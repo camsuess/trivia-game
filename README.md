@@ -15,4 +15,4 @@ Simple multiplayer trivia game using using a client-server architecture.
 * [[Link to Python documentation](https://docs.python.org/3/)]
 * [[Link to sockets tutorial](https://realpython.com/python-sockets/)]
 * [[Link to Trivia API](https://the-trivia-api.com/)]
-* [Link to Second Triva API (https://opentdb.com/api_config.php)]
+* [[Link to Second Triva API](https://opentdb.com/api_config.php)]
