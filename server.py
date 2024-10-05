@@ -33,6 +33,15 @@ class GameServer:
         self.sel.register(server_socket, selectors.EVENT_READ, self.accept_connections)
         return server_socket
 
+    def accept_connections(self, sock):
+        conn, addr = sock.accept()
+        logging.info(f'Accepting connection from {addr}')
+        self.clients.add(conn)
+        conn.setblocking(False)
+        events = selectors.EVENT_READ | selectors.EVENT_WRITE
+        self.sel.register(conn, events, self.handle_client)
+        
+    
 def parse_args():
     parser = argparse.ArgumentParser(description='Trivia Game Server', add_help=False)
     
