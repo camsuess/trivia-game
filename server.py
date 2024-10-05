@@ -6,6 +6,8 @@ import selectors
 import types
 import argparse
 
+logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
+
 class GameServer:
     def __init__(self, host, port):
         self.sel = selectors.DefaultSelector()
