@@ -22,7 +22,16 @@ class GameServer:
         question = response.json().get('results', [])
         logging.info(f'Fetched {len(question)} trivia questions.')
         return question
-        
+    
+    def creat_server_socket(self):
+        server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        server_socket.bind((self.host, self.port))
+        server_socket.listen()
+        logging.info(f'Starting server...\nListening on {self.host}:{self.port}')
+        server_socket.setblocking(False)
+        self.sel.register(server_socket, selectors.EVENT_READ, self.accept_connections)
+        return server_socket
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Trivia Game Server', add_help=False)
