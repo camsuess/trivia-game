@@ -41,6 +41,15 @@ class GameServer:
         events = selectors.EVENT_READ | selectors.EVENT_WRITE
         self.sel.register(conn, events, self.handle_client)
         
+    def send_question(self, conn, question):
+        data = {
+            'question': question['question'],
+            'choices': question['incorrect_answers'] + [question['correct_answer']],
+            'correct_answer': question['correct_answer']
+        }
+        conn.send(json.dumps(data).encode('utf-8'))
+        
+    
     
 def parse_args():
     parser = argparse.ArgumentParser(description='Trivia Game Server', add_help=False)
