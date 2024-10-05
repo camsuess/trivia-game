@@ -19,6 +19,13 @@ class GameClient:
     
     
 
+    def send_answer(self, question, answer):
+        message = json.dumps({'answer': answer, 'correct_answer': question['correct_answer']})
+        self.client_socket.send(message.encode('utf-8'))
+        response = self.client_socket.recv(1024).decode('utf-8')
+        logging.info(f'Received response: {response}')
+    
+    
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Trivia Game Client', add_help=False)
