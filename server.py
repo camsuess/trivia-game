@@ -48,7 +48,27 @@ class GameServer:
             'correct_answer': question['correct_answer']
         }
         conn.send(json.dumps(data).encode('utf-8'))
-        
+    
+    def handle_client(self, conn):
+        try:
+            message = conn.recv(1024).decode('utf-8')
+            if message:
+                logging.info(f'Received message: {message}')
+                data = json.loads(message)
+                if data['answer'] == data['correct_answer']:
+                    response = 'Correct!'
+                else:
+                    response = f'Wrong! The correct answer was {data['correct_answer']}.'
+                
+                conn.send(response.encode('utf-8'))
+            else:
+                self.sel.unregister(conn)
+                self.clients.remove(conn)
+                conn.close()
+        except ConnectionResetError:
+            self.sel.unregister(conn)
+            self.clients.remove(conn)
+            conn.close()
     
     
 def parse_args():
