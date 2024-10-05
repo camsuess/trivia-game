@@ -7,6 +7,7 @@ import types
 import argparse
 
 API_URL = 'https://opentdb.com/api.php?amount=1&type=boolean'
+logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
 
 class GameServer:
     def __init__(self, host, port):
