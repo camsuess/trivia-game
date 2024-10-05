@@ -4,6 +4,8 @@ import argparse
 import logging
 import json
 
+logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
+
 class GameClient:
     def __init__(self, host, port):
         self.sel = selectors.DefaultSelector()
