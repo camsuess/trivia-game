@@ -6,6 +6,7 @@ import selectors
 import types
 import argparse
 
+API_URL = 'https://opentdb.com/api.php?amount=1&type=boolean'
 logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
 
 class GameServer:
@@ -14,6 +15,13 @@ class GameServer:
         self.host = host
         self.port = port
         self.clients = set()
+        self.question = self.fetch_question()
+        
+    def fetch_question(self):
+        response = requests.get(API_URL)
+        question = response.json().get('results', [])
+        logging.info(f'Fetched {len(question)} trivia questions.')
+        return question
         
 
 def parse_args():
