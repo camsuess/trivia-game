@@ -18,19 +18,17 @@ class GameClient:
         client_socket.connect((self.host, self.port))
         return client_socket
     
-    
-
     def send_answer(self, question, answer):
         message = json.dumps({'answer': answer, 'correct_answer': question['correct_answer']})
         self.client_socket.send(message.encode('utf-8'))
         response = self.client_socket.recv(1024).decode('utf-8')
-        logging.info(f'Received response: {response}')
+        logging.info(f"Received response: {response}")
     
     def start(self):
         while True:
-            data = json.loads(self.create_client_socket.recv(1024).decode('utf-8'))
-            logging.info(f'Question: {data['question']}')
-            logging.info(f'Choices: {', '.join(data['choices'])}')
+            data = json.loads(self.client_socket.recv(1024).decode('utf-8'))
+            logging.info(f"Question: {data['question']}")
+            logging.info(f"Choices: {', '.join(data['choices'])}")
             answer = input('Enter your answer: ')
             self.send_answer(data, answer)
     
@@ -40,9 +38,9 @@ class GameClient:
 def parse_args():
     parser = argparse.ArgumentParser(description='Trivia Game Client', add_help=False)
     
-    parser.add_argument('i', '--ip', type=str, help='Server IP')
+    parser.add_argument('-i', '--ip', type=str, default='127.0.0.1', help='Server IP')
     parser.add_argument('-p', '--port', type=int, required=True, help='Server Port')
-    parser.add_argument('h', '--help', action=help, help='Show help message and exit')
+    parser.add_argument('-h', '--help', action='help', help='Show help message and exit')
     
     return parser.parse_args()
 

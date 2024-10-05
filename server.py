@@ -3,7 +3,6 @@ import json
 import requests
 import socket
 import selectors
-import types
 import argparse
 
 API_URL = 'https://opentdb.com/api.php?amount=1&type=boolean'
@@ -22,9 +21,9 @@ class GameServer:
         response = requests.get(API_URL)
         question = response.json().get('results', [])
         logging.info(f'Fetched {len(question)} trivia questions.')
-        return question
+        return question[0] if question else None  # return the first question or None
     
-    def creat_server_socket(self):
+    def create_server_socket(self):
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         server_socket.bind((self.host, self.port))
@@ -57,9 +56,9 @@ class GameServer:
                 logging.info(f'Received message: {message}')
                 data = json.loads(message)
                 if data['answer'] == data['correct_answer']:
-                    response = 'Correct!'
+                    response = "Correct!"
                 else:
-                    response = f'Wrong! The correct answer was {data['correct_answer']}.'
+                    response = f"Wrong! The correct answer was {data['correct_answer']}."
                 
                 conn.send(response.encode('utf-8'))
             else:
@@ -81,9 +80,9 @@ class GameServer:
 def parse_args():
     parser = argparse.ArgumentParser(description='Trivia Game Server', add_help=False)
     
-    parser.add_argument('-i', '--ip', type=str, help='The IP address to bind the server')
-    parser.add_argument('p', '--port', type=int, required=True, help='The port to bind the server')
-    parser.add_argument('h', '--help', action='help', help='Show help message and exit')
+    parser.add_argument('-i', '--ip', type=str, default='127.0.0.1', help='The IP address to bind the server')
+    parser.add_argument('-p', '--port', type=int, required=True, help='The port to bind the server')
+    parser.add_argument('-h', '--help', action='help', help='Show help message and exit')
     
     return parser.parse_args()
 
