@@ -26,11 +26,20 @@ class GameClient:
     
     def start(self):
         while True:
-            data = json.loads(self.client_socket.recv(1024).decode('utf-8'))
-            logging.info(f"Question: {data['question']}")
-            logging.info(f"Choices: {', '.join(data['choices'])}")
-            answer = input('Enter your answer: ')
-            self.send_answer(data, answer)
+            data = self.client_socket.recv(1024).decode('utf-8')
+            if not data:
+                logging.error("No data received from the server")
+                break
+            
+            try:
+                question_data = json.loads(data)
+                logging.info(f"Question: {question_data['question']}")
+                logging.info(f"Choices: {', '.join(question_data['choices'])}")
+                answer = input('Enter your answer: ')
+                self.send_answer(question_data, answer)
+            except json.JSONDecodeError:
+                logging.error("Failed to decode the JSON response from server")
+                break
     
     def close(self):
         self.client_socket.close()

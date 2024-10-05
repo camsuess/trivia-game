@@ -38,16 +38,18 @@ class GameServer:
         logging.info(f'Accepting connection from {addr}')
         self.clients.add(conn)
         conn.setblocking(False)
+        self.send_question(conn)
         events = selectors.EVENT_READ | selectors.EVENT_WRITE
         self.sel.register(conn, events, self.handle_client)
         
-    def send_question(self, conn, question):
-        data = {
-            'question': question['question'],
-            'choices': question['incorrect_answers'] + [question['correct_answer']],
-            'correct_answer': question['correct_answer']
-        }
-        conn.send(json.dumps(data).encode('utf-8'))
+    def send_question(self, conn):
+        if self.question:
+            data = {
+            'question': self.question['question'],
+            'choices': self.question['incorrect_answers'] + [self.question['correct_answer']],
+            'correct_answer': self.question['correct_answer']
+            }
+            conn.send(json.dumps(data).encode('utf-8'))
     
     def handle_client(self, conn):
         try:
@@ -65,6 +67,8 @@ class GameServer:
                 self.sel.unregister(conn)
                 self.clients.remove(conn)
                 conn.close()
+        except BlockingIOError:
+            pass
         except ConnectionResetError:
             self.sel.unregister(conn)
             self.clients.remove(conn)
