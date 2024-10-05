@@ -11,6 +11,7 @@ class GameClient:
         self.sel = selectors.DefaultSelector()
         self.host = host
         self.port = port
+        self.client_socket = self.create_client_socket()
     
     def create_client_socket(self):
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

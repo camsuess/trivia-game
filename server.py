@@ -16,6 +16,7 @@ class GameServer:
         self.port = port
         self.clients = set()
         self.question = self.fetch_question()
+        self.server_socket = self.create_server_socket()
         
     def fetch_question(self):
         response = requests.get(API_URL)
