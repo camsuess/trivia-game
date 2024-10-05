@@ -70,6 +70,12 @@ class GameServer:
             self.clients.remove(conn)
             conn.close()
     
+    def start(self):
+        while True:
+            events = self.sel.select(timeout=True)
+            for key, mask in events:
+                callback = key.data
+                callback(key.fileobj)
     
 def parse_args():
     parser = argparse.ArgumentParser(description='Trivia Game Server', add_help=False)
@@ -79,3 +85,8 @@ def parse_args():
     parser.add_argument('h', '--help', action='help', help='Show help message and exit')
     
     return parser.parse_args()
+
+if __name__ == "__main__":
+    args = parse_args()
+    server = GameServer(host=args.ip, port=args.port)
+    server.start()
