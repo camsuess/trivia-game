@@ -32,11 +32,15 @@ class GameClient:
                 break
             
             try:
-                question_data = json.loads(data)
-                logging.info(f"Question: {question_data['question']}")
-                logging.info(f"Choices: {', '.join(question_data['choices'])}")
-                answer = input('Enter your answer: ')
-                self.send_answer(question_data, answer)
+                message = json.loads(data)
+                if 'message' in message and message['message'] == 'Please enter your name':
+                    name = input("Please enter your name:")
+                    self.client_socket.send(json.dumps({'name': name}).encode('utf-8'))
+                elif 'question' in message:
+                    logging.info(f"Question: {message['question']}")
+                    logging.info(f"Choices: {', '.join(message['choices'])}")
+                    answer = input('Enter your answer: ')
+                    self.send_answer(message, answer)
             except json.JSONDecodeError:
                 logging.error("Failed to decode the JSON response from server")
                 break
