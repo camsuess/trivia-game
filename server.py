@@ -53,6 +53,11 @@ class GameServer:
             
     def send_name_prompt(self, conn):
         conn.send(json.dumps({"message": "Please enter your name:"}).encode('utf-8'))
+        
+    def notify_all(self, message, exclude_conn=None):
+        for conn in self.clients:
+            if conn != exclude_conn: # exclude the player that triggered the message
+                conn.send(json.dumps({"message": message}).encode('utf-8'))
     
     def handle_client(self, conn):
         try:
@@ -60,22 +65,17 @@ class GameServer:
             if message:
                 logging.info(f'Received message: {message}')
                 data = json.loads(message)
-                if data['answer'] == data['correct_answer']:
-                    response = "Correct!"
-                else:
-                    response = f"Wrong! The correct answer was {data['correct_answer']}."
-                
-                conn.send(response.encode('utf-8'))
+                if self.clients[conn]['name'] is None:
+                    self.clients['name'] = data['name']
+                    logging.info(f"Player {data['name']} joined from {self.clients[conn]['address']}")
+                    self.send_question(conn)
+                    self.notify_all(f"{data['name']} just joined the game!")
             else:
-                self.sel.unregister(conn)
-                self.clients.remove(conn)
-                conn.close()
+                self.disconnect_client(conn)
         except BlockingIOError:
             pass
         except ConnectionResetError:
-            self.sel.unregister(conn)
-            self.clients.remove(conn)
-            conn.close()
+            self.disconnect_client(conn)
     
     def start(self):
         while True:
