@@ -4,6 +4,7 @@ import requests
 import socket
 import selectors
 import argparse
+import message
 
 API_URL = 'https://opentdb.com/api.php?amount=1&type=boolean'
 logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
@@ -44,25 +45,24 @@ class GameServer:
         
     def send_question(self, conn):
         if self.question:
-            question_data = {
-                'question': self.question['question'],
-                'choices': self.question['incorrect_answers'] + [self.question['correct_answer']]
+            data = {
+            'question': self.question['question'],
+            'choices': self.question['incorrect_answers'] + [self.question['correct_answer']],
             }
-            message = json.dumps(question_data).encode('utf-8')
             for client_conn in self.clients:
-                client_conn.send(message)
+                message.send(client_conn, data)
     
     def process_answer(self, conn, data):
         if data['answer'] == self.question['correct_answer']:
             response = "Correct!"
-            self.clients[conn]['score'] += 1  # Increment score on correct answer
+            self.clients[conn]['score'] += 1
         else:
             response = f"Wrong! The correct answer was {self.question['correct_answer']}."
         
         self.notify_all(f"{self.clients[conn]['name']} answered: {response}")
             
     def send_name_prompt(self, conn):
-        conn.send(json.dumps({"message": "Please enter your name:"}).encode('utf-8'))
+        message.send(conn, {"message": "Please enter your name:"})
         
     def notify_all(self, message, exclude_conn=None):
         for conn in self.clients:
