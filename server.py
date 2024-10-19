@@ -70,11 +70,12 @@ class GameServer:
                 conn.send(json.dumps({"message": message}).encode('utf-8'))
                 
     def disconnect_client(self, conn):
-        logging.info(f"Player {self.clients[conn]['name']} disconnected from the game.")
+        player_name = self.clients[conn]['name']
         self.sel.unregister(conn)
         self.clients.pop(conn, None)
         conn.close()
-        self.notify_all(f"Player {self.clients[conn]['name']} has left the game.")
+        if player_name:
+            self.notify_all(f"Player {player_name} has left the game.")
     
     def handle_client(self, conn):
         try:
