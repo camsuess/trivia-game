@@ -43,7 +43,7 @@ class GameServer:
         events = selectors.EVENT_READ | selectors.EVENT_WRITE
         self.sel.register(conn, events, self.handle_client)
         
-    def send_question(self, conn):
+    def send_question(self, conn=None):
         if self.question:
             data = {
             'question': self.question['question'],
@@ -61,6 +61,8 @@ class GameServer:
         
         self.notify_all(f"{self.clients[conn]['name']} answered: {response}")
         message.send(conn, {"message": f"Your current score: {self.clients[conn]['score']}"})
+        for client_conn in self.clients:
+            message.send(client_conn, {"message": f"{self.clients[client_conn]['name']}'s current score: {self.clients[client_conn]['score']}"})
             
     def send_name_prompt(self, conn):
         message.send(conn, {"message": "Please enter your name:"})
