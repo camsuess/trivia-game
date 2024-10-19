@@ -44,12 +44,22 @@ class GameServer:
         
     def send_question(self, conn):
         if self.question:
-            data = {
-            'question': self.question['question'],
-            'choices': self.question['incorrect_answers'] + [self.question['correct_answer']],
-            'correct_answer': self.question['correct_answer']
+            question_data = {
+                'question': self.question['question'],
+                'choices': self.question['incorrect_answers'] + [self.question['correct_answer']]
             }
-            conn.send(json.dumps(data).encode('utf-8'))
+            message = json.dumps(question_data).encode('utf-8')
+            for client_conn in self.clients:
+                client_conn.send(message)
+    
+    def process_answer(self, conn, data):
+        if data['answer'] == self.question['correct_answer']:
+            response = "Correct!"
+            self.clients[conn]['score'] += 1  # Increment score on correct answer
+        else:
+            response = f"Wrong! The correct answer was {self.question['correct_answer']}."
+        
+        self.notify_all(f"{self.clients[conn]['name']} answered: {response}")
             
     def send_name_prompt(self, conn):
         conn.send(json.dumps({"message": "Please enter your name:"}).encode('utf-8'))
