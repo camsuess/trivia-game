@@ -13,7 +13,7 @@ class GameServer:
         self.sel = selectors.DefaultSelector()
         self.host = host
         self.port = port
-        self.clients = set()
+        self.clients = {}
         self.question = self.fetch_question()
         self.server_socket = self.create_server_socket()
         
@@ -36,9 +36,9 @@ class GameServer:
     def accept_connections(self, sock):
         conn, addr = sock.accept()
         logging.info(f'Accepting connection from {addr}')
-        self.clients.add(conn)
         conn.setblocking(False)
-        self.send_question(conn)
+        self.clients[conn] = {'address': addr, 'name': None, 'score': 0}
+        self.send_name_prompt(conn)
         events = selectors.EVENT_READ | selectors.EVENT_WRITE
         self.sel.register(conn, events, self.handle_client)
         
@@ -50,6 +50,9 @@ class GameServer:
             'correct_answer': self.question['correct_answer']
             }
             conn.send(json.dumps(data).encode('utf-8'))
+            
+    def send_name_prompt(self, conn):
+        conn.send(json.dumps({"message": "Please enter your name:"}).encode('utf-8'))
     
     def handle_client(self, conn):
         try:
