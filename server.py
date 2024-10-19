@@ -60,6 +60,7 @@ class GameServer:
             response = f"Wrong! The correct answer was {self.question['correct_answer']}."
         
         self.notify_all(f"{self.clients[conn]['name']} answered: {response}")
+        message.send(conn, {"message": f"Your current score: {self.clients[conn]['score']}"})
             
     def send_name_prompt(self, conn):
         message.send(conn, {"message": "Please enter your name:"})
