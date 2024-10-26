@@ -24,6 +24,22 @@ class GameClient:
         response = Message.receive(self.client_socket)
         if response:
             logging.info(f"Received response: {response.get('content', {}).get('message', '')}")
+    
+    def process_message(self, data):
+        if data['type'] == 'message' and data['content'].get('message').strip() == 'Please enter your name:':
+            name = input("Please enter your name: ")
+            Message.send(self.client_socket, {"type": "name", "content": {"name": name}})
+
+        elif data['type'] == 'question':
+            question = data['content']['question']
+            choices = data['content']['choices']
+            logging.info(f"Question: {question}")
+            logging.info(f"Choices: {', '.join(choices)}")
+            answer = input('Enter your answer: ')
+            self.send_answer(answer)
+
+        elif data['type'] == 'score_update':
+            logging.info(data['content'].get('message'))
 
     
     def start(self):
@@ -37,28 +53,14 @@ class GameClient:
                 logging.info(f"Received data: {data}")
 
                 if isinstance(data, dict) and 'type' in data:
-                    if data['type'] == 'message' and data['content'].get('message').strip() == 'Please enter your name:':
-                        name = input("Please enter your name: ")
-                        Message.send(self.client_socket, {"type": "name", "content": {"name": name}})
-                    
-                    elif data['type'] == 'question':
-                        question = data['content']['question']
-                        choices = data['content']['choices']
-                        logging.info(f"Question: {question}")
-                        logging.info(f"Choices: {', '.join(choices)}")
-                        answer = input('Enter your answer: ')
-                        self.send_answer(answer)
-
-                    elif data['type'] == 'score_update':
-                        logging.info(data['content'].get('message'))
+                    self.process_message(data)
                 else:
                     logging.error("Received an improperly formatted message or unknown message type.")
-        
             except (ConnectionResetError, socket.error) as e:
                 logging.error(f"Connection error: {e}")
                 break
-
-
+                
+                
     def close(self):
         self.client_socket.close()
 
