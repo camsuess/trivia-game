@@ -9,13 +9,26 @@ from message import Message
 API_URL = 'https://opentdb.com/api.php?amount=1&type=boolean'
 logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
 
+class GameState:
+    WAITING = "waiting"
+    ASKING_QUESTION = "asking"
+    FINISHED = "finished"
+
+class Player:
+    def __init__(self, conn, address):
+        self.conn = conn
+        self.address = address
+        self.name = None
+        self.score = 0
+
 class GameServer:
     def __init__(self, host, port):
         self.sel = selectors.DefaultSelector()
         self.host = host
         self.port = port
         self.clients = {}
-        self.question = self.fetch_question()
+        self.question = None
+        self.game_state = GameState.WAITING
         self.server_socket = self.create_server_socket()
         
     def fetch_question(self):
@@ -39,47 +52,35 @@ class GameServer:
         conn, addr = sock.accept()
         logging.info(f'Accepting connection from {addr}')
         conn.setblocking(False)
-        self.clients[conn] = {'address': addr, 'name': None, 'score': 0}
+        self.clients[conn] = Player(conn, addr)
         self.send_name_prompt(conn)
         events = selectors.EVENT_READ | selectors.EVENT_WRITE
         self.sel.register(conn, events, self.handle_client)
         
-    def send_question(self, conn=None):
-        if self.question:
-            data = {
-                "type": "question",
-                "content": {
-                    "question": self.question['question'],
-                    "choices": self.question['incorrect_answers'] + [self.question['correct_answer']],
-                    "category": self.question['category'],
-                    "difficulty": self.question['difficulty']
+    def send_question(self):
+        if self.game_state == GameState.ASKING_QUESTION:
+            self.question = self.fetch_question()
+            if self.question:
+                data = {
+                    "type": "question",
+                    "content": {
+                        "question": self.question['question'],
+                        "choices": self.question['incorrect_answers'] + [self.question['correct_answer']],
+                        "category": self.question['category'],
+                        "difficulty": self.question['difficulty']
+                    }
                 }
-            }
-            if conn:
-                logging.info(f'Sending question to {self.clients[conn]["name"]}')
-                Message.send(conn, data)
-        else:
-            for client_conn in self.clients:
-                Message.send(client_conn, data)
-
-
+                for client_conn in self.clients:
+                    Message.send(client_conn.conn, data)
     
-    def process_answer(self, conn, data):
-        if data['answer'] == self.question['correct_answer']:
+    def process_answer(self, conn, answer):
+        player = self.clients[conn]
+        if answer == self.question['correct_answer']:
+            player.score += 1
             response = "Correct!"
-            self.clients[conn]['score'] += 1
         else:
             response = f"Wrong! The correct answer was {self.question['correct_answer']}."
-        
-        self.notify_all(f"{self.clients[conn]['name']} answered: {response}")
-        Message.send(conn, {"type": "score_update", "content": {"message": f"Your current score: {self.clients[conn]['score']}"}})
-        for client_conn in self.clients:
-            Message.send(client_conn, {
-                "type": "score_update",
-                "content": {
-                    "message": f"{self.clients[client_conn]['name']}'s current score: {self.clients[client_conn]['score']}"
-                }
-            })
+
 
             
     def send_name_prompt(self, conn):
@@ -93,7 +94,7 @@ class GameServer:
                 conn.send(json.dumps({"message": message}).encode('utf-8'))
                 
     def disconnect_client(self, conn):
-        player_name = self.clients[conn]['name']
+        player_name = self.clients[conn].name
         self.sel.unregister(conn)
         self.clients.pop(conn, None)
         conn.close()
@@ -105,22 +106,18 @@ class GameServer:
             data = Message.receive(conn)
             if data:
                 logging.info(f'Received data: {data}')
-                if self.clients[conn]['name'] is None and 'name' in data['content']:
+                if self.game_state == GameState.WAITING:
                     self.clients[conn]['name'] = data['content']['name']
                     logging.info(f"Player {data['content']['name']} joined from {self.clients[conn]['address']}")
                     self.send_question(conn)
                     self.notify_all(f"{data['content']['name']} just joined the game!")
-                elif 'answer' in data['content']:
+                elif self.game_state == GameState.ASKING_QUESTION:
                     self.process_answer(conn, data)
             else:
                 self.disconnect_client(conn)
-        except BlockingIOError:
-            pass
-        except ConnectionResetError:
+        except (ConnectionResetError, BlockingIOError):
             self.disconnect_client(conn)
 
-
-    
     def start(self):
         while True:
             events = self.sel.select(timeout=True)
