@@ -2,7 +2,7 @@ import socket
 import selectors
 import argparse
 import logging
-import json
+from message import Message
 
 logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
 
@@ -18,33 +18,47 @@ class GameClient:
         client_socket.connect((self.host, self.port))
         return client_socket
     
-    def send_answer(self, question, answer):
-        message = json.dumps({'answer': answer, 'correct_answer': question['correct_answer']})
-        self.client_socket.send(message.encode('utf-8'))
-        response = self.client_socket.recv(1024).decode('utf-8')
-        logging.info(f"Received response: {response}")
+    def send_answer(self, answer):
+        message = {"type": "answer", "content": {"answer": answer}}
+        Message.send(self.client_socket, message)
+        response = Message.receive(self.client_socket)
+        if response:
+            logging.info(f"Received response: {response.get('content', {}).get('message', '')}")
+
     
     def start(self):
         while True:
-            data = self.client_socket.recv(1024).decode('utf-8')
-            if not data:
-                logging.error("No data received from the server")
-                break
-            
             try:
-                message = json.loads(data)
-                if 'message' in message and message['message'] == 'Please enter your name':
-                    name = input("Please enter your name:")
-                    self.client_socket.send(json.dumps({'name': name}).encode('utf-8'))
-                elif 'question' in message:
-                    logging.info(f"Question: {message['question']}")
-                    logging.info(f"Choices: {', '.join(message['choices'])}")
-                    answer = input('Enter your answer: ')
-                    self.send_answer(message, answer)
-            except json.JSONDecodeError:
-                logging.error("Failed to decode the JSON response from server")
+                data = Message.receive(self.client_socket)
+                if data is None:
+                    logging.error("No data received from the server")
+                    continue
+
+                logging.info(f"Received data: {data}")
+
+                if isinstance(data, dict) and 'type' in data:
+                    if data['type'] == 'message' and data['content'].get('message').strip() == 'Please enter your name:':
+                        name = input("Please enter your name: ")
+                        Message.send(self.client_socket, {"type": "name", "content": {"name": name}})
+                    
+                    elif data['type'] == 'question':
+                        question = data['content']['question']
+                        choices = data['content']['choices']
+                        logging.info(f"Question: {question}")
+                        logging.info(f"Choices: {', '.join(choices)}")
+                        answer = input('Enter your answer: ')
+                        self.send_answer(answer)
+
+                    elif data['type'] == 'score_update':
+                        logging.info(data['content'].get('message'))
+                else:
+                    logging.error("Received an improperly formatted message or unknown message type.")
+        
+            except (ConnectionResetError, socket.error) as e:
+                logging.error(f"Connection error: {e}")
                 break
-    
+
+
     def close(self):
         self.client_socket.close()
 
