@@ -4,7 +4,7 @@ import requests
 import socket
 import selectors
 import argparse
-import message
+from message import Message
 
 API_URL = 'https://opentdb.com/api.php?amount=1&type=boolean'
 logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
@@ -50,7 +50,7 @@ class GameServer:
             'choices': self.question['incorrect_answers'] + [self.question['correct_answer']],
             }
             for client_conn in self.clients:
-                message.send(client_conn, data)
+                Message.send(client_conn, data)
     
     def process_answer(self, conn, data):
         if data['answer'] == self.question['correct_answer']:
@@ -60,12 +60,12 @@ class GameServer:
             response = f"Wrong! The correct answer was {self.question['correct_answer']}."
         
         self.notify_all(f"{self.clients[conn]['name']} answered: {response}")
-        message.send(conn, {"message": f"Your current score: {self.clients[conn]['score']}"})
+        Message.send(conn, {"message": f"Your current score: {self.clients[conn]['score']}"})
         for client_conn in self.clients:
-            message.send(client_conn, {"message": f"{self.clients[client_conn]['name']}'s current score: {self.clients[client_conn]['score']}"})
+            Message.send(client_conn, {"message": f"{self.clients[client_conn]['name']}'s current score: {self.clients[client_conn]['score']}"})
             
     def send_name_prompt(self, conn):
-        message.send(conn, {"message": "Please enter your name:"})
+        Message.send(conn, {"message": "Please enter your name:"})
         
     def notify_all(self, message, exclude_conn=None):
         for conn in self.clients:
