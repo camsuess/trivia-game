@@ -22,6 +22,7 @@ class GameServer:
         response = requests.get(API_URL)
         question = response.json().get('results', [])
         logging.info(f'Fetched {len(question)} trivia questions.')
+        logging.info(f'Fetched question data: {question}')
         return question[0] if question else None  # return the first question or None
     
     def create_server_socket(self):
@@ -46,11 +47,22 @@ class GameServer:
     def send_question(self, conn=None):
         if self.question:
             data = {
-            'question': self.question['question'],
-            'choices': self.question['incorrect_answers'] + [self.question['correct_answer']],
+                "type": "question",
+                "content": {
+                    "question": self.question['question'],
+                    "choices": self.question['incorrect_answers'] + [self.question['correct_answer']],
+                    "category": self.question['category'],
+                    "difficulty": self.question['difficulty']
+                }
             }
+            if conn:
+                logging.info(f'Sending question to {self.clients[conn]["name"]}')
+                Message.send(conn, data)
+        else:
             for client_conn in self.clients:
                 Message.send(client_conn, data)
+
+
     
     def process_answer(self, conn, data):
         if data['answer'] == self.question['correct_answer']:
@@ -60,12 +72,20 @@ class GameServer:
             response = f"Wrong! The correct answer was {self.question['correct_answer']}."
         
         self.notify_all(f"{self.clients[conn]['name']} answered: {response}")
-        Message.send(conn, {"message": f"Your current score: {self.clients[conn]['score']}"})
+        Message.send(conn, {"type": "score_update", "content": {"message": f"Your current score: {self.clients[conn]['score']}"}})
         for client_conn in self.clients:
-            Message.send(client_conn, {"message": f"{self.clients[client_conn]['name']}'s current score: {self.clients[client_conn]['score']}"})
+            Message.send(client_conn, {
+                "type": "score_update",
+                "content": {
+                    "message": f"{self.clients[client_conn]['name']}'s current score: {self.clients[client_conn]['score']}"
+                }
+            })
+
             
     def send_name_prompt(self, conn):
-        Message.send(conn, {"message": "Please enter your name:"})
+        logging.info(f'Sending name prompt to {self.clients[conn]["address"]}')
+        Message.send(conn, {"type": "message", "content": {"message": "Please enter your name:"}})
+
         
     def notify_all(self, message, exclude_conn=None):
         for conn in self.clients:
@@ -82,21 +102,24 @@ class GameServer:
     
     def handle_client(self, conn):
         try:
-            message = conn.recv(1024).decode('utf-8')
-            if message:
-                logging.info(f'Received message: {message}')
-                data = json.loads(message)
-                if self.clients[conn]['name'] is None:
-                    self.clients['name'] = data['name']
-                    logging.info(f"Player {data['name']} joined from {self.clients[conn]['address']}")
+            data = Message.receive(conn)
+            if data:
+                logging.info(f'Received data: {data}')
+                if self.clients[conn]['name'] is None and 'name' in data['content']:
+                    self.clients[conn]['name'] = data['content']['name']
+                    logging.info(f"Player {data['content']['name']} joined from {self.clients[conn]['address']}")
                     self.send_question(conn)
-                    self.notify_all(f"{data['name']} just joined the game!")
+                    self.notify_all(f"{data['content']['name']} just joined the game!")
+                elif 'answer' in data['content']:
+                    self.process_answer(conn, data)
             else:
                 self.disconnect_client(conn)
         except BlockingIOError:
             pass
         except ConnectionResetError:
             self.disconnect_client(conn)
+
+
     
     def start(self):
         while True:
