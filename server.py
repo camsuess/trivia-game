@@ -15,9 +15,9 @@ class GameState:
     FINISHED = "finished"
 
 class Player:
-    def __init__(self, conn, address):
+    def __init__(self, conn, addr):
         self.conn = conn
-        self.address = address
+        self.address = addr
         self.name = None
         self.score = 0
 
@@ -81,11 +81,10 @@ class GameServer:
         else:
             response = f"Wrong! The correct answer was {self.question['correct_answer']}."
 
-
-            
     def send_name_prompt(self, conn):
-        logging.info(f'Sending name prompt to {self.clients[conn]["address"]}')
+        logging.info(f'Sending name prompt to {self.clients[conn].addr}')
         Message.send(conn, {"type": "message", "content": {"message": "Please enter your name:"}})
+
 
         
     def notify_all(self, message, exclude_conn=None):
