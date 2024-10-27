@@ -48,7 +48,7 @@ class GameServer:
         self.sel.register(server_socket, selectors.EVENT_READ, self.accept_connections)
         return server_socket
 
-    def accept_connections(self, sock):
+    def accept_connections(self, sock, mask):
         conn, addr = sock.accept()
         logging.info(f'Accepting connection from {addr}')
         conn.setblocking(False)
