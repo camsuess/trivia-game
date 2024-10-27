@@ -57,6 +57,51 @@ class GameServer:
         events = selectors.EVENT_READ | selectors.EVENT_WRITE
         self.sel.register(conn, events, self.handle_client)
     
+    def send_name_prompt(self, conn):
+        prompt = {
+            "action": "set_name",
+            "message": "Please enter your username."
+        }
+        Message.send(conn, prompt)
+    
+    def handle_client(self, conn, mask):
+        if mask & selectors.EVENT_READ:
+            message = Message()
+            message.read(conn)
+            if message.request:
+                self.process_reqeust(conn, message.request)
+        if mask & selectors.EVENT_WRITE:
+            message = Message()
+            message.write(conn)
+    
+    def process_request(self, conn, request):
+        if request['action'] == "set_name":
+            player = self.clients[conn]
+            player.name = request.get('name')
+            logging.info(f"Player {player.name} connected from {player.address}.")
+            self.send_question(conn)
+            
+    def send_question(self, conn):
+        question = self.fetch_question()
+        question_message = {
+            "action": "question",
+            "question": question['question'],
+            "correct_answer": question['correct_answer']  # Include correct answer for validation
+        }
+        Message.send(conn, question_message)
+        
+    def start(self):
+        try:
+            while True:
+                events = server.sel.select()
+                for key, _ in events:
+                    callback = key.data
+                    callback(key.fileobj, key.events)
+        except KeyboardInterrupt:
+            logging.info("Server shutting down.")
+        finally:
+            server.sel.close()
+    
 def parse_args():
     parser = argparse.ArgumentParser(description='Trivia Game Server', add_help=False)
     
