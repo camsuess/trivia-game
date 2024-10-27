@@ -16,7 +16,7 @@ class Message:
     
     def _json_decode(self, json_bytes, encoding): # Decode the JSON byte string back into a Python object
         tiow = io.TextIOWrapper(io.BytesIO(json_bytes), encoding=encoding, newline="")
-        obj = json.loads(tiow)
+        obj = json.loads(tiow.read())
         tiow.close()
         return obj
     
@@ -69,6 +69,12 @@ class Message:
             response_content = {"result": "This is a response to your request."}  # Example response
             self._send_buffer = self.create_message(response_content)
             self.response_created = True
+            
+    @staticmethod
+    def send(sock, message_content):
+        message = Message()
+        message._send_buffer = message.create_message(message_content)
+        message.write(sock)
 
     def close(self, sock): # Close the socket connection
         sock.close()
