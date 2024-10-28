@@ -66,7 +66,7 @@ class Message:
 
     def _set_send_buffer(self): # Prepare a response based on the request
         if self.request:
-            response_content = {"result": "This is a response to your request."}  # Example response
+            response_content = {}
             self._send_buffer = self.create_message(response_content)
             self.response_created = True
             
