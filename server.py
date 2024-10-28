@@ -75,21 +75,42 @@ class GameServer:
             message.write(conn)
     
     def process_request(self, conn, request):
+        player = self.clients[conn]
+        
         if request['action'] == "set_name":
-            player = self.clients[conn]
             player.name = request.get('name')
             logging.info(f"Player {player.name} connected from {player.address}.")
             self.send_question(conn)
+        elif request['action'] == "answer":
+            player_answer = request.get('answer').lower()
+            correct_answer = self.question['correct_answer'].lower()
+            logging.info(f"Player {player.name} answered with {player_answer}")
             
+            if player_answer == correct_answer:
+                player.score += 1
+                answer_feedback = "Correct!"
+            else:
+                answer_feedback = "Incorrect!"
+            
+            response_message = {
+                "action": "answer_feedback",
+                "message": answer_feedback,
+                "score": player.score
+            }
+            Message.send(conn, response_message)    
+                
     def send_question(self, conn):
-        question = self.fetch_question()
-        question_message = {
-            "action": "question",
-            "question": question['question'],
-            "correct_answer": question['correct_answer']  # Include correct answer for validation
-        }
-        Message.send(conn, question_message)
-        
+        self.question = self.fetch_question()
+        if self.question:
+            question_message = {
+                "action": "question",
+                "question": self.question['question'],
+                "correct_answer": self.question['correct_answer']
+            }
+            Message.send(conn, question_message)
+        else:
+            logging.error("Failed to fetch question from API.")
+    
     def start(self):
         try:
             while True:

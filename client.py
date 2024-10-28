@@ -40,6 +40,9 @@ class GameClient:
                     "answer": answer
                 }
                 Message.send(self.client_socket, answer_message)
+            elif request['action'] == "answer_feedback":
+                print(request['message'])
+                print(f"Your current score: {request['score']}")
 
             
     def start(self):
