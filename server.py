@@ -60,7 +60,7 @@ class GameServer:
     def send_name_prompt(self, conn):
         prompt = {
             "action": "set_name",
-            "message": "Please enter your username."
+            "message": "Please enter your username: "
         }
         Message.send(conn, prompt)
     
@@ -69,7 +69,7 @@ class GameServer:
             message = Message()
             message.read(conn)
             if message.request:
-                self.process_reqeust(conn, message.request)
+                self.process_request(conn, message.request)
         if mask & selectors.EVENT_WRITE:
             message = Message()
             message.write(conn)
