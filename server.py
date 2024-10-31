@@ -5,6 +5,7 @@ import socket
 import selectors
 import argparse
 from message import Message
+import time
 
 API_URL = 'https://opentdb.com/api.php?amount=1&type=boolean'
 logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
@@ -20,6 +21,7 @@ class Player:
         self.address = addr
         self.name = None
         self.score = 0
+        self.answered = False
 
 class GameServer:
     def __init__(self, host, port):
@@ -30,22 +32,16 @@ class GameServer:
         self.question = None
         self.game_state = GameState.WAITING
         self.server_socket = self.create_server_socket()
-        
-    def fetch_question(self):
-        response = requests.get(API_URL)
-        question = response.json().get('results', [])
-        logging.info(f'Fetched {len(question)} trivia questions.')
-        logging.info(f'Fetched question data: {question}')
-        return question[0] if question else None  # return the first question or None
     
     def create_server_socket(self):
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         server_socket.bind((self.host, self.port))
         server_socket.listen()
-        logging.info(f'Starting server...\nListening on {self.host}:{self.port}')
+        logging.info(f'Starting server...\nListening on {self.host}:{self.port}\n')
         server_socket.setblocking(False)
         self.sel.register(server_socket, selectors.EVENT_READ, self.accept_connections)
+        self.question = self.fetch_question()
         return server_socket
 
     def accept_connections(self, sock, mask):
@@ -53,9 +49,9 @@ class GameServer:
         logging.info(f'Accepting connection from {addr}')
         conn.setblocking(False)
         self.clients[conn] = Player(conn, addr)
-        self.send_name_prompt(conn)
         events = selectors.EVENT_READ | selectors.EVENT_WRITE
         self.sel.register(conn, events, self.handle_client)
+        self.send_name_prompt(conn)
     
     def send_name_prompt(self, conn):
         prompt = {
@@ -80,13 +76,17 @@ class GameServer:
         if request['action'] == "set_name":
             player.name = request.get('name')
             logging.info(f"Player {player.name} connected from {player.address}.")
-            self.send_question(conn)
-        elif request['action'] == "answer":
+            self.game_state = GameState.ASKING_QUESTION
+            
+            if self.game_state == GameState.ASKING_QUESTION and self.question:
+                self.send_question_to_player(conn)
+
+        elif request['action'] == "answer" and self.game_state == GameState.ASKING_QUESTION:
             player_answer = request.get('answer').lower()
             correct_answer = self.question['correct_answer'].lower()
             logging.info(f"Player {player.name} answered with {player_answer}")
             
-            if player_answer == 'true' or player_answer == 'false':
+            if player_answer in ['true', 'false']:
                 if player_answer == correct_answer:
                     player.score += 1
                     answer_feedback = "Correct!"
@@ -99,25 +99,58 @@ class GameServer:
                     "score": player.score
                 }
                 Message.send(conn, response_message) 
+                player.answered = True
             else:
-                answer_feedback = "Incorrect answer type please try again."
+                answer_feedback = "Invalid answer format. Please reply with 'True' or 'False'."
                 response_message = {
                     "action": "answer_feedback",
                     "message": answer_feedback
                 }
                 Message.send(conn, response_message)
+
+            if all(player.answered for player in self.clients.values()):
+                logging.info(f'All players have answered')
+                self.reset_for_next_question()
+                self.send_question()
+
+    
+    def reset_for_next_question(self):
+        self.question = None
+        for conn, player in self.clients.items():
+            player.answered = False
+    
+    def fetch_question(self):
+        response = requests.get(API_URL)
+        question = response.json().get('results', [])
+        logging.info(f'\nFetched {len(question)} trivia questions.')
+        logging.info(f'Fetched question data: {question}')
+        return question[0] if question else None  # return the first question or None
                 
-    def send_question(self, conn):
-        self.question = self.fetch_question()
+    def send_question(self):
+        logging.info(f'Entered send question')
+        while self.question is None:
+            self.question = self.fetch_question()
+            if self.question is None:
+                logging.warning("Failed to fetch question. Retrying in 2 seconds...")
+                time.sleep(2)
+                
         if self.question:
             question_message = {
                 "action": "question",
-                "question": self.question['question'],
-                "correct_answer": self.question['correct_answer']
+                "question": self.question['question']
             }
-            Message.send(conn, question_message)
-        else:
-            logging.error("Failed to fetch question from API.")
+            for conn, player in self.clients.items():
+                if player.answered == False:
+                    Message.send(conn, question_message)
+            logging.info("Question sent to all players.\n")
+    
+    def send_question_to_player(self, conn):
+        question_message = {
+            "action": "question",
+            "question": self.question['question']
+        }
+        Message.send(conn, question_message)
+
     
     def start(self):
         try:
