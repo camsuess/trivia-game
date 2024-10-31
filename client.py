@@ -41,8 +41,18 @@ class GameClient:
                 }
                 Message.send(self.client_socket, answer_message)
             elif request['action'] == "answer_feedback":
-                print(request['message'])
-                print(f"Your current score: {request['score']}")
+                feedback = request.get('message')
+                if feedback == "Incorrect answer type please try again.":
+                    print(feedback)
+                    answer = input("Your answer (true/false): ")
+                    answer_message = {
+                        "action": "answer",
+                        "answer": answer
+                    }
+                    Message.send(self.client_socket, answer_message)
+                else:
+                    print(request['message'])
+                    print(f"Your current score: {request['score']}")
 
             
     def start(self):
