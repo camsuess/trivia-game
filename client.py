@@ -42,9 +42,9 @@ class GameClient:
                 Message.send(self.client_socket, answer_message)
             elif request['action'] == "answer_feedback":
                 feedback = request.get('message')
-                if feedback == "Incorrect answer type please try again.":
+                if feedback == "Invalid answer format. Please reply with 'True' or 'False'.":
                     print(feedback)
-                    answer = input("Your answer (true/false): ")
+                    answer = input("\nYour answer (true/false): ")
                     answer_message = {
                         "action": "answer",
                         "answer": answer
@@ -52,7 +52,7 @@ class GameClient:
                     Message.send(self.client_socket, answer_message)
                 else:
                     print(request['message'])
-                    print(f"Your current score: {request['score']}")
+                    print(f"Your current score: {request['score']}\n")
 
             
     def start(self):
