@@ -86,18 +86,26 @@ class GameServer:
             correct_answer = self.question['correct_answer'].lower()
             logging.info(f"Player {player.name} answered with {player_answer}")
             
-            if player_answer == correct_answer:
-                player.score += 1
-                answer_feedback = "Correct!"
+            if player_answer == 'true' or player_answer == 'false':
+                if player_answer == correct_answer:
+                    player.score += 1
+                    answer_feedback = "Correct!"
+                else:
+                    answer_feedback = "Incorrect!"
+                
+                response_message = {
+                    "action": "answer_feedback",
+                    "message": answer_feedback,
+                    "score": player.score
+                }
+                Message.send(conn, response_message) 
             else:
-                answer_feedback = "Incorrect!"
-            
-            response_message = {
-                "action": "answer_feedback",
-                "message": answer_feedback,
-                "score": player.score
-            }
-            Message.send(conn, response_message)    
+                answer_feedback = "Incorrect answer type please try again."
+                response_message = {
+                    "action": "answer_feedback",
+                    "message": answer_feedback
+                }
+                Message.send(conn, response_message)
                 
     def send_question(self, conn):
         self.question = self.fetch_question()
