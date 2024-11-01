@@ -8,7 +8,11 @@ from message import Message
 import time
 
 API_URL = 'https://opentdb.com/api.php?amount=1&type=boolean'
-logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
+
+logging.basicConfig(level=logging.DEBUG, 
+                    format='%(levelname)s - %(message)s',
+                    filename='server.log'
+                    )
 
 class GameState:
     WAITING = "waiting"
@@ -110,8 +114,24 @@ class GameServer:
 
             if all(player.answered for player in self.clients.values()):
                 logging.info(f'All players have answered')
+                self.notify_scores() 
                 self.reset_for_next_question()
                 self.send_question()
+                
+    def notify_all(self, message):
+        for conn, player in self.clients.items():
+            logging.debug(f'Message being sent: {message}')
+            Message.send(conn, message)
+        logging.info(f'Notification sent to all players.')
+        
+    def notify_scores(self):
+        scores = {
+            "action": "score_update",
+            "scores": {player.name: player.score for player in self.clients.values()}
+        }
+        logging.debug(f"Scores being sent: {scores}") 
+        self.notify_all(scores)
+        logging.info("Scores update sent.")
 
     
     def reset_for_next_question(self):
