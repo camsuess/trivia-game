@@ -4,7 +4,10 @@ import argparse
 import logging
 from message import Message
 
-logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
+logging.basicConfig(level=logging.DEBUG, 
+                    format='%(levelname)s - %(message)s',
+                    filename='client.log'
+                    )
 
 class GameClient:
     def __init__(self, host, port):
@@ -25,6 +28,8 @@ class GameClient:
         message.read(sock)
         if message.request:
             request = message.request
+            logging.debug(f"Received request: {request}")
+
             if request['action'] == "set_name":
                 username = input(request['message'])
                 response_message = {
@@ -53,6 +58,11 @@ class GameClient:
                 else:
                     print(request['message'])
                     print(f"Your current score: {request['score']}\n")
+            # move this inside of logic to send confirmation to server and then get question?
+            elif request['action'] == "score_update":
+                print('Current game scores:')
+                for player, score in request['scores'].items():
+                    print(f'{player}: {score}')
 
             
     def start(self):
@@ -63,7 +73,7 @@ class GameClient:
                     callback = key.data
                     callback(key.fileobj, key.events)
         except KeyboardInterrupt:
-            logging.info("Client shutting down.")
+            logging.info("\nClient shutting down.")
         finally:
             client.close()
     

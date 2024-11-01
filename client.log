@@ -1,0 +1,29 @@
+DEBUG - Received request: {'action': 'set_name', 'message': 'Please enter your username: '}
+DEBUG - Received request: {'action': 'question', 'question': 'A caterpillar has more muscles than humans do.'}
+DEBUG - Received request: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+DEBUG - Received request: {'action': 'score_update', 'scores': {'cam': 1}}
+DEBUG - Received request: {'action': 'question', 'question': 'Sound can travel through a vacuum.'}
+DEBUG - Received request: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 2}
+DEBUG - Received request: {'action': 'score_update', 'scores': {'cam': 2}}
+DEBUG - Received request: {'action': 'question', 'question': 'According to Greek Mythology, Zeus can control lightning.'}
+DEBUG - Received request: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 2}
+DEBUG - Received request: {'action': 'score_update', 'scores': {'cam': 2}}
+DEBUG - Received request: {'action': 'question', 'question': 'In Scandinavian languages, the letter &Aring; means river.'}
+DEBUG - Received request: {'action': 'set_name', 'message': 'Please enter your username: '}
+DEBUG - Received request: {'action': 'question', 'question': 'In Scandinavian languages, the letter &Aring; means river.'}
+DEBUG - Received request: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+DEBUG - Received request: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 3}
+DEBUG - Received request: {'action': 'score_update', 'scores': {'cam': 3, 'jim': 1}}
+DEBUG - Received request: {'action': 'score_update', 'scores': {'cam': 3, 'jim': 1}}
+DEBUG - Received request: {'action': 'question', 'question': 'Rabbits are rodents.'}
+DEBUG - Received request: {'action': 'question', 'question': 'Rabbits are rodents.'}
+DEBUG - Received request: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 4}
+DEBUG - Received request: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 2}
+DEBUG - Received request: {'action': 'score_update', 'scores': {'cam': 4, 'jim': 2}}
+DEBUG - Received request: {'action': 'score_update', 'scores': {'cam': 4, 'jim': 2}}
+DEBUG - Received request: {'action': 'question', 'question': 'All of these maps were in &quot;Tom Clancy&#039;s Rainbow Six Siege&quot; on its initial release: House, Clubhouse, Border, Consulate.'}
+DEBUG - Received request: {'action': 'question', 'question': 'All of these maps were in &quot;Tom Clancy&#039;s Rainbow Six Siege&quot; on its initial release: House, Clubhouse, Border, Consulate.'}
+INFO - 
+Client shutting down.
+INFO - 
+Client shutting down.
