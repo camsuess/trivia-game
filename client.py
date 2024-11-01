@@ -74,11 +74,19 @@ class GameClient:
                     callback(key.fileobj, key.events)
         except KeyboardInterrupt:
             logging.info("\nClient shutting down.")
+            self.notify_disconnect(client)
         finally:
             client.close()
     
     def close(self):
         self.client_socket.close()
+        
+    def notify_disconnect(self, sock):
+        message = {
+            "action": "disconnect"
+        }
+        Message.send(self.client_socket, message)
+        
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Trivia Game Client', add_help=False)

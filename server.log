@@ -5,13 +5,17 @@ DEBUG - Starting new HTTPS connection (1): opentdb.com:443
 DEBUG - https://opentdb.com:443 "GET /api.php?amount=1&type=boolean HTTP/1.1" 200 None
 INFO - 
 Fetched 1 trivia questions.
-INFO - Fetched question data: [{'type': 'boolean', 'difficulty': 'easy', 'category': 'Animals', 'question': 'A caterpillar has more muscles than humans do.', 'correct_answer': 'True', 'incorrect_answers': ['False']}]
-INFO - Accepting connection from ('127.0.0.1', 52730)
-INFO - Player cam connected from ('127.0.0.1', 52730).
-INFO - Player cam answered with true
+INFO - Fetched question data: [{'type': 'boolean', 'difficulty': 'hard', 'category': 'Geography', 'question': 'The two largest ethnic groups of Belgium are Flemish and Walloon. ', 'correct_answer': 'True', 'incorrect_answers': ['False']}]
+INFO - Accepting connection from ('127.0.0.1', 41804)
+INFO - Player cam connected from ('127.0.0.1', 41804).
+INFO - Accepting connection from ('127.0.0.1', 41816)
+INFO - Player tom connected from ('127.0.0.1', 41816).
+INFO - Player tom answered with true
+INFO - Player cam answered with false
 INFO - All players have answered
-DEBUG - Scores being sent: {'action': 'score_update', 'scores': {'cam': 1}}
-DEBUG - Message being sent: {'action': 'score_update', 'scores': {'cam': 1}}
+DEBUG - Scores being sent: {'action': 'score_update', 'scores': {'cam': 0, 'tom': 1}}
+DEBUG - Message being sent: {'action': 'score_update', 'scores': {'cam': 0, 'tom': 1}}
+DEBUG - Message being sent: {'action': 'score_update', 'scores': {'cam': 0, 'tom': 1}}
 INFO - Notification sent to all players.
 INFO - Scores update sent.
 INFO - Entered send question
@@ -19,13 +23,30 @@ DEBUG - Starting new HTTPS connection (1): opentdb.com:443
 DEBUG - https://opentdb.com:443 "GET /api.php?amount=1&type=boolean HTTP/1.1" 200 None
 INFO - 
 Fetched 1 trivia questions.
-INFO - Fetched question data: [{'type': 'boolean', 'difficulty': 'medium', 'category': 'Science &amp; Nature', 'question': 'Sound can travel through a vacuum.', 'correct_answer': 'False', 'incorrect_answers': ['True']}]
+INFO - Fetched question data: [{'type': 'boolean', 'difficulty': 'easy', 'category': 'Entertainment: Video Games', 'question': 'There are 6 legendary cards in &quot;Clash Royale&quot;.', 'correct_answer': 'False', 'incorrect_answers': ['True']}]
 INFO - Question sent to all players.
 
-INFO - Player cam answered with false
+INFO - 
+Player cam disconnected from the server.
+
+INFO - Player tom answered with false
 INFO - All players have answered
-DEBUG - Scores being sent: {'action': 'score_update', 'scores': {'cam': 2}}
-DEBUG - Message being sent: {'action': 'score_update', 'scores': {'cam': 2}}
+DEBUG - Scores being sent: {'action': 'score_update', 'scores': {'tom': 2}}
+DEBUG - Message being sent: {'action': 'score_update', 'scores': {'tom': 2}}
+INFO - Notification sent to all players.
+INFO - Scores update sent.
+INFO - Entered send question
+DEBUG - Starting new HTTPS connection (1): opentdb.com:443
+DEBUG - https://opentdb.com:443 "GET /api.php?amount=1&type=boolean HTTP/1.1" 200 None
+INFO - 
+Fetched 1 trivia questions.
+INFO - Fetched question data: [{'type': 'boolean', 'difficulty': 'medium', 'category': 'Science: Computers', 'question': 'Linus Sebastian is the creator of the Linux kernel, which went on to be used in Linux, Android, and Chrome OS.', 'correct_answer': 'False', 'incorrect_answers': ['True']}]
+INFO - Question sent to all players.
+
+INFO - Player tom answered with true
+INFO - All players have answered
+DEBUG - Scores being sent: {'action': 'score_update', 'scores': {'tom': 2}}
+DEBUG - Message being sent: {'action': 'score_update', 'scores': {'tom': 2}}
 INFO - Notification sent to all players.
 INFO - Scores update sent.
 INFO - Entered send question
@@ -39,55 +60,21 @@ DEBUG - Starting new HTTPS connection (1): opentdb.com:443
 DEBUG - https://opentdb.com:443 "GET /api.php?amount=1&type=boolean HTTP/1.1" 200 None
 INFO - 
 Fetched 1 trivia questions.
-INFO - Fetched question data: [{'type': 'boolean', 'difficulty': 'easy', 'category': 'Mythology', 'question': 'According to Greek Mythology, Zeus can control lightning.', 'correct_answer': 'True', 'incorrect_answers': ['False']}]
+INFO - Fetched question data: [{'type': 'boolean', 'difficulty': 'medium', 'category': 'General Knowledge', 'question': 'The French word for &quot;glass&quot; is &quot;glace&quot;.', 'correct_answer': 'False', 'incorrect_answers': ['True']}]
 INFO - Question sent to all players.
 
-INFO - Player cam answered with false
+INFO - 
+Player tom disconnected from the server.
+
 INFO - All players have answered
-DEBUG - Scores being sent: {'action': 'score_update', 'scores': {'cam': 2}}
-DEBUG - Message being sent: {'action': 'score_update', 'scores': {'cam': 2}}
+DEBUG - Scores being sent: {'action': 'score_update', 'scores': {}}
 INFO - Notification sent to all players.
 INFO - Scores update sent.
 INFO - Entered send question
 DEBUG - Starting new HTTPS connection (1): opentdb.com:443
-DEBUG - https://opentdb.com:443 "GET /api.php?amount=1&type=boolean HTTP/1.1" 200 None
+DEBUG - https://opentdb.com:443 "GET /api.php?amount=1&type=boolean HTTP/1.1" 429 None
 INFO - 
-Fetched 1 trivia questions.
-INFO - Fetched question data: [{'type': 'boolean', 'difficulty': 'hard', 'category': 'General Knowledge', 'question': 'In Scandinavian languages, the letter &Aring; means river.', 'correct_answer': 'True', 'incorrect_answers': ['False']}]
-INFO - Question sent to all players.
-
-INFO - Accepting connection from ('127.0.0.1', 51870)
-INFO - Player jim connected from ('127.0.0.1', 51870).
-INFO - Player jim answered with true
-INFO - Player cam answered with true
-INFO - All players have answered
-DEBUG - Scores being sent: {'action': 'score_update', 'scores': {'cam': 3, 'jim': 1}}
-DEBUG - Message being sent: {'action': 'score_update', 'scores': {'cam': 3, 'jim': 1}}
-DEBUG - Message being sent: {'action': 'score_update', 'scores': {'cam': 3, 'jim': 1}}
-INFO - Notification sent to all players.
-INFO - Scores update sent.
-INFO - Entered send question
-DEBUG - Starting new HTTPS connection (1): opentdb.com:443
-DEBUG - https://opentdb.com:443 "GET /api.php?amount=1&type=boolean HTTP/1.1" 200 None
-INFO - 
-Fetched 1 trivia questions.
-INFO - Fetched question data: [{'type': 'boolean', 'difficulty': 'easy', 'category': 'Animals', 'question': 'Rabbits are rodents.', 'correct_answer': 'False', 'incorrect_answers': ['True']}]
-INFO - Question sent to all players.
-
-INFO - Player cam answered with false
-INFO - Player jim answered with false
-INFO - All players have answered
-DEBUG - Scores being sent: {'action': 'score_update', 'scores': {'cam': 4, 'jim': 2}}
-DEBUG - Message being sent: {'action': 'score_update', 'scores': {'cam': 4, 'jim': 2}}
-DEBUG - Message being sent: {'action': 'score_update', 'scores': {'cam': 4, 'jim': 2}}
-INFO - Notification sent to all players.
-INFO - Scores update sent.
-INFO - Entered send question
-DEBUG - Starting new HTTPS connection (1): opentdb.com:443
-DEBUG - https://opentdb.com:443 "GET /api.php?amount=1&type=boolean HTTP/1.1" 200 None
-INFO - 
-Fetched 1 trivia questions.
-INFO - Fetched question data: [{'type': 'boolean', 'difficulty': 'hard', 'category': 'Entertainment: Video Games', 'question': 'All of these maps were in &quot;Tom Clancy&#039;s Rainbow Six Siege&quot; on its initial release: House, Clubhouse, Border, Consulate.', 'correct_answer': 'False', 'incorrect_answers': ['True']}]
-INFO - Question sent to all players.
-
+Fetched 0 trivia questions.
+INFO - Fetched question data: []
+WARNING - Failed to fetch question. Retrying in 2 seconds...
 INFO - Server shutting down.

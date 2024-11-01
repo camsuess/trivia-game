@@ -77,6 +77,15 @@ class GameServer:
     def process_request(self, conn, request):
         player = self.clients[conn]
         
+        if request['action'] == "disconnect":
+            logging.info(f'\nPlayer {player.name} disconnected from the server.\n')
+            self.clients.pop(conn)
+            if all(player.answered for player in self.clients.values()):
+                logging.info(f'All players have answered')
+                self.notify_scores() 
+                self.reset_for_next_question()
+                self.send_question()
+        
         if request['action'] == "set_name":
             player.name = request.get('name')
             logging.info(f"Player {player.name} connected from {player.address}.")
