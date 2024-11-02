@@ -7,7 +7,7 @@ import argparse
 from message import Message
 import time
 
-API_URL = 'https://opentdb.com/api.php?amount=1&type=boolean'
+API_URL = 'https://opentdb.com/api.php?amount=50&type=boolean'
 
 logging.basicConfig(level=logging.DEBUG, 
                     format='%(levelname)s - %(message)s',
@@ -33,6 +33,7 @@ class GameServer:
         self.host = host
         self.port = port
         self.clients = {}
+        self.question_queue = []
         self.question = None
         self.game_state = GameState.WAITING
         self.server_socket = self.create_server_socket()
@@ -52,6 +53,12 @@ class GameServer:
         conn, addr = sock.accept()
         logging.info(f'Accepting connection from {addr}')
         conn.setblocking(False)
+        
+        if conn in self.clients:
+            self.sel.unregister(conn)
+            self.clients[conn].conn.close()
+            self.clients.pop(conn, None)
+        
         self.clients[conn] = Player(conn, addr)
         events = selectors.EVENT_READ | selectors.EVENT_WRITE
         self.sel.register(conn, events, self.handle_client)
@@ -65,21 +72,30 @@ class GameServer:
         Message.send(conn, prompt)
     
     def handle_client(self, conn, mask):
-        if mask & selectors.EVENT_READ:
-            message = Message()
-            message.read(conn)
-            if message.request:
-                self.process_request(conn, message.request)
-        if mask & selectors.EVENT_WRITE:
-            message = Message()
-            message.write(conn)
+        try:
+            if mask & selectors.EVENT_READ:
+                message = Message()
+                message.read(conn)
+                if message.request:
+                    self.process_request(conn, message.request)
+            if mask & selectors.EVENT_WRITE:
+                message = Message()
+                message.write(conn)
+        except (ConnectionResetError, BrokenPipeError):
+            logging.info(f"Connection lost with {self.clients[conn].name}")
+            self.sel.unregister(conn)
+            conn.close()
+            self.clients.pop(conn, None)
     
     def process_request(self, conn, request):
         player = self.clients[conn]
         
         if request['action'] == "disconnect":
             logging.info(f'\nPlayer {player.name} disconnected from the server.\n')
-            self.clients.pop(conn)
+            self.sel.unregister(conn)
+            conn.close()
+            self.clients.pop(conn, None)
+            
             if all(player.answered for player in self.clients.values()):
                 logging.info(f'All players have answered')
                 self.notify_scores() 
@@ -129,7 +145,7 @@ class GameServer:
                 
     def notify_all(self, message):
         for conn, player in self.clients.items():
-            logging.debug(f'Message being sent: {message}')
+            logging.debug(f'Notify all being sent: {message}')
             Message.send(conn, message)
         logging.info(f'Notification sent to all players.')
         
@@ -147,16 +163,20 @@ class GameServer:
         self.question = None
         for conn, player in self.clients.items():
             player.answered = False
-    
+        logging.info(f'Game state reset for next round.')
+        
     def fetch_question(self):
-        response = requests.get(API_URL)
-        question = response.json().get('results', [])
-        logging.info(f'\nFetched {len(question)} trivia questions.')
-        logging.info(f'Fetched question data: {question}')
-        return question[0] if question else None  # return the first question or None
+        if not self.question_queue:
+            response = requests.get(API_URL)
+            if response.status_code == 200:
+                self.question_queue = response.json().get('results', [])
+                logging.info(f'Fetched {len(self.question_queue)} questions from the API.')
+            else:
+                logging.error('Failed to fetch questions from API.')
+        return self.question_queue.pop(0)
                 
     def send_question(self):
-        logging.info(f'Entered send question')
+        logging.info(f'Preparing to send question...')
         while self.question is None:
             self.question = self.fetch_question()
             if self.question is None:
@@ -168,10 +188,10 @@ class GameServer:
                 "action": "question",
                 "question": self.question['question']
             }
-            for conn, player in self.clients.items():
-                if player.answered == False:
-                    Message.send(conn, question_message)
-            logging.info("Question sent to all players.\n")
+            self.notify_all(question_message)
+            logging.info(f'Question sent to all players.')
+        else:
+            logging.warning(f'No question available to send.')
     
     def send_question_to_player(self, conn):
         question_message = {
