@@ -16,7 +16,9 @@ logging.basicConfig(level=logging.DEBUG,
 
 class GameState:
     WAITING = "waiting"
+    QUESTION_SETUP = "question_setup"
     ASKING_QUESTION = "asking"
+    WAITING_FOR_NEXT_ROUND = "waiting_for_next_round"
     FINISHED = "finished"
 
 class Player:
@@ -46,7 +48,6 @@ class GameServer:
         logging.info(f'Starting server...\nListening on {self.host}:{self.port}\n')
         server_socket.setblocking(False)
         self.sel.register(server_socket, selectors.EVENT_READ, self.accept_connections)
-        self.question = self.fetch_question()
         return server_socket
 
     def accept_connections(self, sock, mask):
@@ -91,57 +92,53 @@ class GameServer:
         player = self.clients[conn]
         
         if request['action'] == "disconnect":
-            logging.info(f'\nPlayer {player.name} disconnected from the server.\n')
-            self.sel.unregister(conn)
-            conn.close()
-            self.clients.pop(conn, None)
-            
-            if all(player.answered for player in self.clients.values()):
-                logging.info(f'All players have answered')
-                self.notify_scores() 
-                self.reset_for_next_question()
-                self.send_question()
+            self.disconnect(player)
         
         if request['action'] == "set_name":
-            player.name = request.get('name')
-            logging.info(f"Player {player.name} connected from {player.address}.")
-            self.game_state = GameState.ASKING_QUESTION
-            
-            if self.game_state == GameState.ASKING_QUESTION and self.question:
-                self.send_question_to_player(conn)
-
-        elif request['action'] == "answer" and self.game_state == GameState.ASKING_QUESTION:
-            player_answer = request.get('answer').lower()
-            correct_answer = self.question['correct_answer'].lower()
-            logging.info(f"Player {player.name} answered with {player_answer}")
-            
-            if player_answer in ['true', 'false']:
-                if player_answer == correct_answer:
-                    player.score += 1
-                    answer_feedback = "Correct!"
-                else:
-                    answer_feedback = "Incorrect!"
-                
-                response_message = {
-                    "action": "answer_feedback",
-                    "message": answer_feedback,
-                    "score": player.score
-                }
-                Message.send(conn, response_message) 
-                player.answered = True
-            else:
-                answer_feedback = "Invalid answer format. Please reply with 'True' or 'False'."
-                response_message = {
-                    "action": "answer_feedback",
-                    "message": answer_feedback
-                }
-                Message.send(conn, response_message)
-
+            self.set_name(request, player)
+        
+        if request['action'] == "answer" and self.game_state == GameState.ASKING_QUESTION:
+            self.receive_answer(conn, request, player)
             if all(player.answered for player in self.clients.values()):
-                logging.info(f'All players have answered')
-                self.notify_scores() 
-                self.reset_for_next_question()
-                self.send_question()
+                self.next_phase()
+                self.game_state = GameState.WAITING_FOR_NEXT_ROUND
+    
+    def next_phase(self):
+        if self.game_state == GameState.WAITING:
+            self.prepare_question()
+        elif self.game_state == GameState.QUESTION_SETUP:
+            self.broadcast_question()
+        elif self.game_state == GameState.ASKING_QUESTION:
+            if all(player.answered for conn, player in self.clients.items()):
+                self.complete_round()
+        elif self.game_state == GameState.WAITING_FOR_NEXT_ROUND:
+            self.reset_for_next_question()
+            self.prepare_question()
+            
+    def prepare_question(self):
+        if not self.question:
+            self.question = self.fetch_question()
+        if self.question:
+            logging.debug(f"Question prepared: {self.question['question']}")
+            self.game_state = GameState.QUESTION_SETUP
+            self.next_phase()
+        else:
+            logging.debug("No question was fetched.")    
+        
+    def broadcast_question(self):
+        if self.question and self.game_state == GameState.QUESTION_SETUP:
+            question_message = {
+                "action": "question",
+                "question": self.question['question']
+            }
+            self.notify_all(question_message)
+            logging.info("Question broadcasted to all players.")
+            self.game_state = GameState.ASKING_QUESTION
+        
+    def complete_round(self):
+        self.notify_scores()
+        self.game_state = GameState.WAITING_FOR_NEXT_ROUND
+        self.next_phase()
                 
     def notify_all(self, message):
         for conn, player in self.clients.items():
@@ -152,7 +149,7 @@ class GameServer:
     def notify_scores(self):
         scores = {
             "action": "score_update",
-            "scores": {player.name: player.score for player in self.clients.values()}
+            "scores": {player.name: player.score for conn, player in self.clients.items()}
         }
         logging.debug(f"Scores being sent: {scores}") 
         self.notify_all(scores)
@@ -163,7 +160,9 @@ class GameServer:
         self.question = None
         for conn, player in self.clients.items():
             player.answered = False
-        logging.info(f'Game state reset for next round.')
+        logging.info('Game state reset for next round.')
+        self.game_state = GameState.WAITING
+        self.next_phase()
         
     def fetch_question(self):
         if not self.question_queue:
@@ -174,31 +173,52 @@ class GameServer:
             else:
                 logging.error('Failed to fetch questions from API.')
         return self.question_queue.pop(0)
-                
-    def send_question(self):
-        logging.info(f'Preparing to send question...')
-        while self.question is None:
-            self.question = self.fetch_question()
-            if self.question is None:
-                logging.warning("Failed to fetch question. Retrying in 2 seconds...")
-                time.sleep(2)
-                
-        if self.question:
-            question_message = {
-                "action": "question",
-                "question": self.question['question']
-            }
-            self.notify_all(question_message)
-            logging.info(f'Question sent to all players.')
-        else:
-            logging.warning(f'No question available to send.')
     
-    def send_question_to_player(self, conn):
-        question_message = {
-            "action": "question",
-            "question": self.question['question']
-        }
-        Message.send(conn, question_message)
+    def disconnect(self, conn, player):
+        logging.info(f'\nPlayer {player.name} disconnected from the server.\n')
+        self.sel.unregister(conn)
+        conn.close()
+        self.clients.pop(conn, None)
+        
+        if all(player.answered for conn, player in self.clients.items()):
+            logging.info(f'All players have answered')
+            self.notify_scores() 
+            self.reset_for_next_question()
+            self.broadcast_question()
+            
+    def set_name(self, request, player):
+        player.name = request.get('name')
+        logging.info(f"Player {player.name} connected from {player.address}.")
+        if all(player.name for conn, player in self.clients.items()):
+            self.game_state = GameState.QUESTION_SETUP
+            self.next_phase()
+    
+    def receive_answer(self, conn, request, player):
+        player_answer = request.get('answer').lower()
+        correct_answer = self.question['correct_answer'].lower()
+        logging.info(f"Player {player.name} answered with {player_answer}")
+        
+        if player_answer in ['true', 'false']:
+            if player_answer == correct_answer:
+                player.score += 1
+                answer_feedback = "Correct!"
+            else:
+                answer_feedback = "Incorrect!"
+            
+            response_message = {
+                "action": "answer_feedback",
+                "message": answer_feedback,
+                "score": player.score
+            }
+            Message.send(conn, response_message) 
+            player.answered = True
+        else:
+            answer_feedback = "Invalid answer format. Please reply with 'True' or 'False'."
+            response_message = {
+                "action": "answer_feedback",
+                "message": answer_feedback
+            }
+            Message.send(conn, response_message)
 
     
     def start(self):
