@@ -36,6 +36,7 @@ class GameRoom:
         self.creator = creator      # player who created the game room
         self.players = [creator]    # list of players
         self.is_private = is_private
+        self.in_progress = False
         self.max_players = 5 if room_type == 'public' else 2 # min/max players for game room
         self.game_state = GameState.WAITING
         self.question_queue = []
@@ -121,7 +122,8 @@ class GameServer:
             "options": [
                 "1. Join a current public game",
                 "2. Start your own public game",
-                "3. Start a private game"
+                "3. Start a private game",
+                "4. Join a private game"
             ]
         }
         Message.send(conn, menu)   
@@ -142,28 +144,49 @@ class GameServer:
         logging.info(f'Game room {room_id} created by {player.name}')
     
     def join_game(self, conn, player, request):
-        room_id = request.get('room_id')
-        room = self.rooms.get(room_id)
-        if room and not room.is_private and len(room.players) < room.max_players:
-            room.players.append(player)
-            player.current_room = room_id
-            response = {
-                "action": "game_joined",
-                "room_id": room_id,
-                "message": f"Joined game {room_id}. Waiting for the game to start."
-            }
-            Message.send(conn, response)
-            logging.info(f"Player {player.name} joined game {room_id}")
-            self.notify_room(room, {
-                "action": "player_joined",
-                "player": player.name
-            })
+        if request.get('room_type') == 'public':
+            room = self.find_available_public_game()
+            if room:
+                self.add_player_to_room(conn, player,room)
+                return
+            else:
+                response = {
+                    "action": "error",
+                    "message": "No avaiable public games to join."
+                }
+                Message.send(conn, response)
         else:
-            response = {
-                "action": "error",
-                "message": "Failed to join game. It might be full or does not exist."
-            }
-            Message.send(conn, response)
+            room_id = request.get('room_id')
+            room = self.rooms.get(room_id)
+            if room and room.is_private and len(room.players) < room.max_players:
+                self.add_player_to_room(conn, player, room)
+            else:
+                response = {
+                    "action": "error",
+                    "message": "Failed to join private game. It might be full or does not exist anymore."
+                }
+                Message.send(conn, response)
+            
+    def find_available_public_game(self):
+        for room in self.rooms.values():
+            if room.room_type == 'public' and not room.is_private and len(room.players) < room.max_players and not room.in_progress:
+                return room
+        return None
+    
+    def add_player_to_room(self, conn, player, room):
+        room.players.append(player)
+        player.current_room = room.room_id
+        response = {
+            "action": "game_joined",
+            "room_id": room.room_id,
+            "message": f"Joined game {room.room_id}. Waiting for game to start."
+        }
+        Message.send(conn, response)
+        logging.info(f"Player {player.name} joined game {room.room_id}.")
+        self.notify_room(room, {
+            "action": "player_joined",
+            "player": player.name
+        })
         
     def send_name_prompt(self, conn):
         prompt = {
@@ -177,6 +200,7 @@ class GameServer:
         room = self.rooms.get(room_id)
         if room and room.creator == player:
             if len(room.players) >= 2:
+                room.in_progress = True
                 room.game_state = GameState.QUESTION_SETUP
                 self.fetch_question(room)
                 self.broadcast_to_room(room, {
@@ -389,7 +413,7 @@ class GameServer:
 def parse_args():
     parser = argparse.ArgumentParser(description='Trivia Game Server', add_help=False)
     
-    parser.add_argument('-i', '--ip', type=str, default='127.0.0.1', help='The IP address to bind the server')
+    parser.add_argument('-i', '--ip', type=str, default='0.0.0.0', help='The IP address to bind the server')
     parser.add_argument('-p', '--port', type=int, required=True, help='The port to bind the server')
     parser.add_argument('-h', '--help', action='help', help='Show help message and exit')
     
