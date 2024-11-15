@@ -92,28 +92,26 @@ class GameClient:
         print("\n--- Game Menu ---")
         for option in request['options']:
             print(option)
-        choice = input("Select an option (1-3): ")
+        choice = input("Select an option (1-4): ")
         if choice == '1':
             self.join_public_game()
         elif choice == '2':
             self.create_public_game()
         elif choice == '3':
             self.create_private_game()
+        elif choice == '4':
+            self.join_private_game()
         else:
             print("Invalid choice. Please select again.")
             self.show_game_menu(request)
             
     def join_public_game(self):
-        room_id = input("Enter the Room ID of the public game you want to join: ").strip()
-        if not room_id:
-            print("Room ID cannot be empty.")
-            self.join_public_game()
-            return
         response_message = {
             "action": "join_game",
-            "room_id": room_id
+            "room_type": "public"
         }
         Message.send(self.client_socket, response_message)
+        print("Joining the first available public game...")
     
     def create_public_game(self):
         response_message = {
@@ -126,6 +124,18 @@ class GameClient:
         response_message = {
             "action": "create_game",
             "room_type": "private"
+        }
+        Message.send(self.client_socket, response_message)
+        
+    def join_private_game(self):
+        room_id = input("Enter the Room ID of the private game you want to join: ").strip()
+        if not room_id:
+            print("Room ID cannot be empty.")
+            self.join_private_game()
+            return
+        response_message = {
+            "action": "join_game",
+            "room_id": room_id
         }
         Message.send(self.client_socket, response_message)
 
