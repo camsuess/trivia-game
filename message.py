@@ -1,6 +1,7 @@
 import json
 import struct
 import io
+import html
 
 class Message:
     def __init__(self):
@@ -61,6 +62,10 @@ class Message:
             content_length = self.jsonheader["content-length"]
             if len(self._recv_buffer) >= content_length:
                 self.request = self._json_decode(self._recv_buffer[:content_length], "utf-8")
+                
+                if isinstance(self.request, str):
+                    self.request = html.unescape(self.request)
+                    
                 self._recv_buffer = self._recv_buffer[content_length:]
                 self._set_send_buffer()
 

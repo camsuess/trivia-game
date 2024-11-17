@@ -2,6 +2,8 @@ import socket
 import selectors
 import argparse
 import logging
+import threading
+import time
 from message import Message
 
 logging.basicConfig(level=logging.DEBUG, 
@@ -17,6 +19,25 @@ class GameClient:
         self.client_socket = self.create_client_socket()
         self.username_set = False
         self.current_room = False
+        self.running = True
+        self.lock = threading.Lock()
+        self.show_menu_flag = False
+        self.prompt_start_flag = False
+        self.waiting_for_answer = False
+        self.current_question = None
+        self.show_answer_feedback = False
+        self.show_score_update = False
+        self.show_game_joined_message = False
+        self.game_over_flag = False
+        self.username_prompt = ""
+        self.menu_options = []
+        self.game_created_message = ""
+        self.game_joined_message = ""
+        self.answer_feedback = ""
+        self.current_score = 0
+        self.scores = {}
+        self.action_event = threading.Event()
+        
     
     def create_client_socket(self):
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -26,72 +47,98 @@ class GameClient:
         return client_socket
     
     def read_response(self, sock, mask):
-        message = Message()
-        message.read(sock)
-        if message.request:
-            request = message.request
-            logging.debug(f"Received request: {request}")
+        try:
+            message = Message()
+            message.read(sock)
+            if message.request:
+                request = message.request
+                action = request.get('action')
+                logging.debug(f"Received request: {request}")
 
-            action = request.get('action')
-
-            if action == "set_name":
-                self.set_name(request)
-            
-            elif action == "game_menu":
-                self.show_game_menu(request)
-            
-            elif action == "game_created":
-                self.process_game_created(request)
-            
-            elif action == "game_joined":
-                self.process_game_joined(request)
-            
-            elif action == "player_joined":
-                self.process_player_joined(request)
+                if action == "set_name":
+                    with self.lock:
+                        self.username_prompt = request.get('message')
+                        self.username_set = False
+                    logging.debug("Set username_prompt and username_set flag")
+                    self.action_event.set()
+                elif action == "game_menu":
+                    with self.lock:
+                        self.menu_options = request.get('options')
+                        self.show_menu_flag = True
+                    logging.debug("Set menu_options and show_menu_flag")
+                    self.action_event.set()
+                elif action == "game_created":
+                    with self.lock:
+                        self.game_created_message = request.get('message')
+                        self.current_room = request.get('room_id')
+                        self.prompt_start_flag = True
+                    logging.debug("Set game_created_message and prompt_start_flag")
+                    self.action_event.set()
+                elif action == "game_joined":
+                    with self.lock:
+                        self.game_joined_message = request.get('message')
+                        self.current_room = request.get('room_id')
+                        self.show_game_joined_message = True
+                    logging.debug("Set game_joined_message and show_game_joined_message")
+                    self.action_event.set()
+                elif action == "player_joined":
+                    player_name = request.get('player')
+                    print(f"Player '{player_name}' has joined the game.")
+                elif action == "game_started":
+                    game_started_message = request.get('message')
+                    print(game_started_message)
+                    print("Game has started! Get ready for the first question.")
+                elif action == "question":
+                    with self.lock:
+                        self.current_question = request.get('question')
+                        self.waiting_for_answer = True
+                    logging.debug("Set current_question and waiting_for_answer flag")
+                    self.action_event.set()
+                elif action == "answer_feedback":
+                    with self.lock:
+                        self.answer_feedback = request.get('message')
+                        self.current_score = request.get('score')
+                        self.show_answer_feedback = True
+                    logging.debug("Set answer_feedback and show_answer_feedback")
+                    self.action_event.set()
+                elif action == "score_update":
+                    with self.lock:
+                        self.scores = request.get('scores', {})
+                        self.show_score_update = True
+                    logging.debug("Set scores and show_score_update")
+                    self.action_event.set()
+                elif action == "game_over":
+                    with self.lock:
+                        self.game_over_message = request.get('message')
+                        self.game_over_flag = True
+                    logging.debug("Set game_over_message and game_over_flag")
+                    self.action_event.set()
+                elif action == "error":
+                    error_message = request.get('message')
+                    print(f"\nError: {error_message}")
+        except Exception as e:
+            logging.error(f"Error in read_response{e}")
+            self.running = False
+            self.notify_disconnect()
                 
-            elif action == "player_left":
-                self.process_player_left(request)
 
-            elif action == "new_creator":
-                self.process_new_creator(request)
-            
-            elif action == "game_started":
-                self.process_game_started(request)
-            
-            elif action == "question":
-                self.process_question(request)
-            
-            elif action == "answer_feedback":
-                self.process_answer_feedback(request)
-            
-            elif action == "score_update":
-                self.process_score_update(request)
-            
-            elif action == "game_over":
-                self.process_game_over(request)
-            
-            elif action == "tie_breaker":
-                self.process_tie_breaker(request)
-            
-            elif action == "error":
-                self.process_error(request)
-
-    def set_name(self, request):
-        username = input(request['message'])
+    def prompt_for_username(self):
+        username = input(self.username_prompt)
         while not username.strip():
-            print("Username cannot be blank.")
-            username = input(request['message'])
+            print("Username cannot be blank.", flush=True)
+            username = input(self.username_prompt)
         response_message = {
             "action": "set_name",
             "name": username.strip()
         }
         Message.send(self.client_socket, response_message)
         self.username_set = True
+
         
-    def show_game_menu(self, request):
+    def display_game_menu(self):
         print("\n--- Game Menu ---")
-        for option in request['options']:
-            print(option)
+        for option in self.menu_options:
+            print(option, flush=True)
         choice = input("Select an option (1-4): ")
         if choice == '1':
             self.join_public_game()
@@ -103,7 +150,9 @@ class GameClient:
             self.join_private_game()
         else:
             print("Invalid choice. Please select again.")
-            self.show_game_menu(request)
+            return  # Keep the flag true to prompt again
+        self.show_menu_flag = False  # Reset the flag
+
             
     def join_public_game(self):
         response_message = {
@@ -139,13 +188,8 @@ class GameClient:
         }
         Message.send(self.client_socket, response_message)
 
-    def process_game_created(self, request):
-        print(request['message'])
-        self.current_room = request.get('room_id')
-        if self.current_room:
-            self.prompt_start_game()
-
     def prompt_start_game(self):
+        print(self.game_created_message)
         choice = input("Do you want to start the game now? (yes/no): ").strip().lower()
         if choice in ['yes', 'y']:
             response_message = {
@@ -156,85 +200,57 @@ class GameClient:
             print("Waiting for other players to join...")
         else:
             print("Invalid choice. Please enter 'yes' or 'no'.")
-            self.prompt_start_game()
-    
-    def process_game_joined(self, request):
-        print(request['message'])
-        self.current_room = request.get('room_id')
-        print("Waiting for the game to start...")
+            return  # keep the flag true to prompt again
+        self.prompt_start_flag = False  # reset the flag
+        
 
-    def process_player_joined(self, request):
-        player_name = request.get('player')
-        print(f"Player '{player_name}' has joined the game.")
-    
-    def process_player_left(self, request):
-        player_name = request.get('player')
-        print(f"Player '{player_name}' has left the game.")
-
-    def process_new_creator(self, request):
-        new_creator = request.get('player')
-        print(f"Player '{new_creator}' is now the game creator.")
-
-    def process_game_started(self, request):
-        print(request['message'])
-        print("Game has started! Get ready for the first question.")
-
-    def process_question(self, request):
-        question = request.get('question')
-        print(f"\nQuestion: {question}")
-        answer = self.get_valid_answer()
-        answer_message = {
-            "action": "answer",
-            "answer": answer
-        }
-        Message.send(self.client_socket, answer_message)
-
-    def get_valid_answer(self):
+    def get_answer(self):
+        logging.debug("Entering get_answer")
+        print(f"\nQuestion: {self.current_question}", flush=True)
         answer = input("Your answer (true/false): ").strip().lower()
         while answer not in ['true', 'false']:
-            print("Invalid answer format. Please reply with 'True' or 'False'.")
+            print("Invalid answer format. Please reply with 'True' or 'False'.", flush=True)
             answer = input("Your answer (true/false): ").strip().lower()
-        return answer
-    
-    def question_response(self, request):
-        print("Question:", request['question'])
-        answer = input("Your answer (true/false): ")
         answer_message = {
             "action": "answer",
             "answer": answer
         }
         Message.send(self.client_socket, answer_message)
+        with self.lock:
+            self.waiting_for_answer = False  # Reset the flag
+        logging.debug("Exiting get_answer and reset waiting_for_answer flag")
+
+
     
-    def process_answer_feedback(self, request):
-        feedback = request.get('message')
-        score = request.get('score')
-        print(f"\n{feedback}")
-        if score is not None:
-            print(f"Your current score: {score}\n")
-    
-    def process_score_update(self, request):
-        scores = request.get('scores', {})
+    def display_answer_feedback(self):
+        print(f"\n{self.answer_feedback}")
+        if self.current_score is not None:
+            print(f"Your current score: {self.current_score}\n")
+        with self.lock:
+            self.show_answer_feedback = False  # Reset the flag
+        logging.debug("Exiting display_answer_feedback and reset show_answer_feedback flag")
+        
+
+    def display_score_update(self):
         print("\n--- Current Game Scores ---")
-        for player, score in scores.items():
+        for player, score in self.scores.items():
             print(f"{player}: {score}")
         print("---------------------------\n")
+        with self.lock:
+            self.show_score_update = False  # Reset the flag
+        logging.debug("Exiting display_score_update and reset show_score_update flag")
+
         
-    def process_game_over(self, request):
-        message = request.get('message')
-        print(f"\n{message}")
+
+    def handle_game_over(self):
+        print(f"\n{self.game_over_message}")
         play_again = input("Do you want to play again? (yes/no): ").strip().lower()
         if play_again in ['yes', 'y']:
             self.reset_game()
         else:
             self.notify_disconnect()
+        self.game_over_flag = False  # Reset the flag
 
-    def process_tie_breaker(self, request):
-        message = request.get('message')
-        print(f"\n{message}")
-
-    def process_error(self, request):
-        error_message = request.get('message')
-        print(f"\nError: {error_message}")
 
     def reset_game(self):
         self.current_room = None
@@ -250,20 +266,80 @@ class GameClient:
                 "3. Start a private game"
             ]
         })
-    
-    def start(self):
-        try:
-            while True:
-                events = self.sel.select()
+        
+        
+    def listen_for_messages(self):
+        while self.running:
+            try:
+                events = self.sel.select(timeout=1)
                 for key, mask in events:
                     callback = key.data
-                    callback(key.fileobj, key.events)
+                    callback(key.fileobj, mask)
+            except Exception as e:
+                logging.error(f"Error in listen_for_messages: {e}")
+                self.running = False
+                self.notify_disconnect()
+                break
+    
+    def start(self):
+        listener_thread = threading.Thread(target=self.listen_for_messages, daemon=True)
+        listener_thread.start()
+
+        try:
+            while self.running:
+                self.action_event.wait()
+                self.action_event.clear()
+                action_to_take = None
+
+                with self.lock:
+                    if not self.username_set and self.username_prompt:
+                        action_to_take = 'prompt_for_username'
+                    elif self.show_menu_flag:
+                        action_to_take = 'display_game_menu'
+                    elif self.prompt_start_flag:
+                        action_to_take = 'prompt_start_game'
+                    elif self.waiting_for_answer:
+                        action_to_take = 'get_answer'
+                    elif self.show_game_joined_message:
+                        action_to_take = 'show_game_joined_message'
+                    elif self.show_answer_feedback:
+                        action_to_take = 'display_answer_feedback'
+                    elif self.show_score_update:
+                        action_to_take = 'display_score_update'
+                    elif self.game_over_flag:
+                        action_to_take = 'handle_game_over'
+
+                logging.debug(f"Main loop action: {action_to_take}")
+
+                # Perform the action without holding the lock
+                if action_to_take == 'prompt_for_username':
+                    self.prompt_for_username()
+                elif action_to_take == 'display_game_menu':
+                    self.display_game_menu()
+                elif action_to_take == 'prompt_start_game':
+                    self.prompt_start_game()
+                elif action_to_take == 'get_answer':
+                    self.get_answer()
+                elif action_to_take == 'show_game_joined_message':
+                    with self.lock:
+                        print(self.game_joined_message)
+                        print("Waiting for the game to start...")
+                        self.show_game_joined_message = False
+                elif action_to_take == 'display_answer_feedback':
+                    self.display_answer_feedback()
+                elif action_to_take == 'display_score_update':
+                    self.display_score_update()
+                elif action_to_take == 'handle_game_over':
+                    self.handle_game_over()
         except KeyboardInterrupt:
             logging.info("\nClient shutting down.")
+            self.running = False
             self.notify_disconnect()
         finally:
-            self.sel.close()
-    
+            self.close()
+
+
+
     def close(self):
         self.sel.unregister(self.client_socket)
         self.client_socket.close()

@@ -201,13 +201,12 @@ class GameServer:
         if room and room.creator == player:
             if len(room.players) >= 2:
                 room.in_progress = True
-                room.game_state = GameState.QUESTION_SETUP
-                self.fetch_question(room)
+                room.game_state = GameState.WAITING_FOR_NEXT_ROUND
                 self.broadcast_to_room(room, {
                     "action": "game_started",
                     "message": "Game is starting!"
                 })
-                self.broadcast_question(room)
+                logging.info(f"Game in room {room.room_id} started by {player.name}")
             else:
                 response = {
                     "action": "error",
@@ -220,6 +219,7 @@ class GameServer:
                 "message": "Only the game creator can start the game."
             }
             Message.send(conn, response)
+
     
     def process_answer(self, conn, player, request):
         room_id = player.current_room
@@ -238,9 +238,13 @@ class GameServer:
             else:
                 logging.error(f'Failed to fetch questions for room {room.room_id}')
                 return
-        room.current_question = room.question_queue.pop(0)
-        room.game_state = GameState.ASKING_QUESTION
-        logging.debug(f'Question fetched for room {room.room_id}: {room.current_question}')
+        if room.question_queue:
+            room.current_question = room.question_queue.pop(0)
+            room.game_state = GameState.ASKING_QUESTION
+            logging.debug(f'Question fetched for room {room.room_id}: {room.current_question}')
+        else:
+            logging.error(f"No questions available in question_queue for room {room.room_id}")
+
     
     def broadcast_question(self, room):
         if room.current_question and room.game_state == GameState.ASKING_QUESTION:
@@ -248,8 +252,11 @@ class GameServer:
                 "action": "question",
                 "question": room.current_question['question']
             }
+            logging.info(f"Broadcasting question to room {room.room_id}: {room.current_question['question']}")
             self.broadcast_to_room(room, question_message)
-            logging.info(f"Question broadcasted to room {room.room_id}")
+        else:
+            logging.warning(f"broadcast_question called but room {room.room_id} has no current question or wrong game state.")
+
         
     def broadcast_to_room(self, room, message):
         for player in room.players:
@@ -296,16 +303,14 @@ class GameServer:
         self.show_menu(player.conn, player)
     
     def next_phase(self, room):
-        if room.game_state == GameState.WAITING:
-            self.fetch_question(room)
-        elif room.game_state == GameState.QUESTION_SETUP:
-            self.broadcast_question(room)
-        elif room.game_state == GameState.ASKING_QUESTION:
-            if all(player.answered for player in room.players):
+        if room.game_state == GameState.ASKING_QUESTION:
+            if all(p.answered for p in room.players):
                 self.complete_round(room)
         elif room.game_state == GameState.WAITING_FOR_NEXT_ROUND:
             self.reset_for_next_question(room)
             self.fetch_question(room)
+            self.broadcast_question(room)
+            room.game_state = GameState.ASKING_QUESTION
     
     def receive_answer(self, conn, request, player):
         room_id = player.current_room
@@ -338,11 +343,8 @@ class GameServer:
                 "message": answer_feedback
             }
             Message.send(conn, response_message)
-        
-        if all(player.answered for player in room.players):
-            self.complete_round(room)
-        
-        
+           
+    
     def complete_round(self, room):
         self.notify_scores(room)
         # check for winners and handle it
@@ -353,7 +355,8 @@ class GameServer:
             self.process_tie_breaker(room)
         else:
             room.game_state = GameState.WAITING_FOR_NEXT_ROUND
-            self.next_phase(room)
+            logging.info(f"Round completed in room {room.room_id}, proceeding to next question.")
+
     
     def process_tie_breaker(self, room):
         room.game_state = GameState.ASKING_QUESTION
@@ -378,8 +381,6 @@ class GameServer:
         room.current_question = None
         for player in room.players:
             player.answered = False
-        room.game_state = GameState.WAITING
-        logging.info(f'Game state reset for next round in room {room.room_id}.')
 
     def start(self):
         try:
