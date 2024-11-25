@@ -1,426 +1,389 @@
-from message import Message
-
 import logging
-import requests
 import socket
 import selectors
 import argparse
+import json
+import struct
+import requests
+import sys
 import uuid
 
+# Configuration Constants
 API_URL = 'https://opentdb.com/api.php?amount=50&type=boolean'
+LOG_FILE = 'server.log'
+DEFAULT_MAX_PLAYERS_PER_ROOM = 4  # Default maximum number of players per room
 
-logging.basicConfig(level=logging.DEBUG, 
-                    format='%(levelname)s - %(message)s',
-                    filename='server.log'
-                    )
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s - %(levelname)s - %(message)s',
+                    filename=LOG_FILE,
+                    filemode='a')  # Append mode
 
-class GameState:
-    WAITING = "waiting"
-    QUESTION_SETUP = "question_setup"
-    ASKING_QUESTION = "asking"
-    WAITING_FOR_NEXT_ROUND = "waiting_for_next_round"
-    FINISHED = "finished"
 
 class Player:
     def __init__(self, conn, addr):
         self.conn = conn
-        self.address = addr
+        self.addr = addr
         self.name = None
+        self.recv_buffer = b""
+        self.send_buffer = b""
+        self.events = selectors.EVENT_READ
         self.score = 0
         self.answered = False
 
+
 class GameRoom:
-    def __init__(self, room_id, room_type, creator, is_private=False):
+    def __init__(self, room_id, max_players=DEFAULT_MAX_PLAYERS_PER_ROOM):
         self.room_id = room_id
-        self.room_type = room_type  # public or private game room
-        self.creator = creator      # player who created the game room
-        self.players = [creator]    # list of players
-        self.is_private = is_private
+        self.players = []
         self.in_progress = False
-        self.max_players = 5 if room_type == 'public' else 2 # min/max players for game room
-        self.game_state = GameState.WAITING
-        self.question_queue = []
         self.current_question = None
+        self.questions = []
+        self.current_question_index = 0
+        self.max_players = max_players
+
+    def is_full(self):
+        return len(self.players) >= self.max_players
+
 
 class GameServer:
-    def __init__(self, host, port):
+    def __init__(self, host, port, max_players_per_room):
         self.sel = selectors.DefaultSelector()
-        self.host = host
-        self.port = port
         self.clients = {}
         self.rooms = {}
-        self.server_socket = self.create_server_socket()
-    
-    def create_server_socket(self):
+        self.server_socket = self.create_server_socket(host, port)
+        self.max_players_per_room = max_players_per_room
+
+    def create_server_socket(self, host, port):
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        server_socket.bind((self.host, self.port))
+        server_socket.bind((host, port))
         server_socket.listen()
-        logging.info(f'Starting server...\nListening on {self.host}:{self.port}\n')
         server_socket.setblocking(False)
-        self.sel.register(server_socket, selectors.EVENT_READ, self.accept_connections)
+        self.sel.register(server_socket, selectors.EVENT_READ, self.accept_connection)
+        logging.info(f"Server started on {host}:{port}")
         return server_socket
 
-    def accept_connections(self, sock, mask):
-        conn, addr = sock.accept()
-        logging.info(f'Accepting connection from {addr}')
+    def accept_connection(self, server_socket, mask):
+        conn, addr = server_socket.accept()
         conn.setblocking(False)
-        
-        if conn in self.clients:
-            self.sel.unregister(conn)
-            self.clients[conn].conn.close()
-            self.clients.pop(conn, None)
-        
-        self.clients[conn] = Player(conn, addr)
-        events = selectors.EVENT_READ | selectors.EVENT_WRITE
-        self.sel.register(conn, events, self.handle_client)
-        self.send_name_prompt(conn)
-    
-    def handle_client(self, conn, mask):
-        try:
-            if mask & selectors.EVENT_READ:
-                message = Message()
-                message.read(conn)
-                if message.request:
-                    self.process_request(conn, message.request)
-            if mask & selectors.EVENT_WRITE:
-                message = Message()
-                message.write(conn)
-        except (ConnectionResetError, BrokenPipeError):
-            logging.info(f"Connection lost with {self.clients[conn].name}")
-            self.sel.unregister(conn)
-            conn.close()
-            self.clients.pop(conn, None)
-    
-    def process_request(self, conn, request):
-        player = self.clients[conn]
-        
-        if request['action'] == "disconnect":
-            self.disconnect(player)
-        
-        elif request['action'] == "set_name":
-            self.set_name(request, player)
-        
-        elif request['action'] == "game_menu":
-            self.show_menu(conn, player)
-            
-        elif request['action'] == "join_game":
-            self.join_game(conn, player, request)
-        
-        elif request['action'] == "create_game":
-            self.create_game(conn, player, request)
-        
-        elif request['action'] == "start_game":
-            self.start_game(conn, player, request)
-        
-        elif request['action'] == "answer":
-            self.process_answer(conn, player, request)
-    
-    def show_menu(self, conn, player):
-        menu = {
-            "action": "game_menu",
-            "options": [
-                "1. Join a current public game",
-                "2. Start your own public game",
-                "3. Start a private game",
-                "4. Join a private game"
-            ]
-        }
-        Message.send(conn, menu)   
-        
-    def create_game(self, conn, player, request):
-        room_id = str(uuid.uuid4())[:8]
-        room_type = request.get('room_type', 'public')
-        is_private = room_type == 'private'
-        room = GameRoom(room_id, room_type, player, is_private)
-        self.rooms[room_id] = room
-        player.current_room = room_id
-        response = {
-            "action": "game_created",
-            "room_id": room_id,
-            "message": f"Game created with ID: {room_id}. Waiting for players to join..."
-        }
-        Message.send(conn, response)
-        logging.info(f'Game room {room_id} created by {player.name}')
-    
-    def join_game(self, conn, player, request):
-        if request.get('room_type') == 'public':
-            room = self.find_available_public_game()
-            if room:
-                self.add_player_to_room(conn, player,room)
-                return
-            else:
-                response = {
-                    "action": "error",
-                    "message": "No avaiable public games to join."
-                }
-                Message.send(conn, response)
-        else:
-            room_id = request.get('room_id')
-            room = self.rooms.get(room_id)
-            if room and room.is_private and len(room.players) < room.max_players:
-                self.add_player_to_room(conn, player, room)
-            else:
-                response = {
-                    "action": "error",
-                    "message": "Failed to join private game. It might be full or does not exist anymore."
-                }
-                Message.send(conn, response)
-            
-    def find_available_public_game(self):
-        for room in self.rooms.values():
-            if room.room_type == 'public' and not room.is_private and len(room.players) < room.max_players and not room.in_progress:
-                return room
-        return None
-    
-    def add_player_to_room(self, conn, player, room):
-        room.players.append(player)
-        player.current_room = room.room_id
-        response = {
-            "action": "game_joined",
-            "room_id": room.room_id,
-            "message": f"Joined game {room.room_id}. Waiting for game to start."
-        }
-        Message.send(conn, response)
-        logging.info(f"Player {player.name} joined game {room.room_id}.")
-        self.notify_room(room, {
-            "action": "player_joined",
-            "player": player.name
-        })
-        
-    def send_name_prompt(self, conn):
-        prompt = {
-            "action": "set_name",
-            "message": "Please enter your username: "
-        }
-        Message.send(conn, prompt)
-        
-    def start_game(self, conn, player, request):
-        room_id = player.current_room
-        room = self.rooms.get(room_id)
-        if room and room.creator == player:
-            if len(room.players) >= 2:
-                room.in_progress = True
-                room.game_state = GameState.WAITING_FOR_NEXT_ROUND
-                self.broadcast_to_room(room, {
-                    "action": "game_started",
-                    "message": "Game is starting!"
-                })
-                logging.info(f"Game in room {room.room_id} started by {player.name}")
-            else:
-                response = {
-                    "action": "error",
-                    "message": "Not enough players to start the game."
-                }
-                Message.send(conn, response)
-        else:
-            response = {
-                "action": "error",
-                "message": "Only the game creator can start the game."
-            }
-            Message.send(conn, response)
+        player = Player(conn, addr)
+        self.clients[conn] = player
+        self.sel.register(conn, selectors.EVENT_READ | selectors.EVENT_WRITE, self.handle_client)
+        logging.info(f"New connection from {addr}")
+        self.send_message(player, {"action": "set_name", "message": "Enter your username: "})
 
-    
-    def process_answer(self, conn, player, request):
-        room_id = player.current_room
-        room = self.rooms.get(room_id)
-        if room and room.game_state == GameState.ASKING_QUESTION:
-            self.receive_answer(conn, request, player)
-            if all(p.answered for p in room.players):
-                self.complete_round(room)
-    
-    def fetch_question(self, room):
-        if not room.question_queue:
+    def handle_client(self, conn, mask):
+        player = self.clients.get(conn)
+        if not player:
+            logging.warning(f"Handle client called for unknown connection {conn}")
+            return
+
+        if mask & selectors.EVENT_READ:
+            self.receive_message(player)
+        if mask & selectors.EVENT_WRITE:
+            self.send_buffered_messages(player)
+
+    def send_message(self, player, message):
+        try:
+            message_json = json.dumps(message).encode('utf-8')
+            message_length = struct.pack('>I', len(message_json))
+            player.send_buffer += message_length + message_json
+
+            if not player.events & selectors.EVENT_WRITE:
+                player.events |= selectors.EVENT_WRITE
+                self.sel.modify(player.conn, player.events, self.handle_client)
+            logging.debug(f"Queued message to {player.name}: {message}")
+        except Exception as e:
+            logging.error(f"Error queuing message to {player.addr}: {e}")
+            self.disconnect(player)
+
+    def receive_message(self, player):
+        try:
+            data = player.conn.recv(1024)
+            if not data:
+                self.disconnect(player)
+                return
+            player.recv_buffer += data
+
+            while True:
+                if len(player.recv_buffer) < 4:
+                    break  # Not enough data for message length
+                message_length = struct.unpack('>I', player.recv_buffer[:4])[0]
+                if len(player.recv_buffer) < 4 + message_length:
+                    break  # Not enough data for the complete message
+                message_data = player.recv_buffer[4:4 + message_length]
+                player.recv_buffer = player.recv_buffer[4 + message_length:]
+                message = json.loads(message_data.decode('utf-8'))
+                self.process_message(player, message)
+        except json.JSONDecodeError as e:
+            logging.error(f"JSON decode error from {player.addr}: {e}")
+            self.send_message(player, {"action": "error", "message": "Invalid message format."})
+        except Exception as e:
+            logging.error(f"Error receiving message from {player.addr}: {e}")
+            self.disconnect(player)
+
+    def send_buffered_messages(self, player):
+        try:
+            if player.send_buffer:
+                sent = player.conn.send(player.send_buffer)
+                logging.debug(f"Sent {sent} bytes to {player.name}")
+                player.send_buffer = player.send_buffer[sent:]
+                if not player.send_buffer:  # All data sent
+                    player.events &= ~selectors.EVENT_WRITE
+                    self.sel.modify(player.conn, player.events, self.handle_client)
+        except BlockingIOError:
+            logging.debug(f"Write not ready for player {player.name}")
+        except Exception as e:
+            logging.error(f"Error sending message to {player.addr}: {e}")
+            self.disconnect(player)
+
+    def process_message(self, player, message):
+        action = message.get("action")
+        if not action:
+            logging.warning(f"Received message without 'action' from {player.addr}")
+            self.send_message(player, {"action": "error", "message": "Missing 'action' in message."})
+            return
+
+        logging.info(f"Processing action '{action}' from player '{player.name}'")
+
+        if action == "set_name":
+            self.handle_set_name(player, message)
+        elif action == "create_game":
+            self.create_game_room(player)
+        elif action == "join_game":
+            self.join_game_room(player)
+        elif action == "answer":
+            self.process_answer(player, message.get("answer"))
+        elif action == "disconnect":
+            self.disconnect(player)
+        elif action == "game_menu":
+            self.send_message(player, {"action": "game_menu", "options": ["1. Join a game", "2. Create a game"]})
+        else:
+            logging.warning(f"Unknown action '{action}' from player '{player.name}'")
+            self.send_message(player, {"action": "error", "message": f"Unknown action '{action}'."})
+
+    def handle_set_name(self, player, message):
+        name = message.get("name")
+        if not name:
+            self.send_message(player, {"action": "error", "message": "Username cannot be empty."})
+            return
+        player.name = name.strip()
+        logging.info(f"Player '{player.name}' connected from {player.addr}")
+        self.send_message(player, {"action": "game_menu", "options": ["1. Join a game", "2. Create a game"]})
+
+    def create_game_room(self, player):
+        # Find if player is already in a room
+        existing_room = self.get_player_room(player)
+        if existing_room:
+            self.send_message(player, {"action": "error", "message": "You are already in a game room."})
+            return
+
+        room_id = str(uuid.uuid4())[:8]
+        room = GameRoom(room_id, max_players=self.max_players_per_room)
+        room.players.append(player)
+        self.rooms[room_id] = room
+        self.send_message(player, {"action": "game_created", "room_id": room_id,
+                                   "message": f"Room {room_id} created. Waiting for players to join."})
+        logging.info(f"Game room {room_id} created by '{player.name}'.")
+
+    def join_game_room(self, player):
+        # Check if player is already in a room
+        existing_room = self.get_player_room(player)
+        if existing_room:
+            self.send_message(player, {"action": "error", "message": "You are already in a game room."})
+            return
+
+        for room in self.rooms.values():
+            if not room.in_progress and not room.is_full():
+                room.players.append(player)
+                self.send_message(player, {"action": "game_joined", "room_id": room.room_id,
+                                           "message": f"Joined room {room.room_id}. Waiting for the game to start."})
+                self.notify_room(room, {"action": "player_joined", "player": player.name})
+                logging.info(f"Player '{player.name}' joined room {room.room_id}")
+
+                if len(room.players) >= 2:  # Start game if minimum players reached
+                    self.start_game(room)
+                return
+
+        self.send_message(player, {"action": "error", "message": "No available public games to join. Consider creating one."})
+
+    def start_game(self, room):
+        if room.in_progress:
+            logging.warning(f"Attempted to start an already in-progress game in room {room.room_id}")
+            return
+
+        logging.info(f"Starting game in room {room.room_id} with players: {[p.name for p in room.players]}")
+        room.in_progress = True
+        # Initialize scores and answered flags
+        for player in room.players:
+            player.score = 0
+            player.answered = False
+
+        self.notify_room(room, {"action": "game_started", "message": "The game has started! Get ready for the first question."})
+        self.fetch_and_broadcast_question(room)
+
+    def fetch_questions(self, room):
+        try:
             response = requests.get(API_URL)
             if response.status_code == 200:
-                room.question_queue = response.json().get('results', [])
-                logging.info(f'Fetched {len(room.question_queue)} questions for room {room.room_id}')
-            else:
-                logging.error(f'Failed to fetch questions for room {room.room_id}')
-                return
-        if room.question_queue:
-            room.current_question = room.question_queue.pop(0)
-            room.game_state = GameState.ASKING_QUESTION
-            logging.debug(f'Question fetched for room {room.room_id}: {room.current_question}')
-        else:
-            logging.error(f"No questions available in question_queue for room {room.room_id}")
-
-    
-    def broadcast_question(self, room):
-        if room.current_question and room.game_state == GameState.ASKING_QUESTION:
-            question_message = {
-                "action": "question",
-                "question": room.current_question['question']
-            }
-            logging.info(f"Broadcasting question to room {room.room_id}: {room.current_question['question']}")
-            self.broadcast_to_room(room, question_message)
-        else:
-            logging.warning(f"broadcast_question called but room {room.room_id} has no current question or wrong game state.")
-
-        
-    def broadcast_to_room(self, room, message):
-        for player in room.players:
-            Message.send(player.conn, message)
-            
-    def notify_room(self, room, message):
-        self.broadcast_to_room(room, message)
-    
-    def disconnect(self, conn, player):
-        logging.info(f'Player {player.name} disconnected from the server.')
-        self.sel.unregister(conn)
-        conn.close()
-        self.clients.pop(conn, None)
-        
-        room_id = player.current_room
-        if room_id:
-            room = self.rooms.get(room_id)
-            if room:
-                room.players.remove(player)
-                self.notify_room(room, {
-                    "action": "player_left",
-                    "player": player.name
-                })
-                logging.info(f"Player {player.name} left game {room_id}")
-                
-                # remove room if empty
-                if not room.players:
-                    del self.rooms[room_id]
-                    logging.info(f"Game room {room_id} has been removed as it became empty.")
+                questions = response.json().get('results', [])
+                if questions:
+                    room.questions = questions
+                    room.current_question_index = 0
+                    logging.info(f"Fetched {len(questions)} questions for room {room.room_id}")
                 else:
-                    # if creator leaves assign new creator for the game room
-                    if room.creator == player:
-                        room.creator = room.players[0]
-                        self.notify_room(room, {
-                            "action": "new_creator",
-                            "player": room.creator.name
-                        })
-                        logging.info(f"New creator for room {room_id} is {room.creator.name}")
-
-            
-    def set_name(self, request, player):
-        player.name = request.get('name')
-        logging.info(f"Player {player.name} connected from {player.address}.")
-        self.show_menu(player.conn, player)
-    
-    def next_phase(self, room):
-        if room.game_state == GameState.ASKING_QUESTION:
-            if all(p.answered for p in room.players):
-                self.complete_round(room)
-        elif room.game_state == GameState.WAITING_FOR_NEXT_ROUND:
-            self.reset_for_next_question(room)
-            self.fetch_question(room)
-            self.broadcast_question(room)
-            room.game_state = GameState.ASKING_QUESTION
-    
-    def receive_answer(self, conn, request, player):
-        room_id = player.current_room
-        room = self.rooms.get(room_id)
-        if not room or room.game_state != GameState.ASKING_QUESTION:
-            return
-        
-        player_answer = request.get('answer').lower()
-        correct_answer = room.current_question['correct_answer'].lower()
-        logging.info(f"Player {player.name} answered with {player_answer} in room {room_id}")
-        
-        if player_answer in ['true', 'false']:
-            if player_answer == correct_answer:
-                player.score += 1
-                answer_feedback = "Correct!"
+                    logging.error(f"No questions available from the API for room {room.room_id}.")
+                    self.notify_room(room, {"action": "error", "message": "No questions available. Game cannot proceed."})
+                    self.end_game_due_to_error(room)
             else:
-                answer_feedback = "Incorrect!"
-            
-            response_message = {
-                "action": "answer_feedback",
-                "message": answer_feedback,
-                "score": player.score
-            }
-            Message.send(conn, response_message) 
-            player.answered = True
-        else:
-            answer_feedback = "Invalid answer format. Please reply with 'True' or 'False'."
-            response_message = {
-                "action": "answer_feedback",
-                "message": answer_feedback
-            }
-            Message.send(conn, response_message)
-           
-    
-    def complete_round(self, room):
-        self.notify_scores(room)
-        # check for winners and handle it
-        winners = [player for player in room.players if player.score >= 10]
-        if len(winners) == 1:
-            self.end_game(room, winner=winners[0])
-        elif len(winners) > 1:
-            self.process_tie_breaker(room)
-        else:
-            room.game_state = GameState.WAITING_FOR_NEXT_ROUND
-            logging.info(f"Round completed in room {room.room_id}, proceeding to next question.")
+                logging.error(f"Failed to fetch questions. Status code: {response.status_code} for room {room.room_id}")
+                self.notify_room(room, {"action": "error", "message": "Failed to fetch questions. Game cannot proceed."})
+                self.end_game_due_to_error(room)
+        except Exception as e:
+            logging.error(f"Exception while fetching questions for room {room.room_id}: {e}")
+            self.notify_room(room, {"action": "error", "message": "An error occurred while fetching questions."})
+            self.end_game_due_to_error(room)
 
-    
-    def process_tie_breaker(self, room):
-        room.game_state = GameState.ASKING_QUESTION
-        message = {
-            "action": "tie_breaker",
-            "message": "It's a tie! Continuing the game until one player leads by one point..."
-        }
-        self.broadcast_to_room(room, message)
-        logging.info(f"Tie breaker initiated in room {room.room_id}")
-        self.prepare_question(room)
-        self.broadcast_question(room)
-    
-    def notify_scores(self, room):
-        scores = {
-            "action": "score_update",
-            "scores": {player.name: player.score for player in room.players}
-        }
-        self.broadcast_to_room(room, scores)
-        logging.info(f'Scores update sent to room {room.room_id}')
-        
-    def reset_for_next_question(self, room):
-        room.current_question = None
+    def fetch_and_broadcast_question(self, room):
+        if room.current_question_index >= len(room.questions):
+            self.fetch_questions(room)
+            if not room.questions:
+                return  # Cannot proceed without questions
+
+        if room.current_question_index < len(room.questions):
+            question = room.questions[room.current_question_index]
+            room.current_question = question
+            room.current_question_index += 1
+            self.notify_room(room, {
+                "action": "question",
+                "question": question["question"],
+                "options": ["True", "False"]
+            })
+            logging.info(f"Broadcasted question to room {room.room_id}: {question['question']}")
+
+    def process_answer(self, player, answer):
+        room = self.get_player_room(player)
+        if not room or not room.current_question:
+            self.send_message(player, {"action": "error", "message": "No active question to answer."})
+            return
+
+        correct_answer = room.current_question["correct_answer"].lower()
+        if answer.lower() == correct_answer:
+            player.score += 1
+            feedback = "Correct!"
+        else:
+            feedback = "Incorrect!"
+
+        self.send_message(player, {"action": "answer_feedback", "message": feedback, "score": player.score})
+        player.answered = True
+        logging.info(f"Player '{player.name}' answered '{answer}' in room {room.room_id}. Score: {player.score}")
+
+        if all(p.answered for p in room.players):
+            self.end_round(room)
+
+    def end_round(self, room):
+        logging.info(f"Ending round in room {room.room_id}")
+        winners = [p for p in room.players if p.score >= 10]
+        if len(winners) == 1:
+            winner = winners[0]
+            self.notify_room(room, {"action": "game_over", "message": f"{winner.name} wins with {winner.score} points!"})
+            room.in_progress = False
+            logging.info(f"Game in room {room.room_id} ended. Winner: {winner.name}")
+            self.reset_room(room)
+        elif len(winners) > 1:
+            # Handle multiple winners
+            winner_names = ", ".join([p.name for p in winners])
+            self.notify_room(room, {"action": "game_over", "message": f"Multiple winners: {winner_names} with {winners[0].score} points!"})
+            room.in_progress = False
+            logging.info(f"Game in room {room.room_id} ended. Winners: {winner_names}")
+            self.reset_room(room)
+        else:
+            # Continue the game with the next question
+            for player in room.players:
+                player.answered = False
+            self.fetch_and_broadcast_question(room)
+
+    def end_game_due_to_error(self, room):
+        room.in_progress = False
+        self.reset_room(room)
+
+    def reset_room(self, room):
         for player in room.players:
+            player.score = 0
             player.answered = False
+        room.players.clear()
+        room.questions = []
+        room.current_question = None
+        room.current_question_index = 0
+        del self.rooms[room.room_id]
+        logging.info(f"Room {room.room_id} has been reset and removed.")
+
+    def notify_room(self, room, message):
+        for player in room.players:
+            logging.debug(f"Sending message to '{player.name}' in room {room.room_id}: {message}")
+            self.send_message(player, message)
+
+    def disconnect(self, player):
+        logging.info(f"Player '{player.name}' disconnected")
+        self.sel.unregister(player.conn)
+        player.conn.close()
+        del self.clients[player.conn]
+        room = self.get_player_room(player)
+        if room:
+            room.players.remove(player)
+            self.notify_room(room, {"action": "player_left", "player": player.name})
+            logging.info(f"Player '{player.name}' removed from room {room.room_id}")
+            if not room.players:
+                del self.rooms[room.room_id]
+                logging.info(f"Room {room.room_id} deleted as it became empty")
+            elif room.in_progress and len(room.players) < 2:
+                # Not enough players to continue the game
+                self.notify_room(room, {"action": "error", "message": "Not enough players to continue the game. Game ended."})
+                self.end_game_due_to_error(room)
+
+    def get_player_room(self, player):
+        for room in self.rooms.values():
+            if player in room.players:
+                return room
+        return None
+
+    def shutdown(self):
+        logging.info("Server shutting down...")
+        shutdown_message = {"action": "server_shutdown", "message": "Server is shutting down."}
+        for player in list(self.clients.values()):
+            self.send_message(player, shutdown_message)
+            self.disconnect(player)
+        self.sel.close()
+        self.server_socket.close()
+        logging.info("Server has been shut down.")
 
     def start(self):
         try:
             while True:
-                events = self.sel.select(timeout=1)
+                events = self.sel.select(timeout=None)
                 for key, mask in events:
                     callback = key.data
                     callback(key.fileobj, mask)
-                # handle each game room
-                for room_id, room in list(self.rooms.items()):
-                    if room.game_state not in [GameState.FINISHED]:
-                        self.next_phase(room)
         except KeyboardInterrupt:
-            logging.info("Server shutting down...")
-        finally:
-            self.sel.close()
-    
-    def end_game(self, room, winner):
-        message = {
-            "action": "game_over",
-            "message": f"Game over! The winner is {winner.name} with {winner.score} points."
-        }
-        self.broadcast_to_room(room, message)
-        room.game_state = GameState.FINISHED
-        logging.info(f"Game in room {room.room_id} ended. Winner: {winner.name}")
-        # remove game after completion
-        del self.rooms[room.room_id]
-        logging.info(f"Game room {room.room_id} has been removed after game completion.")
+            logging.info("KeyboardInterrupt received. Initiating shutdown.")
+            self.shutdown()
+            sys.exit(0)
+        except Exception as e:
+            logging.error(f"Unexpected error: {e}")
+            self.shutdown()
+            sys.exit(1)
 
-    
+
 def parse_args():
-    parser = argparse.ArgumentParser(description='Trivia Game Server', add_help=False)
-    
-    parser.add_argument('-i', '--ip', type=str, default='0.0.0.0', help='The IP address to bind the server')
-    parser.add_argument('-p', '--port', type=int, required=True, help='The port to bind the server')
-    parser.add_argument('-h', '--help', action='help', help='Show help message and exit')
-    
+    parser = argparse.ArgumentParser(description="Trivia Game Server")
+    parser.add_argument("-i", "--ip", default="0.0.0.0", help="Server IP")
+    parser.add_argument("-p", "--port", type=int, required=True, help="Server Port")
+    parser.add_argument("-m", "--max", type=int, default=DEFAULT_MAX_PLAYERS_PER_ROOM,
+                        help=f"Maximum number of players per room (default: {DEFAULT_MAX_PLAYERS_PER_ROOM})")
     return parser.parse_args()
+
 
 if __name__ == "__main__":
     args = parse_args()
-    server = GameServer(host=args.ip, port=args.port)
+    server = GameServer(args.ip, args.port, args.max)
     server.start()
