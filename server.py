@@ -201,7 +201,7 @@ class GameServer:
                 self.notify_room(room, {"action": "player_joined", "player": player.name})
                 logging.info(f"Player '{player.name}' joined room {room.room_id}")
 
-                if len(room.players) >= 2:  # Start game if minimum players reached
+                if len(room.players) >= DEFAULT_MAX_PLAYERS_PER_ROOM:  # Start game if maximum players are reached
                     self.start_game(room)
                 return
 
@@ -283,7 +283,7 @@ class GameServer:
 
     def end_round(self, room):
         logging.info(f"Ending round in room {room.room_id}")
-        winners = [p for p in room.players if p.score >= 10]
+        winners = [p for p in room.players if p.score >= 5]
         if len(winners) == 1:
             winner = winners[0]
             self.notify_room(room, {"action": "game_over", "message": f"{winner.name} wins with {winner.score} points!"})
