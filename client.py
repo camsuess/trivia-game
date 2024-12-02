@@ -7,11 +7,10 @@ import logging
 import sys
 import threading
 
-# Configuration Constants
 LOG_FILE = 'client.log'
 
 logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(levelname)s - %(message)s',
+                    format='%(levelname)s - %(message)s',
                     filename=LOG_FILE,
                     filemode='a')  # Append mode
 
@@ -159,6 +158,8 @@ class GameClient:
             self.send_message({"action": "join_game"})
         elif choice == "2":
             self.send_message({"action": "create_game"})
+        elif choice == "3":
+            self.send_message({"action": "disconnect"})
         else:
             print("Invalid choice. Please select a valid option.")
             self.handle_game_menu(message)  # Wait for valid input

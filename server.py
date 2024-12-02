@@ -8,13 +8,12 @@ import requests
 import sys
 import uuid
 
-# Configuration Constants
 API_URL = 'https://opentdb.com/api.php?amount=50&type=boolean'
 LOG_FILE = 'server.log'
-DEFAULT_MAX_PLAYERS_PER_ROOM = 4  # Default maximum number of players per room
+DEFAULT_MAX_PLAYERS_PER_ROOM = 2  # Default maximum number of players per room
 
 logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(levelname)s - %(message)s',
+                    format='%(levelname)s - %(message)s',
                     filename=LOG_FILE,
                     filemode='a')  # Append mode
 
@@ -157,7 +156,7 @@ class GameServer:
         elif action == "disconnect":
             self.disconnect(player)
         elif action == "game_menu":
-            self.send_message(player, {"action": "game_menu", "options": ["1. Join a game", "2. Create a game"]})
+            self.send_message(player, {"action": "game_menu", "options": ["1. Join a game", "2. Create a game", "3. Exit"]})
         else:
             logging.warning(f"Unknown action '{action}' from player '{player.name}'")
             self.send_message(player, {"action": "error", "message": f"Unknown action '{action}'."})
@@ -169,7 +168,7 @@ class GameServer:
             return
         player.name = name.strip()
         logging.info(f"Player '{player.name}' connected from {player.addr}")
-        self.send_message(player, {"action": "game_menu", "options": ["1. Join a game", "2. Create a game"]})
+        self.send_message(player, {"action": "game_menu", "options": ["1. Join a game", "2. Create a game", "3. Exit"]})
 
     def create_game_room(self, player):
         # Find if player is already in a room
@@ -206,6 +205,7 @@ class GameServer:
                 return
 
         self.send_message(player, {"action": "error", "message": "No available public games to join. Consider creating one."})
+        self.send_message(player, {"action": "game_menu", "options": ["1. Join a game", "2. Create a game", "3. Exit"]})
 
     def start_game(self, room):
         if room.in_progress:
@@ -248,7 +248,7 @@ class GameServer:
         if room.current_question_index >= len(room.questions):
             self.fetch_questions(room)
             if not room.questions:
-                return  # Cannot proceed without questions
+                return
 
         if room.current_question_index < len(room.questions):
             question = room.questions[room.current_question_index]
@@ -298,7 +298,7 @@ class GameServer:
             logging.info(f"Game in room {room.room_id} ended. Winners: {winner_names}")
             self.reset_room(room)
         else:
-            # Continue the game with the next question
+            # Continue the game
             for player in room.players:
                 player.answered = False
             self.fetch_and_broadcast_question(room)
@@ -339,7 +339,8 @@ class GameServer:
             elif room.in_progress and len(room.players) < 2:
                 # Not enough players to continue the game
                 self.notify_room(room, {"action": "error", "message": "Not enough players to continue the game. Game ended."})
-                self.end_game_due_to_error(room)
+                self.notify_room(room, {"action": "game_menu", "options": ["1. Join a game", "2. Create a game", "3. Exit"]})
+            self.end_game_due_to_error(room)
 
     def get_player_room(self, player):
         for room in self.rooms.values():
