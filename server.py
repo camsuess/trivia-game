@@ -125,9 +125,8 @@ class GameServer:
         try:
             if player.send_buffer:
                 sent = player.conn.send(player.send_buffer)
-                logging.debug(f"Sent {sent} bytes to {player.name}")
                 player.send_buffer = player.send_buffer[sent:]
-                if not player.send_buffer:  # All data sent
+                if not player.send_buffer:  # All data sent successfully!
                     player.events &= ~selectors.EVENT_WRITE
                     self.sel.modify(player.conn, player.events, self.handle_client)
         except BlockingIOError:
@@ -186,7 +185,7 @@ class GameServer:
         logging.info(f"Game room {room_id} created by '{player.name}'.")
 
     def join_game_room(self, player):
-        # Check if player is already in a room
+        # Check if player is already in a room first
         existing_room = self.get_player_room(player)
         if existing_room:
             self.send_message(player, {"action": "error", "message": "You are already in a game room."})
@@ -291,14 +290,14 @@ class GameServer:
             logging.info(f"Game in room {room.room_id} ended. Winner: {winner.name}")
             self.reset_room(room)
         elif len(winners) > 1:
-            # Handle multiple winners
+            # Handle multiple "winners"
             winner_names = ", ".join([p.name for p in winners])
-            self.notify_room(room, {"action": "game_over", "message": f"Multiple winners: {winner_names} with {winners[0].score} points!"})
+            self.notify_room(room, {"action": "game_over", "message": f"Game Tied!\n {winner_names} tied with {winners[0].score} points!"})
             room.in_progress = False
             logging.info(f"Game in room {room.room_id} ended. Winners: {winner_names}")
             self.reset_room(room)
         else:
-            # Continue the game
+            # Continue the game as normal
             for player in room.players:
                 player.answered = False
             self.fetch_and_broadcast_question(room)
@@ -337,7 +336,7 @@ class GameServer:
                 del self.rooms[room.room_id]
                 logging.info(f"Room {room.room_id} deleted as it became empty")
             elif room.in_progress and len(room.players) < 2:
-                # Not enough players to continue the game
+                # Not enough players to continue the game - disconnect and display game menu
                 self.notify_room(room, {"action": "error", "message": "Not enough players to continue the game. Game ended."})
                 self.notify_room(room, {"action": "game_menu", "options": ["1. Join a game", "2. Create a game", "3. Exit"]})
             self.end_game_due_to_error(room)

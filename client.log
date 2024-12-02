@@ -1,0 +1,180 @@
+INFO - Connected to server at ('atlanta', 5555)
+DEBUG - Received message from server: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from server
+DEBUG - Queued message to server: {'action': 'set_name', 'name': 'cam'}
+DEBUG - Sent 41 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+INFO - Connected to server at ('atlanta', 5555)
+DEBUG - Received message from server: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from server
+DEBUG - Queued message to server: {'action': 'set_name', 'name': 'dave'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'create_game'}
+DEBUG - Sent 29 bytes to server
+DEBUG - Received message from server: {'action': 'game_created', 'room_id': '60109a3f', 'message': 'Room 60109a3f created. Waiting for players to join.'}
+INFO - Processing action 'game_created' from server
+DEBUG - Queued message to server: {'action': 'join_game'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_joined', 'room_id': '60109a3f', 'message': 'Joined room 60109a3f. Waiting for the game to start.'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Received message from server: {'action': 'question', 'question': 'The character Plum from &quot;No Game No Life&quot; is a girl.', 'options': ['True', 'False']}
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+INFO - Processing action 'player_joined' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'The character Plum from &quot;No Game No Life&quot; is a girl.', 'options': ['True', 'False']}
+INFO - Processing action 'game_started' from server
+INFO - Processing action 'game_joined' from server
+INFO - Processing action 'question' from server
+INFO - Processing action 'player_joined' from server
+INFO - Processing action 'game_started' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+DEBUG - Received message from server: {'action': 'question', 'question': 'Tetris is the #1 best-selling video game of all-time.', 'options': ['True', 'False']}
+INFO - Processing action 'answer_feedback' from server
+INFO - Processing action 'question' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'Tetris is the #1 best-selling video game of all-time.', 'options': ['True', 'False']}
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+DEBUG - Received message from server: {'action': 'question', 'question': 'Ferrari has never made a V10 engine for any of its cars.', 'options': ['True', 'False']}
+INFO - Processing action 'answer_feedback' from server
+INFO - Processing action 'question' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'Ferrari has never made a V10 engine for any of its cars.', 'options': ['True', 'False']}
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+DEBUG - Received message from server: {'action': 'question', 'question': 'An octopus can fit through any hole larger than its beak.', 'options': ['True', 'False']}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'An octopus can fit through any hole larger than its beak.', 'options': ['True', 'False']}
+INFO - Processing action 'question' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+DEBUG - Received message from server: {'action': 'question', 'question': 'In Until Dawn, both characters Sam and Mike cannot be killed under any means until the final chapter of the game.', 'options': ['True', 'False']}
+DEBUG - Received message from server: {'action': 'question', 'question': 'In Until Dawn, both characters Sam and Mike cannot be killed under any means until the final chapter of the game.', 'options': ['True', 'False']}
+INFO - Processing action 'question' from server
+INFO - Processing action 'answer_feedback' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'false'}
+DEBUG - Sent 43 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 1}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'false'}
+DEBUG - Sent 43 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 1}
+DEBUG - Received message from server: {'action': 'question', 'question': 'To bypass US Munitions Export Laws, the creator of the PGP published all the source code in book form. ', 'options': ['True', 'False']}
+DEBUG - Received message from server: {'action': 'question', 'question': 'To bypass US Munitions Export Laws, the creator of the PGP published all the source code in book form. ', 'options': ['True', 'False']}
+INFO - Processing action 'question' from server
+INFO - Processing action 'answer_feedback' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 2}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 2}
+DEBUG - Received message from server: {'action': 'question', 'question': 'Throughout the entirety of &quot;Dragon Ball Z&quot;, Goku only kills two characters: a miniboss named Yakon and Kid Buu.', 'options': ['True', 'False']}
+DEBUG - Received message from server: {'action': 'question', 'question': 'Throughout the entirety of &quot;Dragon Ball Z&quot;, Goku only kills two characters: a miniboss named Yakon and Kid Buu.', 'options': ['True', 'False']}
+INFO - Processing action 'answer_feedback' from server
+INFO - Processing action 'question' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 3}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 3}
+DEBUG - Received message from server: {'action': 'question', 'question': 'Scatman John&#039;s real name was John Paul Larkin.', 'options': ['True', 'False']}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'Scatman John&#039;s real name was John Paul Larkin.', 'options': ['True', 'False']}
+INFO - Processing action 'question' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'false'}
+DEBUG - Sent 43 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 3}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'false'}
+DEBUG - Sent 43 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 3}
+DEBUG - Received message from server: {'action': 'question', 'question': 'AMD created the first consumer 64-bit processor.', 'options': ['True', 'False']}
+INFO - Processing action 'answer_feedback' from server
+INFO - Processing action 'question' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'AMD created the first consumer 64-bit processor.', 'options': ['True', 'False']}
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 4}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 4}
+DEBUG - Received message from server: {'action': 'question', 'question': 'Liechtenstein does not have an airport.', 'options': ['True', 'False']}
+DEBUG - Received message from server: {'action': 'question', 'question': 'Liechtenstein does not have an airport.', 'options': ['True', 'False']}
+INFO - Processing action 'answer_feedback' from server
+INFO - Processing action 'question' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'false'}
+DEBUG - Sent 43 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 4}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'false'}
+DEBUG - Sent 43 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 4}
+DEBUG - Received message from server: {'action': 'question', 'question': 'There are 86400 seconds in a day.', 'options': ['True', 'False']}
+INFO - Processing action 'answer_feedback' from server
+INFO - Processing action 'question' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'There are 86400 seconds in a day.', 'options': ['True', 'False']}
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 5}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 5}
+DEBUG - Received message from server: {'action': 'game_over', 'message': 'Game Tied!\n dave, cam with 5 points!'}
+INFO - Processing action 'answer_feedback' from server
+INFO - Processing action 'game_over' from server
+DEBUG - Received message from server: {'action': 'game_over', 'message': 'Game Tied!\n dave, cam with 5 points!'}
+DEBUG - Queued message to server: {'action': 'game_menu'}
+DEBUG - Sent 27 bytes to server
+INFO - Processing action 'game_over' from server
+DEBUG - Queued message to server: {'action': 'game_menu'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'disconnect'}
+DEBUG - Sent 28 bytes to server
+INFO - Server closed the connection.
+DEBUG - Queued message to server: {'action': 'disconnect'}
+DEBUG - Sent 28 bytes to server
+INFO - Server closed the connection.
