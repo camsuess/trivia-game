@@ -124,6 +124,8 @@ class GameClient:
             self.handle_question(message)
         elif action == "answer_feedback":
             print(f"{message.get('message')} Your current score: {message.get('score')}\n")
+        elif action == "score_update":
+            print(f"Current Scoreboard:\n{message.get('scores')}\n")
         elif action == "game_over":
             print(message.get("message", "Game over!"))
             print("Returning to the main menu...")
