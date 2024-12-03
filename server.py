@@ -282,6 +282,10 @@ class GameServer:
 
     def end_round(self, room):
         logging.info(f"Ending round in room {room.room_id}")
+
+        scores = {player.name: player.score for player in room.players}
+        self.notify_room(room, {"action": "score_update", "scores": scores})
+
         winners = [p for p in room.players if p.score >= 5]
         if len(winners) == 1:
             winner = winners[0]
@@ -290,7 +294,6 @@ class GameServer:
             logging.info(f"Game in room {room.room_id} ended. Winner: {winner.name}")
             self.reset_room(room)
         elif len(winners) > 1:
-            # Handle multiple "winners"
             winner_names = ", ".join([p.name for p in winners])
             self.notify_room(room, {"action": "game_over", "message": f"Game Tied!\n {winner_names} tied with {winners[0].score} points!"})
             room.in_progress = False
