@@ -1,0 +1,6 @@
+INFO - Connected to server at ('127.0.0.1', 12345)
+INFO - Connected to server at ('127.0.0.1', 12345)
+INFO - Connected to server at ('127.0.0.1', 12345)
+INFO - Connected to server at ('127.0.0.1', 12345)
+INFO - Connected to server at ('127.0.0.1', 12345)
+DEBUG - Queued message to server: {'action': 'test'}
