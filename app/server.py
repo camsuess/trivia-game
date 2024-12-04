@@ -10,12 +10,12 @@ import uuid
 
 API_URL = 'https://opentdb.com/api.php?amount=50&type=boolean'
 LOG_FILE = 'server.log'
-DEFAULT_MAX_PLAYERS_PER_ROOM = 2  # Default maximum number of players per room
+DEFAULT_MAX_PLAYERS_PER_ROOM = 3
 
 logging.basicConfig(level=logging.DEBUG,
                     format='%(levelname)s - %(message)s',
                     filename=LOG_FILE,
-                    filemode='a')  # Append mode
+                    filemode='a')
 
 
 class Player:
@@ -170,7 +170,6 @@ class GameServer:
         self.send_message(player, {"action": "game_menu", "options": ["1. Join a game", "2. Create a game", "3. Exit"]})
 
     def create_game_room(self, player):
-        # Find if player is already in a room
         existing_room = self.get_player_room(player)
         if existing_room:
             self.send_message(player, {"action": "error", "message": "You are already in a game room."})
@@ -342,7 +341,7 @@ class GameServer:
                 # Not enough players to continue the game - disconnect and display game menu
                 self.notify_room(room, {"action": "error", "message": "Not enough players to continue the game. Game ended."})
                 self.notify_room(room, {"action": "game_menu", "options": ["1. Join a game", "2. Create a game", "3. Exit"]})
-            self.end_game_due_to_error(room)
+                self.end_game_due_to_error(room)
 
     def get_player_room(self, player):
         for room in self.rooms.values():
@@ -381,8 +380,6 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Trivia Game Server")
     parser.add_argument("-i", "--ip", default="0.0.0.0", help="Server IP")
     parser.add_argument("-p", "--port", type=int, required=True, help="Server Port")
-    parser.add_argument("-m", "--max", type=int, default=DEFAULT_MAX_PLAYERS_PER_ROOM,
-                        help=f"Maximum number of players per room (default: {DEFAULT_MAX_PLAYERS_PER_ROOM})")
     return parser.parse_args()
 
 
