@@ -380,6 +380,8 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Trivia Game Server")
     parser.add_argument("-i", "--ip", default="0.0.0.0", help="Server IP")
     parser.add_argument("-p", "--port", type=int, required=True, help="Server Port")
+    parser.add_argument("-m", "--max", type=int, default=DEFAULT_MAX_PLAYERS_PER_ROOM,
+                        help=f"Maximum number of players per room: {DEFAULT_MAX_PLAYERS_PER_ROOM})")
     return parser.parse_args()
 
 
