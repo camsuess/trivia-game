@@ -132,7 +132,7 @@ class GameClient:
         elif action == "player_left":
             print(f"Player '{message.get('player')}' has left the game.")
         elif action == "error":
-            print(f"Error: {message.get('message')}")
+            print(f"\nError: {message.get('message')}")
         elif action == "server_shutdown":
             print(message.get("message", "Server is shutting down."))
             self.running = False
