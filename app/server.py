@@ -156,9 +156,19 @@ class GameServer:
             self.disconnect(player)
         elif action == "game_menu":
             self.send_message(player, {"action": "game_menu", "options": ["1. Join a game", "2. Create a game", "3. Exit"]})
+        elif action == "exit_room":
+            self.leave_game_room(player)
+            self.send_message(player, {"action": "game_menu", "options": ["1. Join a game", "2. Create a game", "3. Exit"]})
         else:
             logging.warning(f"Unknown action '{action}' from player '{player.name}'")
             self.send_message(player, {"action": "error", "message": f"Unknown action '{action}'."})
+
+    def leave_game_room(self, player):
+        room = self.get_player_room(player)
+        if room:
+            room.players.remove(player)
+            self.notify_room(room, {"action": "player_left", "player": player.name})
+            logging.info(f"Player '{player.name}' removed from room {room.room_id}")
 
     def handle_set_name(self, player, message):
         name = message.get("name")

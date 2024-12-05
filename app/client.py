@@ -174,10 +174,13 @@ class GameClient:
 
     def send_answer(self):
         answer = input("Your answer (True/False): ").strip().lower()
-        while answer not in ["true", "false"]:
-            print("Invalid answer. Please respond with 'True' or 'False'.")
+        while answer not in ["true", "false", "exit"]:
+            print("Invalid answer. Please respond with 'True' or 'False'.\nTo exit back to the main menu enter 'Exit'.")
             answer = input("Your answer (True/False): ").strip().lower()
-        self.send_message({"action": "answer", "answer": answer})
+        if answer == 'exit':
+            self.send_message({"action": "exit_room"})
+        else:
+            self.send_message({"action": "answer", "answer": answer})
 
     def start(self):
         try:
