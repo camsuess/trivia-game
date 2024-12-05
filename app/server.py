@@ -169,6 +169,10 @@ class GameServer:
             room.players.remove(player)
             self.notify_room(room, {"action": "player_left", "player": player.name})
             logging.info(f"Player '{player.name}' removed from room {room.room_id}")
+        if room.in_progress and len(room.players) < 2:
+            self.notify_room(room, {"action": "error", "message": "Not enough players to continue the game. Game ended."})
+            self.notify_room(room, {"action": "game_menu", "options": ["1. Join a game", "2. Create a game", "3. Exit"]})
+            self.end_game_due_to_error(room)
 
     def handle_set_name(self, player, message):
         name = message.get("name")

@@ -1,0 +1,865 @@
+INFO - Connected to server at ('grouper', 5555)
+DEBUG - Received message from server: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from server
+DEBUG - Queued message to server: {'action': 'set_name', 'name': 'ca,'}
+DEBUG - Sent 41 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'create_game'}
+DEBUG - Sent 29 bytes to server
+DEBUG - Received message from server: {'action': 'game_created', 'room_id': '54d76ed5', 'message': 'Room 54d76ed5 created. Waiting for players to join.'}
+INFO - Processing action 'game_created' from server
+INFO - Connected to server at ('grouper', 5555)
+DEBUG - Received message from server: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from server
+DEBUG - Queued message to server: {'action': 'set_name', 'name': 'tom'}
+DEBUG - Sent 41 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'join_game'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_joined', 'room_id': '54d76ed5', 'message': 'Joined room 54d76ed5. Waiting for the game to start.'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'tom'}
+INFO - Processing action 'player_joined' from server
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'tom'}
+INFO - Processing action 'game_joined' from server
+INFO - Processing action 'player_joined' from server
+INFO - Connected to server at ('grouper', 5555)
+DEBUG - Received message from server: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from server
+DEBUG - Queued message to server: {'action': 'set_name', 'name': 'dave'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'join_game'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_joined', 'room_id': '54d76ed5', 'message': 'Joined room 54d76ed5. Waiting for the game to start.'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Received message from server: {'action': 'question', 'question': 'United States President John F. Kennedy was assassinated during his presidential motorcade in Atlanta, Georgia on November 22nd, 1963.', 'options': ['True', 'False']}
+INFO - Processing action 'game_joined' from server
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'dave'}
+INFO - Processing action 'player_joined' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'United States President John F. Kennedy was assassinated during his presidential motorcade in Atlanta, Georgia on November 22nd, 1963.', 'options': ['True', 'False']}
+INFO - Processing action 'game_started' from server
+INFO - Processing action 'player_joined' from server
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+INFO - Processing action 'question' from server
+INFO - Processing action 'game_started' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'United States President John F. Kennedy was assassinated during his presidential motorcade in Atlanta, Georgia on November 22nd, 1963.', 'options': ['True', 'False']}
+INFO - Processing action 'question' from server
+INFO - Processing action 'player_joined' from server
+INFO - Processing action 'game_started' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'exit_room'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'exit_room'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'player_left', 'player': 'dave'}
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'player_left' from server
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'player_left', 'player': 'dave'}
+DEBUG - Received message from server: {'action': 'player_left', 'player': 'tom'}
+INFO - Processing action 'player_left' from server
+INFO - Processing action 'player_left' from server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'ca,': 0}}
+DEBUG - Received message from server: {'action': 'question', 'question': 'It was once believed that injecting shark cartilage into people would prevent them from contracting cancer.', 'options': ['True', 'False']}
+INFO - Processing action 'answer_feedback' from server
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'exit_room'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'create_game'}
+DEBUG - Sent 29 bytes to server
+DEBUG - Received message from server: {'action': 'game_created', 'room_id': '1544e076', 'message': 'Room 1544e076 created. Waiting for players to join.'}
+INFO - Processing action 'game_created' from server
+DEBUG - Queued message to server: {'action': 'join_game'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_joined', 'room_id': '1544e076', 'message': 'Joined room 1544e076. Waiting for the game to start.'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'tom'}
+INFO - Processing action 'player_joined' from server
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'tom'}
+INFO - Processing action 'game_joined' from server
+INFO - Processing action 'player_joined' from server
+DEBUG - Queued message to server: {'action': 'join_game'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_joined', 'room_id': '1544e076', 'message': 'Joined room 1544e076. Waiting for the game to start.'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Received message from server: {'action': 'question', 'question': 'The song &quot;Megalovania&quot; by Toby Fox made its third appearence in the 2015 RPG &quot;Undertale&quot;.', 'options': ['True', 'False']}
+INFO - Processing action 'game_joined' from server
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'dave'}
+INFO - Processing action 'player_joined' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'The song &quot;Megalovania&quot; by Toby Fox made its third appearence in the 2015 RPG &quot;Undertale&quot;.', 'options': ['True', 'False']}
+INFO - Processing action 'player_joined' from server
+INFO - Processing action 'game_started' from server
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+INFO - Processing action 'question' from server
+INFO - Processing action 'game_started' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'The song &quot;Megalovania&quot; by Toby Fox made its third appearence in the 2015 RPG &quot;Undertale&quot;.', 'options': ['True', 'False']}
+INFO - Processing action 'question' from server
+INFO - Processing action 'player_joined' from server
+INFO - Processing action 'game_started' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'ca,': 1, 'tom': 1, 'dave': 1}}
+DEBUG - Received message from server: {'action': 'question', 'question': 'Sitting for more than three hours a day can cut two years off a person&#039;s life expectancy.', 'options': ['True', 'False']}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'ca,': 1, 'tom': 1, 'dave': 1}}
+INFO - Processing action 'answer_feedback' from server
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'Sitting for more than three hours a day can cut two years off a person&#039;s life expectancy.', 'options': ['True', 'False']}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'ca,': 1, 'tom': 1, 'dave': 1}}
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'Sitting for more than three hours a day can cut two years off a person&#039;s life expectancy.', 'options': ['True', 'False']}
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'exit_room'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'player_left', 'player': 'ca,'}
+INFO - Processing action 'player_left' from server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 2}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'player_left', 'player': 'ca,'}
+INFO - Processing action 'player_left' from server
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'tom': 2, 'dave': 2}}
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 2}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'tom': 2, 'dave': 2}}
+DEBUG - Received message from server: {'action': 'question', 'question': 'The television show Doctor Who first aired in 1963.', 'options': ['True', 'False']}
+INFO - Processing action 'answer_feedback' from server
+INFO - Processing action 'score_update' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'The television show Doctor Who first aired in 1963.', 'options': ['True', 'False']}
+INFO - Processing action 'question' from server
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'exit_room'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'false'}
+DEBUG - Sent 43 bytes to server
+DEBUG - Received message from server: {'action': 'player_left', 'player': 'dave'}
+INFO - Processing action 'player_left' from server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 2}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'tom': 2}}
+DEBUG - Received message from server: {'action': 'question', 'question': 'The 2005 video game &quot;Call of Duty 2: Big Red One&quot; is not available on PC.', 'options': ['True', 'False']}
+INFO - Processing action 'answer_feedback' from server
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'exit_room'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'create_game'}
+DEBUG - Sent 29 bytes to server
+DEBUG - Received message from server: {'action': 'game_created', 'room_id': '2735ad79', 'message': 'Room 2735ad79 created. Waiting for players to join.'}
+INFO - Processing action 'game_created' from server
+DEBUG - Queued message to server: {'action': 'join_game'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_joined', 'room_id': '2735ad79', 'message': 'Joined room 2735ad79. Waiting for the game to start.'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'tom'}
+INFO - Processing action 'game_joined' from server
+INFO - Processing action 'player_joined' from server
+INFO - Processing action 'player_joined' from server
+DEBUG - Queued message to server: {'action': 'join_game'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_joined', 'room_id': '2735ad79', 'message': 'Joined room 2735ad79. Waiting for the game to start.'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Received message from server: {'action': 'question', 'question': '&quot;Buffalo buffalo Buffalo buffalo buffalo buffalo Buffalo buffalo.&quot; is a grammatically correct sentence.', 'options': ['True', 'False']}
+DEBUG - Received message from server: {'action': 'question', 'question': '&quot;Buffalo buffalo Buffalo buffalo buffalo buffalo Buffalo buffalo.&quot; is a grammatically correct sentence.', 'options': ['True', 'False']}
+INFO - Processing action 'player_joined' from server
+DEBUG - Received message from server: {'action': 'question', 'question': '&quot;Buffalo buffalo Buffalo buffalo buffalo buffalo Buffalo buffalo.&quot; is a grammatically correct sentence.', 'options': ['True', 'False']}
+INFO - Processing action 'player_joined' from server
+INFO - Processing action 'game_joined' from server
+INFO - Processing action 'game_started' from server
+INFO - Processing action 'game_started' from server
+INFO - Processing action 'question' from server
+INFO - Processing action 'player_joined' from server
+INFO - Processing action 'question' from server
+INFO - Processing action 'game_started' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'ca,': 1, 'tom': 1, 'dave': 1}}
+DEBUG - Received message from server: {'action': 'question', 'question': 'Eurobeat is primarily an Italian genre of music.', 'options': ['True', 'False']}
+INFO - Processing action 'score_update' from server
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'ca,': 1, 'tom': 1, 'dave': 1}}
+INFO - Processing action 'question' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'Eurobeat is primarily an Italian genre of music.', 'options': ['True', 'False']}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'ca,': 1, 'tom': 1, 'dave': 1}}
+INFO - Processing action 'answer_feedback' from server
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'Eurobeat is primarily an Italian genre of music.', 'options': ['True', 'False']}
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+INFO - KeyboardInterrupt received. Shutting down client.
+DEBUG - Queued message to server: {'action': 'disconnect'}
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'false'}
+DEBUG - Sent 43 bytes to server
+DEBUG - Received message from server: {'action': 'player_left', 'player': 'ca,'}
+INFO - Processing action 'player_left' from server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 1}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'false'}
+DEBUG - Sent 43 bytes to server
+DEBUG - Received message from server: {'action': 'player_left', 'player': 'ca,'}
+INFO - Processing action 'player_left' from server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 1}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'tom': 1, 'dave': 1}}
+DEBUG - Received message from server: {'action': 'question', 'question': 'The cover of The Beatles album &quot;Abbey Road&quot; featured a Volkswagen Beetle in the background.', 'options': ['True', 'False']}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'tom': 1, 'dave': 1}}
+INFO - Processing action 'answer_feedback' from server
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'The cover of The Beatles album &quot;Abbey Road&quot; featured a Volkswagen Beetle in the background.', 'options': ['True', 'False']}
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+INFO - KeyboardInterrupt received. Shutting down client.
+DEBUG - Queued message to server: {'action': 'disconnect'}
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'false'}
+DEBUG - Sent 43 bytes to server
+DEBUG - Received message from server: {'action': 'player_left', 'player': 'dave'}
+DEBUG - Received message from server: {'action': 'error', 'message': 'Not enough players to continue the game. Game ended.'}
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'player_left' from server
+INFO - Processing action 'error' from server
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'disconnect'}
+DEBUG - Sent 28 bytes to server
+DEBUG - Received message from server: {'action': 'error', 'message': 'No active question to answer.'}
+INFO - Processing action 'error' from server
+INFO - Server closed the connection.
+INFO - Connected to server at ('grouper', 5555)
+DEBUG - Received message from server: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from server
+DEBUG - Queued message to server: {'action': 'set_name', 'name': 'cam'}
+DEBUG - Sent 41 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+INFO - Connected to server at ('grouper', 5555)
+DEBUG - Received message from server: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from server
+DEBUG - Queued message to server: {'action': 'set_name', 'name': 'tom'}
+DEBUG - Sent 41 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+INFO - Connected to server at ('grouper', 5555)
+DEBUG - Received message from server: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from server
+DEBUG - Queued message to server: {'action': 'set_name', 'name': 'dave'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'create_game'}
+DEBUG - Sent 29 bytes to server
+DEBUG - Received message from server: {'action': 'game_created', 'room_id': '371ed2a0', 'message': 'Room 371ed2a0 created. Waiting for players to join.'}
+INFO - Processing action 'game_created' from server
+DEBUG - Queued message to server: {'action': 'join_game'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_joined', 'room_id': '371ed2a0', 'message': 'Joined room 371ed2a0. Waiting for the game to start.'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'tom'}
+INFO - Processing action 'game_joined' from server
+INFO - Processing action 'player_joined' from server
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'tom'}
+INFO - Processing action 'player_joined' from server
+DEBUG - Queued message to server: {'action': 'join_game'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_joined', 'room_id': '371ed2a0', 'message': 'Joined room 371ed2a0. Waiting for the game to start.'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Received message from server: {'action': 'question', 'question': 'Donald Duck played the role of Bob Cratchit in Disney&#039;s 1983 adaptation of A Christmas Carol.', 'options': ['True', 'False']}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'cam'}
+INFO - Processing action 'game_joined' from server
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+INFO - Processing action 'player_joined' from server
+INFO - Processing action 'game_started' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'Donald Duck played the role of Bob Cratchit in Disney&#039;s 1983 adaptation of A Christmas Carol.', 'options': ['True', 'False']}
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+INFO - Processing action 'question' from server
+INFO - Processing action 'player_joined' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'Donald Duck played the role of Bob Cratchit in Disney&#039;s 1983 adaptation of A Christmas Carol.', 'options': ['True', 'False']}
+INFO - Processing action 'game_started' from server
+INFO - Processing action 'player_joined' from server
+INFO - Processing action 'question' from server
+INFO - Processing action 'game_started' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'exit_room'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'player_left', 'player': 'cam'}
+INFO - Processing action 'player_left' from server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'player_left', 'player': 'cam'}
+INFO - Processing action 'player_left' from server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'dave': 0, 'tom': 0}}
+DEBUG - Received message from server: {'action': 'question', 'question': 'Several characters in &quot;Super Mario 64&quot; blink their eyes, including Mario himself.', 'options': ['True', 'False']}
+INFO - Processing action 'answer_feedback' from server
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'dave': 0, 'tom': 0}}
+DEBUG - Received message from server: {'action': 'question', 'question': 'Several characters in &quot;Super Mario 64&quot; blink their eyes, including Mario himself.', 'options': ['True', 'False']}
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'exit_room'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'false'}
+DEBUG - Sent 43 bytes to server
+DEBUG - Received message from server: {'action': 'player_left', 'player': 'dave'}
+INFO - Processing action 'player_left' from server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'tom': 0}}
+DEBUG - Received message from server: {'action': 'question', 'question': 'The Windows 7 operating system has six main editions.', 'options': ['True', 'False']}
+INFO - Processing action 'answer_feedback' from server
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'false'}
+DEBUG - Sent 43 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'tom': 0}}
+DEBUG - Received message from server: {'action': 'question', 'question': 'The color of the pills in the Matrix were Blue and Yellow.', 'options': ['True', 'False']}
+INFO - Processing action 'answer_feedback' from server
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+INFO - KeyboardInterrupt received. Shutting down client.
+DEBUG - Queued message to server: {'action': 'disconnect'}
+INFO - KeyboardInterrupt received. Shutting down client.
+DEBUG - Queued message to server: {'action': 'disconnect'}
+INFO - KeyboardInterrupt received. Shutting down client.
+DEBUG - Queued message to server: {'action': 'disconnect'}
+INFO - Connected to server at ('grouper', 5555)
+DEBUG - Received message from server: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from server
+DEBUG - Queued message to server: {'action': 'set_name', 'name': 'cam'}
+DEBUG - Sent 41 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+INFO - Connected to server at ('grouper', 5555)
+DEBUG - Received message from server: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from server
+DEBUG - Queued message to server: {'action': 'set_name', 'name': 'tom'}
+DEBUG - Sent 41 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+INFO - Connected to server at ('grouper', 5555)
+DEBUG - Received message from server: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from server
+DEBUG - Queued message to server: {'action': 'set_name', 'name': 'dave'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'create_game'}
+DEBUG - Sent 29 bytes to server
+DEBUG - Received message from server: {'action': 'game_created', 'room_id': '36a71d10', 'message': 'Room 36a71d10 created. Waiting for players to join.'}
+INFO - Processing action 'game_created' from server
+DEBUG - Queued message to server: {'action': 'join_game'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_joined', 'room_id': '36a71d10', 'message': 'Joined room 36a71d10. Waiting for the game to start.'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'tom'}
+INFO - Processing action 'game_joined' from server
+INFO - Processing action 'player_joined' from server
+INFO - Processing action 'player_joined' from server
+DEBUG - Queued message to server: {'action': 'join_game'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_joined', 'room_id': '36a71d10', 'message': 'Joined room 36a71d10. Waiting for the game to start.'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Received message from server: {'action': 'question', 'question': 'The binary number &quot;101001101&quot; is equivalent to the Decimal number &quot;334&quot;', 'options': ['True', 'False']}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'cam'}
+INFO - Processing action 'game_joined' from server
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+INFO - Processing action 'player_joined' from server
+INFO - Processing action 'game_started' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'The binary number &quot;101001101&quot; is equivalent to the Decimal number &quot;334&quot;', 'options': ['True', 'False']}
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+INFO - Processing action 'question' from server
+INFO - Processing action 'player_joined' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'The binary number &quot;101001101&quot; is equivalent to the Decimal number &quot;334&quot;', 'options': ['True', 'False']}
+INFO - Processing action 'game_started' from server
+INFO - Processing action 'player_joined' from server
+INFO - Processing action 'question' from server
+INFO - Processing action 'game_started' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'exit_room'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'exit_room'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'player_left', 'player': 'cam'}
+INFO - Processing action 'player_left' from server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'player_left', 'player': 'cam'}
+DEBUG - Received message from server: {'action': 'player_left', 'player': 'tom'}
+INFO - Processing action 'player_left' from server
+INFO - Processing action 'player_left' from server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'dave': 0}}
+DEBUG - Received message from server: {'action': 'question', 'question': 'Slovakia is a member of European Union-', 'options': ['True', 'False']}
+INFO - Processing action 'answer_feedback' from server
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'false'}
+DEBUG - Sent 43 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'dave': 0}}
+DEBUG - Received message from server: {'action': 'question', 'question': 'In &quot;Mario Kart 64&quot;, Waluigi is a playable character.', 'options': ['True', 'False']}
+INFO - Processing action 'answer_feedback' from server
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'exit_room'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+INFO - KeyboardInterrupt received. Shutting down client.
+DEBUG - Queued message to server: {'action': 'disconnect'}
+INFO - KeyboardInterrupt received. Shutting down client.
+DEBUG - Queued message to server: {'action': 'disconnect'}
+INFO - KeyboardInterrupt received. Shutting down client.
+DEBUG - Queued message to server: {'action': 'disconnect'}
+INFO - Connected to server at ('grouper', 5555)
+DEBUG - Received message from server: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from server
+DEBUG - Queued message to server: {'action': 'set_name', 'name': 'cam'}
+DEBUG - Sent 41 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'create_game'}
+DEBUG - Sent 29 bytes to server
+DEBUG - Received message from server: {'action': 'game_created', 'room_id': '58fd0da9', 'message': 'Room 58fd0da9 created. Waiting for players to join.'}
+INFO - Processing action 'game_created' from server
+INFO - Connected to server at ('grouper', 5555)
+DEBUG - Received message from server: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from server
+DEBUG - Queued message to server: {'action': 'set_name', 'name': 'dave'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'join_game'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_joined', 'room_id': '58fd0da9', 'message': 'Joined room 58fd0da9. Waiting for the game to start.'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'dave'}
+INFO - Processing action 'game_joined' from server
+INFO - Processing action 'player_joined' from server
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'dave'}
+INFO - Processing action 'player_joined' from server
+INFO - Connected to server at ('grouper', 5555)
+DEBUG - Received message from server: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from server
+DEBUG - Queued message to server: {'action': 'set_name', 'name': 'tom'}
+DEBUG - Sent 41 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'join_game'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_joined', 'room_id': '58fd0da9', 'message': 'Joined room 58fd0da9. Waiting for the game to start.'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Received message from server: {'action': 'question', 'question': 'The band STRFKR was also briefly known as Pyramiddd.', 'options': ['True', 'False']}
+INFO - Processing action 'game_joined' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'The band STRFKR was also briefly known as Pyramiddd.', 'options': ['True', 'False']}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'tom'}
+INFO - Processing action 'player_joined' from server
+INFO - Processing action 'player_joined' from server
+INFO - Processing action 'game_started' from server
+INFO - Processing action 'game_started' from server
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+INFO - Processing action 'question' from server
+INFO - Processing action 'question' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'The band STRFKR was also briefly known as Pyramiddd.', 'options': ['True', 'False']}
+INFO - Processing action 'player_joined' from server
+INFO - Processing action 'game_started' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'false'}
+DEBUG - Sent 43 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'cam': 1, 'dave': 1, 'tom': 0}}
+DEBUG - Received message from server: {'action': 'question', 'question': 'Stevie Wonder&#039;s real name is Stevland Hardaway Morris.', 'options': ['True', 'False']}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'cam': 1, 'dave': 1, 'tom': 0}}
+INFO - Processing action 'answer_feedback' from server
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'Stevie Wonder&#039;s real name is Stevland Hardaway Morris.', 'options': ['True', 'False']}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'cam': 1, 'dave': 1, 'tom': 0}}
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'Stevie Wonder&#039;s real name is Stevland Hardaway Morris.', 'options': ['True', 'False']}
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'exit_room'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'false'}
+DEBUG - Sent 43 bytes to server
+DEBUG - Received message from server: {'action': 'player_left', 'player': 'cam'}
+INFO - Processing action 'player_left' from server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 1}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'player_left', 'player': 'cam'}
+INFO - Processing action 'player_left' from server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'dave': 1, 'tom': 1}}
+DEBUG - Received message from server: {'action': 'question', 'question': 'In the game &quot;Melty Blood Actress Again Current Code&quot;, you can enter Blood Heat mode in Half Moon style.', 'options': ['True', 'False']}
+INFO - Processing action 'answer_feedback' from server
+INFO - Processing action 'score_update' from server
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'dave': 1, 'tom': 1}}
+INFO - Processing action 'question' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'In the game &quot;Melty Blood Actress Again Current Code&quot;, you can enter Blood Heat mode in Half Moon style.', 'options': ['True', 'False']}
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'exit_room'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'false'}
+DEBUG - Sent 43 bytes to server
+DEBUG - Received message from server: {'action': 'player_left', 'player': 'tom'}
+INFO - Processing action 'player_left' from server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 2}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'dave': 2}}
+DEBUG - Received message from server: {'action': 'question', 'question': 'Like with the Neanderthals, Homo sapiens sapiens also interbred with the Denisovans.', 'options': ['True', 'False']}
+INFO - Processing action 'answer_feedback' from server
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+INFO - KeyboardInterrupt received. Shutting down client.
+DEBUG - Queued message to server: {'action': 'disconnect'}
+INFO - KeyboardInterrupt received. Shutting down client.
+DEBUG - Queued message to server: {'action': 'disconnect'}
+INFO - KeyboardInterrupt received. Shutting down client.
+DEBUG - Queued message to server: {'action': 'disconnect'}
+INFO - Connected to server at ('grouper', 5555)
+DEBUG - Received message from server: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from server
+DEBUG - Queued message to server: {'action': 'set_name', 'name': 'cam'}
+DEBUG - Sent 41 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+INFO - Connected to server at ('grouper', 5555)
+DEBUG - Received message from server: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from server
+DEBUG - Queued message to server: {'action': 'set_name', 'name': 'tom'}
+DEBUG - Sent 41 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+INFO - Connected to server at ('grouper', 5555)
+DEBUG - Received message from server: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from server
+DEBUG - Queued message to server: {'action': 'set_name', 'name': 'dave'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'create_game'}
+DEBUG - Sent 29 bytes to server
+DEBUG - Received message from server: {'action': 'game_created', 'room_id': '2d8f9c80', 'message': 'Room 2d8f9c80 created. Waiting for players to join.'}
+INFO - Processing action 'game_created' from server
+DEBUG - Queued message to server: {'action': 'join_game'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'tom'}
+INFO - Processing action 'player_joined' from server
+DEBUG - Received message from server: {'action': 'game_joined', 'room_id': '2d8f9c80', 'message': 'Joined room 2d8f9c80. Waiting for the game to start.'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'tom'}
+INFO - Processing action 'game_joined' from server
+INFO - Processing action 'player_joined' from server
+DEBUG - Queued message to server: {'action': 'join_game'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_joined', 'room_id': '2d8f9c80', 'message': 'Joined room 2d8f9c80. Waiting for the game to start.'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Received message from server: {'action': 'question', 'question': 'There is a Donald Trump Board Game, which was made in 1989.', 'options': ['True', 'False']}
+INFO - Processing action 'game_joined' from server
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'cam'}
+INFO - Processing action 'player_joined' from server
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'cam'}
+INFO - Processing action 'game_started' from server
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+INFO - Processing action 'question' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'There is a Donald Trump Board Game, which was made in 1989.', 'options': ['True', 'False']}
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+INFO - Processing action 'player_joined' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'There is a Donald Trump Board Game, which was made in 1989.', 'options': ['True', 'False']}
+INFO - Processing action 'game_started' from server
+INFO - Processing action 'player_joined' from server
+INFO - Processing action 'question' from server
+INFO - Processing action 'game_started' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'false'}
+DEBUG - Sent 43 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'false'}
+DEBUG - Sent 43 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'dave': 0, 'tom': 0, 'cam': 1}}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'dave': 0, 'tom': 0, 'cam': 1}}
+DEBUG - Received message from server: {'action': 'question', 'question': 'The Windows ME operating system was released in the year 2000.', 'options': ['True', 'False']}
+INFO - Processing action 'answer_feedback' from server
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'The Windows ME operating system was released in the year 2000.', 'options': ['True', 'False']}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'dave': 0, 'tom': 0, 'cam': 1}}
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'The Windows ME operating system was released in the year 2000.', 'options': ['True', 'False']}
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'exit_room'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'player_left', 'player': 'dave'}
+INFO - Processing action 'player_left' from server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'player_left', 'player': 'dave'}
+INFO - Processing action 'player_left' from server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 2}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'tom': 1, 'cam': 2}}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'tom': 1, 'cam': 2}}
+DEBUG - Received message from server: {'action': 'question', 'question': 'Sean Connery wasn&#039;t in &quot;Indiana Jones and the Kingdom of the Crystal Skull&quot; because he found retirement too enjoyable.', 'options': ['True', 'False']}
+INFO - Processing action 'answer_feedback' from server
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'Sean Connery wasn&#039;t in &quot;Indiana Jones and the Kingdom of the Crystal Skull&quot; because he found retirement too enjoyable.', 'options': ['True', 'False']}
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'exit_room'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'false'}
+DEBUG - Sent 43 bytes to server
+DEBUG - Received message from server: {'action': 'player_left', 'player': 'cam'}
+INFO - Processing action 'player_left' from server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 1}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'tom': 1}}
+DEBUG - Received message from server: {'action': 'question', 'question': 'Time on Computers is measured via the EPOX System.', 'options': ['True', 'False']}
+INFO - Processing action 'answer_feedback' from server
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+INFO - KeyboardInterrupt received. Shutting down client.
+DEBUG - Queued message to server: {'action': 'disconnect'}
+INFO - KeyboardInterrupt received. Shutting down client.
+DEBUG - Queued message to server: {'action': 'disconnect'}
+INFO - KeyboardInterrupt received. Shutting down client.
+DEBUG - Queued message to server: {'action': 'disconnect'}
+INFO - Connected to server at ('grouper', 5555)
+DEBUG - Received message from server: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from server
+DEBUG - Queued message to server: {'action': 'set_name', 'name': 'cam'}
+DEBUG - Sent 41 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+INFO - Connected to server at ('grouper', 5555)
+DEBUG - Received message from server: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from server
+DEBUG - Queued message to server: {'action': 'set_name', 'name': 'dave'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+INFO - Connected to server at ('grouper', 5555)
+DEBUG - Received message from server: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from server
+DEBUG - Queued message to server: {'action': 'set_name', 'name': 'tom'}
+DEBUG - Sent 41 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'create_game'}
+DEBUG - Sent 29 bytes to server
+DEBUG - Received message from server: {'action': 'game_created', 'room_id': '8e8f976e', 'message': 'Room 8e8f976e created. Waiting for players to join.'}
+INFO - Processing action 'game_created' from server
+DEBUG - Queued message to server: {'action': 'join_game'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_joined', 'room_id': '8e8f976e', 'message': 'Joined room 8e8f976e. Waiting for the game to start.'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'dave'}
+INFO - Processing action 'game_joined' from server
+INFO - Processing action 'player_joined' from server
+INFO - Processing action 'player_joined' from server
+DEBUG - Queued message to server: {'action': 'join_game'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_joined', 'room_id': '8e8f976e', 'message': 'Joined room 8e8f976e. Waiting for the game to start.'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Received message from server: {'action': 'question', 'question': 'Nazi Germany surrendered on Harry Truman&#039;s birthday while he was president.', 'options': ['True', 'False']}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'cam'}
+INFO - Processing action 'game_joined' from server
+INFO - Processing action 'player_joined' from server
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'cam'}
+INFO - Processing action 'game_started' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'Nazi Germany surrendered on Harry Truman&#039;s birthday while he was president.', 'options': ['True', 'False']}
+INFO - Processing action 'question' from server
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+INFO - Processing action 'player_joined' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'Nazi Germany surrendered on Harry Truman&#039;s birthday while he was president.', 'options': ['True', 'False']}
+INFO - Processing action 'game_started' from server
+INFO - Processing action 'question' from server
+INFO - Processing action 'player_joined' from server
+INFO - Processing action 'game_started' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'false'}
+DEBUG - Sent 43 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+INFO - Processing action 'answer_feedback' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'true'}
+DEBUG - Sent 42 bytes to server
+DEBUG - Received message from server: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'tom': 1, 'dave': 1, 'cam': 0}}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'tom': 1, 'dave': 1, 'cam': 0}}
+DEBUG - Received message from server: {'action': 'score_update', 'scores': {'tom': 1, 'dave': 1, 'cam': 0}}
+DEBUG - Received message from server: {'action': 'question', 'question': 'Oxford University is older than the Aztec Empire. ', 'options': ['True', 'False']}
+INFO - Processing action 'answer_feedback' from server
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'Oxford University is older than the Aztec Empire. ', 'options': ['True', 'False']}
+INFO - Processing action 'score_update' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'Oxford University is older than the Aztec Empire. ', 'options': ['True', 'False']}
+INFO - Processing action 'question' from server
+INFO - Processing action 'score_update' from server
+INFO - Processing action 'question' from server
+DEBUG - Queued message to server: {'action': 'exit_room'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'exit_room'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'player_left', 'player': 'tom'}
+INFO - Processing action 'player_left' from server
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'answer', 'answer': 'false'}
+DEBUG - Sent 43 bytes to server
+DEBUG - Received message from server: {'action': 'player_left', 'player': 'tom'}
+DEBUG - Received message from server: {'action': 'player_left', 'player': 'dave'}
+DEBUG - Received message from server: {'action': 'error', 'message': 'Not enough players to continue the game. Game ended.'}
+DEBUG - Received message from server: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'player_left' from server
+INFO - Processing action 'player_left' from server
+INFO - Processing action 'error' from server
+INFO - Processing action 'game_menu' from server
+DEBUG - Queued message to server: {'action': 'create_game'}
+DEBUG - Sent 29 bytes to server
+DEBUG - Received message from server: {'action': 'error', 'message': 'No active question to answer.'}
+INFO - Processing action 'error' from server
+DEBUG - Received message from server: {'action': 'game_created', 'room_id': '21222ab2', 'message': 'Room 21222ab2 created. Waiting for players to join.'}
+INFO - Processing action 'game_created' from server
+DEBUG - Queued message to server: {'action': 'join_game'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_joined', 'room_id': '21222ab2', 'message': 'Joined room 21222ab2. Waiting for the game to start.'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'dave'}
+INFO - Processing action 'game_joined' from server
+INFO - Processing action 'player_joined' from server
+INFO - Processing action 'player_joined' from server
+DEBUG - Queued message to server: {'action': 'join_game'}
+DEBUG - Sent 27 bytes to server
+DEBUG - Received message from server: {'action': 'game_joined', 'room_id': '21222ab2', 'message': 'Joined room 21222ab2. Waiting for the game to start.'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Received message from server: {'action': 'question', 'question': 'In the &quot;Half-Life&quot; series, &quot;H.E.V&quot; stands for &quot;Hazardous Evasiveness Vest&quot;', 'options': ['True', 'False']}
+DEBUG - Received message from server: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Received message from server: {'action': 'question', 'question': 'In the &quot;Half-Life&quot; series, &quot;H.E.V&quot; stands for &quot;Hazardous Evasiveness Vest&quot;', 'options': ['True', 'False']}
+INFO - Processing action 'game_joined' from server
+INFO - Processing action 'player_joined' from server
+DEBUG - Received message from server: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+INFO - Processing action 'game_started' from server
+INFO - Processing action 'player_joined' from server
+INFO - Processing action 'question' from server
+INFO - Processing action 'game_started' from server
+DEBUG - Received message from server: {'action': 'question', 'question': 'In the &quot;Half-Life&quot; series, &quot;H.E.V&quot; stands for &quot;Hazardous Evasiveness Vest&quot;', 'options': ['True', 'False']}
+INFO - Processing action 'question' from server
+INFO - Processing action 'player_joined' from server
+INFO - Processing action 'game_started' from server
+INFO - Processing action 'question' from server
+INFO - KeyboardInterrupt received. Shutting down client.
+DEBUG - Queued message to server: {'action': 'disconnect'}
+INFO - KeyboardInterrupt received. Shutting down client.
+DEBUG - Queued message to server: {'action': 'disconnect'}
+INFO - KeyboardInterrupt received. Shutting down client.
+DEBUG - Queued message to server: {'action': 'disconnect'}

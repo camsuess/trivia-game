@@ -1,0 +1,877 @@
+INFO - Server started on 0.0.0.0:5555
+INFO - New connection from ('129.82.45.130', 48848)
+DEBUG - Queued message to None: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from player 'None'
+INFO - Player 'ca,' connected from ('129.82.45.130', 48848)
+DEBUG - Queued message to ca,: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'create_game' from player 'ca,'
+DEBUG - Queued message to ca,: {'action': 'game_created', 'room_id': '54d76ed5', 'message': 'Room 54d76ed5 created. Waiting for players to join.'}
+INFO - Game room 54d76ed5 created by 'ca,'.
+INFO - New connection from ('129.82.45.130', 48850)
+DEBUG - Queued message to None: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from player 'None'
+INFO - Player 'tom' connected from ('129.82.45.130', 48850)
+DEBUG - Queued message to tom: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'join_game' from player 'tom'
+DEBUG - Queued message to tom: {'action': 'game_joined', 'room_id': '54d76ed5', 'message': 'Joined room 54d76ed5. Waiting for the game to start.'}
+DEBUG - Sending message to 'ca,' in room 54d76ed5: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Queued message to ca,: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Sending message to 'tom' in room 54d76ed5: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Queued message to tom: {'action': 'player_joined', 'player': 'tom'}
+INFO - Player 'tom' joined room 54d76ed5
+INFO - New connection from ('129.82.45.130', 48864)
+DEBUG - Queued message to None: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from player 'None'
+INFO - Player 'dave' connected from ('129.82.45.130', 48864)
+DEBUG - Queued message to dave: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'join_game' from player 'dave'
+DEBUG - Queued message to dave: {'action': 'game_joined', 'room_id': '54d76ed5', 'message': 'Joined room 54d76ed5. Waiting for the game to start.'}
+DEBUG - Sending message to 'ca,' in room 54d76ed5: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Queued message to ca,: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Sending message to 'tom' in room 54d76ed5: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Queued message to tom: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Sending message to 'dave' in room 54d76ed5: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Queued message to dave: {'action': 'player_joined', 'player': 'dave'}
+INFO - Player 'dave' joined room 54d76ed5
+INFO - Starting game in room 54d76ed5 with players: ['ca,', 'tom', 'dave']
+DEBUG - Sending message to 'ca,' in room 54d76ed5: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Queued message to ca,: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Sending message to 'tom' in room 54d76ed5: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Queued message to tom: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Sending message to 'dave' in room 54d76ed5: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Queued message to dave: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Starting new HTTPS connection (1): opentdb.com:443
+DEBUG - https://opentdb.com:443 "GET /api.php?amount=50&type=boolean HTTP/1.1" 200 None
+INFO - Fetched 50 questions for room 54d76ed5
+DEBUG - Sending message to 'ca,' in room 54d76ed5: {'action': 'question', 'question': 'United States President John F. Kennedy was assassinated during his presidential motorcade in Atlanta, Georgia on November 22nd, 1963.', 'options': ['True', 'False']}
+DEBUG - Queued message to ca,: {'action': 'question', 'question': 'United States President John F. Kennedy was assassinated during his presidential motorcade in Atlanta, Georgia on November 22nd, 1963.', 'options': ['True', 'False']}
+DEBUG - Sending message to 'tom' in room 54d76ed5: {'action': 'question', 'question': 'United States President John F. Kennedy was assassinated during his presidential motorcade in Atlanta, Georgia on November 22nd, 1963.', 'options': ['True', 'False']}
+DEBUG - Queued message to tom: {'action': 'question', 'question': 'United States President John F. Kennedy was assassinated during his presidential motorcade in Atlanta, Georgia on November 22nd, 1963.', 'options': ['True', 'False']}
+DEBUG - Sending message to 'dave' in room 54d76ed5: {'action': 'question', 'question': 'United States President John F. Kennedy was assassinated during his presidential motorcade in Atlanta, Georgia on November 22nd, 1963.', 'options': ['True', 'False']}
+DEBUG - Queued message to dave: {'action': 'question', 'question': 'United States President John F. Kennedy was assassinated during his presidential motorcade in Atlanta, Georgia on November 22nd, 1963.', 'options': ['True', 'False']}
+INFO - Broadcasted question to room 54d76ed5: United States President John F. Kennedy was assassinated during his presidential motorcade in Atlanta, Georgia on November 22nd, 1963.
+INFO - Processing action 'exit_room' from player 'dave'
+DEBUG - Sending message to 'ca,' in room 54d76ed5: {'action': 'player_left', 'player': 'dave'}
+DEBUG - Queued message to ca,: {'action': 'player_left', 'player': 'dave'}
+DEBUG - Sending message to 'tom' in room 54d76ed5: {'action': 'player_left', 'player': 'dave'}
+DEBUG - Queued message to tom: {'action': 'player_left', 'player': 'dave'}
+INFO - Player 'dave' removed from room 54d76ed5
+DEBUG - Queued message to dave: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'exit_room' from player 'tom'
+DEBUG - Sending message to 'ca,' in room 54d76ed5: {'action': 'player_left', 'player': 'tom'}
+DEBUG - Queued message to ca,: {'action': 'player_left', 'player': 'tom'}
+INFO - Player 'tom' removed from room 54d76ed5
+DEBUG - Queued message to tom: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'answer' from player 'ca,'
+DEBUG - Queued message to ca,: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+INFO - Player 'ca,' answered 'true' in room 54d76ed5. Score: 0
+INFO - Ending round in room 54d76ed5
+DEBUG - Sending message to 'ca,' in room 54d76ed5: {'action': 'score_update', 'scores': {'ca,': 0}}
+DEBUG - Queued message to ca,: {'action': 'score_update', 'scores': {'ca,': 0}}
+DEBUG - Sending message to 'ca,' in room 54d76ed5: {'action': 'question', 'question': 'It was once believed that injecting shark cartilage into people would prevent them from contracting cancer.', 'options': ['True', 'False']}
+DEBUG - Queued message to ca,: {'action': 'question', 'question': 'It was once believed that injecting shark cartilage into people would prevent them from contracting cancer.', 'options': ['True', 'False']}
+INFO - Broadcasted question to room 54d76ed5: It was once believed that injecting shark cartilage into people would prevent them from contracting cancer.
+INFO - Processing action 'exit_room' from player 'ca,'
+INFO - Player 'ca,' removed from room 54d76ed5
+DEBUG - Queued message to ca,: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'create_game' from player 'ca,'
+DEBUG - Queued message to ca,: {'action': 'game_created', 'room_id': '1544e076', 'message': 'Room 1544e076 created. Waiting for players to join.'}
+INFO - Game room 1544e076 created by 'ca,'.
+INFO - Processing action 'join_game' from player 'tom'
+DEBUG - Queued message to tom: {'action': 'game_joined', 'room_id': '1544e076', 'message': 'Joined room 1544e076. Waiting for the game to start.'}
+DEBUG - Sending message to 'ca,' in room 1544e076: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Queued message to ca,: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Sending message to 'tom' in room 1544e076: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Queued message to tom: {'action': 'player_joined', 'player': 'tom'}
+INFO - Player 'tom' joined room 1544e076
+INFO - Processing action 'join_game' from player 'dave'
+DEBUG - Queued message to dave: {'action': 'game_joined', 'room_id': '1544e076', 'message': 'Joined room 1544e076. Waiting for the game to start.'}
+DEBUG - Sending message to 'ca,' in room 1544e076: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Queued message to ca,: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Sending message to 'tom' in room 1544e076: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Queued message to tom: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Sending message to 'dave' in room 1544e076: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Queued message to dave: {'action': 'player_joined', 'player': 'dave'}
+INFO - Player 'dave' joined room 1544e076
+INFO - Starting game in room 1544e076 with players: ['ca,', 'tom', 'dave']
+DEBUG - Sending message to 'ca,' in room 1544e076: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Queued message to ca,: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Sending message to 'tom' in room 1544e076: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Queued message to tom: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Sending message to 'dave' in room 1544e076: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Queued message to dave: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Starting new HTTPS connection (1): opentdb.com:443
+DEBUG - https://opentdb.com:443 "GET /api.php?amount=50&type=boolean HTTP/1.1" 200 None
+INFO - Fetched 50 questions for room 1544e076
+DEBUG - Sending message to 'ca,' in room 1544e076: {'action': 'question', 'question': 'The song &quot;Megalovania&quot; by Toby Fox made its third appearence in the 2015 RPG &quot;Undertale&quot;.', 'options': ['True', 'False']}
+DEBUG - Queued message to ca,: {'action': 'question', 'question': 'The song &quot;Megalovania&quot; by Toby Fox made its third appearence in the 2015 RPG &quot;Undertale&quot;.', 'options': ['True', 'False']}
+DEBUG - Sending message to 'tom' in room 1544e076: {'action': 'question', 'question': 'The song &quot;Megalovania&quot; by Toby Fox made its third appearence in the 2015 RPG &quot;Undertale&quot;.', 'options': ['True', 'False']}
+DEBUG - Queued message to tom: {'action': 'question', 'question': 'The song &quot;Megalovania&quot; by Toby Fox made its third appearence in the 2015 RPG &quot;Undertale&quot;.', 'options': ['True', 'False']}
+DEBUG - Sending message to 'dave' in room 1544e076: {'action': 'question', 'question': 'The song &quot;Megalovania&quot; by Toby Fox made its third appearence in the 2015 RPG &quot;Undertale&quot;.', 'options': ['True', 'False']}
+DEBUG - Queued message to dave: {'action': 'question', 'question': 'The song &quot;Megalovania&quot; by Toby Fox made its third appearence in the 2015 RPG &quot;Undertale&quot;.', 'options': ['True', 'False']}
+INFO - Broadcasted question to room 1544e076: The song &quot;Megalovania&quot; by Toby Fox made its third appearence in the 2015 RPG &quot;Undertale&quot;.
+INFO - Processing action 'answer' from player 'dave'
+DEBUG - Queued message to dave: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+INFO - Player 'dave' answered 'true' in room 1544e076. Score: 1
+INFO - Processing action 'answer' from player 'tom'
+DEBUG - Queued message to tom: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+INFO - Player 'tom' answered 'true' in room 1544e076. Score: 1
+INFO - Processing action 'answer' from player 'ca,'
+DEBUG - Queued message to ca,: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+INFO - Player 'ca,' answered 'true' in room 1544e076. Score: 1
+INFO - Ending round in room 1544e076
+DEBUG - Sending message to 'ca,' in room 1544e076: {'action': 'score_update', 'scores': {'ca,': 1, 'tom': 1, 'dave': 1}}
+DEBUG - Queued message to ca,: {'action': 'score_update', 'scores': {'ca,': 1, 'tom': 1, 'dave': 1}}
+DEBUG - Sending message to 'tom' in room 1544e076: {'action': 'score_update', 'scores': {'ca,': 1, 'tom': 1, 'dave': 1}}
+DEBUG - Queued message to tom: {'action': 'score_update', 'scores': {'ca,': 1, 'tom': 1, 'dave': 1}}
+DEBUG - Sending message to 'dave' in room 1544e076: {'action': 'score_update', 'scores': {'ca,': 1, 'tom': 1, 'dave': 1}}
+DEBUG - Queued message to dave: {'action': 'score_update', 'scores': {'ca,': 1, 'tom': 1, 'dave': 1}}
+DEBUG - Sending message to 'ca,' in room 1544e076: {'action': 'question', 'question': 'Sitting for more than three hours a day can cut two years off a person&#039;s life expectancy.', 'options': ['True', 'False']}
+DEBUG - Queued message to ca,: {'action': 'question', 'question': 'Sitting for more than three hours a day can cut two years off a person&#039;s life expectancy.', 'options': ['True', 'False']}
+DEBUG - Sending message to 'tom' in room 1544e076: {'action': 'question', 'question': 'Sitting for more than three hours a day can cut two years off a person&#039;s life expectancy.', 'options': ['True', 'False']}
+DEBUG - Queued message to tom: {'action': 'question', 'question': 'Sitting for more than three hours a day can cut two years off a person&#039;s life expectancy.', 'options': ['True', 'False']}
+DEBUG - Sending message to 'dave' in room 1544e076: {'action': 'question', 'question': 'Sitting for more than three hours a day can cut two years off a person&#039;s life expectancy.', 'options': ['True', 'False']}
+DEBUG - Queued message to dave: {'action': 'question', 'question': 'Sitting for more than three hours a day can cut two years off a person&#039;s life expectancy.', 'options': ['True', 'False']}
+INFO - Broadcasted question to room 1544e076: Sitting for more than three hours a day can cut two years off a person&#039;s life expectancy.
+INFO - Processing action 'exit_room' from player 'ca,'
+DEBUG - Sending message to 'tom' in room 1544e076: {'action': 'player_left', 'player': 'ca,'}
+DEBUG - Queued message to tom: {'action': 'player_left', 'player': 'ca,'}
+DEBUG - Sending message to 'dave' in room 1544e076: {'action': 'player_left', 'player': 'ca,'}
+DEBUG - Queued message to dave: {'action': 'player_left', 'player': 'ca,'}
+INFO - Player 'ca,' removed from room 1544e076
+DEBUG - Queued message to ca,: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'answer' from player 'tom'
+DEBUG - Queued message to tom: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 2}
+INFO - Player 'tom' answered 'true' in room 1544e076. Score: 2
+INFO - Processing action 'answer' from player 'dave'
+DEBUG - Queued message to dave: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 2}
+INFO - Player 'dave' answered 'true' in room 1544e076. Score: 2
+INFO - Ending round in room 1544e076
+DEBUG - Sending message to 'tom' in room 1544e076: {'action': 'score_update', 'scores': {'tom': 2, 'dave': 2}}
+DEBUG - Queued message to tom: {'action': 'score_update', 'scores': {'tom': 2, 'dave': 2}}
+DEBUG - Sending message to 'dave' in room 1544e076: {'action': 'score_update', 'scores': {'tom': 2, 'dave': 2}}
+DEBUG - Queued message to dave: {'action': 'score_update', 'scores': {'tom': 2, 'dave': 2}}
+DEBUG - Sending message to 'tom' in room 1544e076: {'action': 'question', 'question': 'The television show Doctor Who first aired in 1963.', 'options': ['True', 'False']}
+DEBUG - Queued message to tom: {'action': 'question', 'question': 'The television show Doctor Who first aired in 1963.', 'options': ['True', 'False']}
+DEBUG - Sending message to 'dave' in room 1544e076: {'action': 'question', 'question': 'The television show Doctor Who first aired in 1963.', 'options': ['True', 'False']}
+DEBUG - Queued message to dave: {'action': 'question', 'question': 'The television show Doctor Who first aired in 1963.', 'options': ['True', 'False']}
+INFO - Broadcasted question to room 1544e076: The television show Doctor Who first aired in 1963.
+INFO - Processing action 'exit_room' from player 'dave'
+DEBUG - Sending message to 'tom' in room 1544e076: {'action': 'player_left', 'player': 'dave'}
+DEBUG - Queued message to tom: {'action': 'player_left', 'player': 'dave'}
+INFO - Player 'dave' removed from room 1544e076
+DEBUG - Queued message to dave: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'answer' from player 'tom'
+DEBUG - Queued message to tom: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 2}
+INFO - Player 'tom' answered 'false' in room 1544e076. Score: 2
+INFO - Ending round in room 1544e076
+DEBUG - Sending message to 'tom' in room 1544e076: {'action': 'score_update', 'scores': {'tom': 2}}
+DEBUG - Queued message to tom: {'action': 'score_update', 'scores': {'tom': 2}}
+DEBUG - Sending message to 'tom' in room 1544e076: {'action': 'question', 'question': 'The 2005 video game &quot;Call of Duty 2: Big Red One&quot; is not available on PC.', 'options': ['True', 'False']}
+DEBUG - Queued message to tom: {'action': 'question', 'question': 'The 2005 video game &quot;Call of Duty 2: Big Red One&quot; is not available on PC.', 'options': ['True', 'False']}
+INFO - Broadcasted question to room 1544e076: The 2005 video game &quot;Call of Duty 2: Big Red One&quot; is not available on PC.
+INFO - Processing action 'exit_room' from player 'tom'
+INFO - Player 'tom' removed from room 1544e076
+DEBUG - Queued message to tom: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'create_game' from player 'ca,'
+DEBUG - Queued message to ca,: {'action': 'game_created', 'room_id': '2735ad79', 'message': 'Room 2735ad79 created. Waiting for players to join.'}
+INFO - Game room 2735ad79 created by 'ca,'.
+INFO - Processing action 'join_game' from player 'tom'
+DEBUG - Queued message to tom: {'action': 'game_joined', 'room_id': '2735ad79', 'message': 'Joined room 2735ad79. Waiting for the game to start.'}
+DEBUG - Sending message to 'ca,' in room 2735ad79: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Queued message to ca,: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Sending message to 'tom' in room 2735ad79: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Queued message to tom: {'action': 'player_joined', 'player': 'tom'}
+INFO - Player 'tom' joined room 2735ad79
+INFO - Processing action 'join_game' from player 'dave'
+DEBUG - Queued message to dave: {'action': 'game_joined', 'room_id': '2735ad79', 'message': 'Joined room 2735ad79. Waiting for the game to start.'}
+DEBUG - Sending message to 'ca,' in room 2735ad79: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Queued message to ca,: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Sending message to 'tom' in room 2735ad79: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Queued message to tom: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Sending message to 'dave' in room 2735ad79: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Queued message to dave: {'action': 'player_joined', 'player': 'dave'}
+INFO - Player 'dave' joined room 2735ad79
+INFO - Starting game in room 2735ad79 with players: ['ca,', 'tom', 'dave']
+DEBUG - Sending message to 'ca,' in room 2735ad79: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Queued message to ca,: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Sending message to 'tom' in room 2735ad79: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Queued message to tom: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Sending message to 'dave' in room 2735ad79: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Queued message to dave: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Starting new HTTPS connection (1): opentdb.com:443
+DEBUG - https://opentdb.com:443 "GET /api.php?amount=50&type=boolean HTTP/1.1" 200 None
+INFO - Fetched 50 questions for room 2735ad79
+DEBUG - Sending message to 'ca,' in room 2735ad79: {'action': 'question', 'question': '&quot;Buffalo buffalo Buffalo buffalo buffalo buffalo Buffalo buffalo.&quot; is a grammatically correct sentence.', 'options': ['True', 'False']}
+DEBUG - Queued message to ca,: {'action': 'question', 'question': '&quot;Buffalo buffalo Buffalo buffalo buffalo buffalo Buffalo buffalo.&quot; is a grammatically correct sentence.', 'options': ['True', 'False']}
+DEBUG - Sending message to 'tom' in room 2735ad79: {'action': 'question', 'question': '&quot;Buffalo buffalo Buffalo buffalo buffalo buffalo Buffalo buffalo.&quot; is a grammatically correct sentence.', 'options': ['True', 'False']}
+DEBUG - Queued message to tom: {'action': 'question', 'question': '&quot;Buffalo buffalo Buffalo buffalo buffalo buffalo Buffalo buffalo.&quot; is a grammatically correct sentence.', 'options': ['True', 'False']}
+DEBUG - Sending message to 'dave' in room 2735ad79: {'action': 'question', 'question': '&quot;Buffalo buffalo Buffalo buffalo buffalo buffalo Buffalo buffalo.&quot; is a grammatically correct sentence.', 'options': ['True', 'False']}
+DEBUG - Queued message to dave: {'action': 'question', 'question': '&quot;Buffalo buffalo Buffalo buffalo buffalo buffalo Buffalo buffalo.&quot; is a grammatically correct sentence.', 'options': ['True', 'False']}
+INFO - Broadcasted question to room 2735ad79: &quot;Buffalo buffalo Buffalo buffalo buffalo buffalo Buffalo buffalo.&quot; is a grammatically correct sentence.
+INFO - Processing action 'answer' from player 'dave'
+DEBUG - Queued message to dave: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+INFO - Player 'dave' answered 'true' in room 2735ad79. Score: 1
+INFO - Processing action 'answer' from player 'tom'
+DEBUG - Queued message to tom: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+INFO - Player 'tom' answered 'true' in room 2735ad79. Score: 1
+INFO - Processing action 'answer' from player 'ca,'
+DEBUG - Queued message to ca,: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+INFO - Player 'ca,' answered 'true' in room 2735ad79. Score: 1
+INFO - Ending round in room 2735ad79
+DEBUG - Sending message to 'ca,' in room 2735ad79: {'action': 'score_update', 'scores': {'ca,': 1, 'tom': 1, 'dave': 1}}
+DEBUG - Queued message to ca,: {'action': 'score_update', 'scores': {'ca,': 1, 'tom': 1, 'dave': 1}}
+DEBUG - Sending message to 'tom' in room 2735ad79: {'action': 'score_update', 'scores': {'ca,': 1, 'tom': 1, 'dave': 1}}
+DEBUG - Queued message to tom: {'action': 'score_update', 'scores': {'ca,': 1, 'tom': 1, 'dave': 1}}
+DEBUG - Sending message to 'dave' in room 2735ad79: {'action': 'score_update', 'scores': {'ca,': 1, 'tom': 1, 'dave': 1}}
+DEBUG - Queued message to dave: {'action': 'score_update', 'scores': {'ca,': 1, 'tom': 1, 'dave': 1}}
+DEBUG - Sending message to 'ca,' in room 2735ad79: {'action': 'question', 'question': 'Eurobeat is primarily an Italian genre of music.', 'options': ['True', 'False']}
+DEBUG - Queued message to ca,: {'action': 'question', 'question': 'Eurobeat is primarily an Italian genre of music.', 'options': ['True', 'False']}
+DEBUG - Sending message to 'tom' in room 2735ad79: {'action': 'question', 'question': 'Eurobeat is primarily an Italian genre of music.', 'options': ['True', 'False']}
+DEBUG - Queued message to tom: {'action': 'question', 'question': 'Eurobeat is primarily an Italian genre of music.', 'options': ['True', 'False']}
+DEBUG - Sending message to 'dave' in room 2735ad79: {'action': 'question', 'question': 'Eurobeat is primarily an Italian genre of music.', 'options': ['True', 'False']}
+DEBUG - Queued message to dave: {'action': 'question', 'question': 'Eurobeat is primarily an Italian genre of music.', 'options': ['True', 'False']}
+INFO - Broadcasted question to room 2735ad79: Eurobeat is primarily an Italian genre of music.
+INFO - Processing action 'disconnect' from player 'ca,'
+INFO - Player 'ca,' disconnected
+DEBUG - Sending message to 'tom' in room 2735ad79: {'action': 'player_left', 'player': 'ca,'}
+DEBUG - Queued message to tom: {'action': 'player_left', 'player': 'ca,'}
+DEBUG - Sending message to 'dave' in room 2735ad79: {'action': 'player_left', 'player': 'ca,'}
+DEBUG - Queued message to dave: {'action': 'player_left', 'player': 'ca,'}
+INFO - Player 'ca,' removed from room 2735ad79
+INFO - Processing action 'answer' from player 'tom'
+DEBUG - Queued message to tom: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 1}
+INFO - Player 'tom' answered 'false' in room 2735ad79. Score: 1
+INFO - Processing action 'answer' from player 'dave'
+DEBUG - Queued message to dave: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 1}
+INFO - Player 'dave' answered 'false' in room 2735ad79. Score: 1
+INFO - Ending round in room 2735ad79
+DEBUG - Sending message to 'tom' in room 2735ad79: {'action': 'score_update', 'scores': {'tom': 1, 'dave': 1}}
+DEBUG - Queued message to tom: {'action': 'score_update', 'scores': {'tom': 1, 'dave': 1}}
+DEBUG - Sending message to 'dave' in room 2735ad79: {'action': 'score_update', 'scores': {'tom': 1, 'dave': 1}}
+DEBUG - Queued message to dave: {'action': 'score_update', 'scores': {'tom': 1, 'dave': 1}}
+DEBUG - Sending message to 'tom' in room 2735ad79: {'action': 'question', 'question': 'The cover of The Beatles album &quot;Abbey Road&quot; featured a Volkswagen Beetle in the background.', 'options': ['True', 'False']}
+DEBUG - Queued message to tom: {'action': 'question', 'question': 'The cover of The Beatles album &quot;Abbey Road&quot; featured a Volkswagen Beetle in the background.', 'options': ['True', 'False']}
+DEBUG - Sending message to 'dave' in room 2735ad79: {'action': 'question', 'question': 'The cover of The Beatles album &quot;Abbey Road&quot; featured a Volkswagen Beetle in the background.', 'options': ['True', 'False']}
+DEBUG - Queued message to dave: {'action': 'question', 'question': 'The cover of The Beatles album &quot;Abbey Road&quot; featured a Volkswagen Beetle in the background.', 'options': ['True', 'False']}
+INFO - Broadcasted question to room 2735ad79: The cover of The Beatles album &quot;Abbey Road&quot; featured a Volkswagen Beetle in the background.
+INFO - Processing action 'disconnect' from player 'dave'
+INFO - Player 'dave' disconnected
+DEBUG - Sending message to 'tom' in room 2735ad79: {'action': 'player_left', 'player': 'dave'}
+DEBUG - Queued message to tom: {'action': 'player_left', 'player': 'dave'}
+INFO - Player 'dave' removed from room 2735ad79
+DEBUG - Sending message to 'tom' in room 2735ad79: {'action': 'error', 'message': 'Not enough players to continue the game. Game ended.'}
+DEBUG - Queued message to tom: {'action': 'error', 'message': 'Not enough players to continue the game. Game ended.'}
+DEBUG - Sending message to 'tom' in room 2735ad79: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+DEBUG - Queued message to tom: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Room 2735ad79 has been reset and removed.
+INFO - Processing action 'answer' from player 'tom'
+DEBUG - Queued message to tom: {'action': 'error', 'message': 'No active question to answer.'}
+INFO - Processing action 'disconnect' from player 'tom'
+INFO - Player 'tom' disconnected
+INFO - KeyboardInterrupt received. Initiating shutdown.
+INFO - Server shutting down...
+INFO - Server has been shut down.
+INFO - Server started on 0.0.0.0:5555
+INFO - New connection from ('129.82.45.130', 60468)
+DEBUG - Queued message to None: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from player 'None'
+INFO - Player 'cam' connected from ('129.82.45.130', 60468)
+DEBUG - Queued message to cam: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - New connection from ('129.82.45.130', 46838)
+DEBUG - Queued message to None: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from player 'None'
+INFO - Player 'tom' connected from ('129.82.45.130', 46838)
+DEBUG - Queued message to tom: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - New connection from ('129.82.45.130', 46840)
+DEBUG - Queued message to None: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from player 'None'
+INFO - Player 'dave' connected from ('129.82.45.130', 46840)
+DEBUG - Queued message to dave: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'create_game' from player 'dave'
+DEBUG - Queued message to dave: {'action': 'game_created', 'room_id': '371ed2a0', 'message': 'Room 371ed2a0 created. Waiting for players to join.'}
+INFO - Game room 371ed2a0 created by 'dave'.
+INFO - Processing action 'join_game' from player 'tom'
+DEBUG - Queued message to tom: {'action': 'game_joined', 'room_id': '371ed2a0', 'message': 'Joined room 371ed2a0. Waiting for the game to start.'}
+DEBUG - Sending message to 'dave' in room 371ed2a0: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Queued message to dave: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Sending message to 'tom' in room 371ed2a0: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Queued message to tom: {'action': 'player_joined', 'player': 'tom'}
+INFO - Player 'tom' joined room 371ed2a0
+INFO - Processing action 'join_game' from player 'cam'
+DEBUG - Queued message to cam: {'action': 'game_joined', 'room_id': '371ed2a0', 'message': 'Joined room 371ed2a0. Waiting for the game to start.'}
+DEBUG - Sending message to 'dave' in room 371ed2a0: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Queued message to dave: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Sending message to 'tom' in room 371ed2a0: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Queued message to tom: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Sending message to 'cam' in room 371ed2a0: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Queued message to cam: {'action': 'player_joined', 'player': 'cam'}
+INFO - Player 'cam' joined room 371ed2a0
+INFO - Starting game in room 371ed2a0 with players: ['dave', 'tom', 'cam']
+DEBUG - Sending message to 'dave' in room 371ed2a0: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Queued message to dave: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Sending message to 'tom' in room 371ed2a0: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Queued message to tom: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Sending message to 'cam' in room 371ed2a0: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Queued message to cam: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Starting new HTTPS connection (1): opentdb.com:443
+DEBUG - https://opentdb.com:443 "GET /api.php?amount=50&type=boolean HTTP/1.1" 200 None
+INFO - Fetched 50 questions for room 371ed2a0
+DEBUG - Sending message to 'dave' in room 371ed2a0: {'action': 'question', 'question': 'Donald Duck played the role of Bob Cratchit in Disney&#039;s 1983 adaptation of A Christmas Carol.', 'options': ['True', 'False']}
+DEBUG - Queued message to dave: {'action': 'question', 'question': 'Donald Duck played the role of Bob Cratchit in Disney&#039;s 1983 adaptation of A Christmas Carol.', 'options': ['True', 'False']}
+DEBUG - Sending message to 'tom' in room 371ed2a0: {'action': 'question', 'question': 'Donald Duck played the role of Bob Cratchit in Disney&#039;s 1983 adaptation of A Christmas Carol.', 'options': ['True', 'False']}
+DEBUG - Queued message to tom: {'action': 'question', 'question': 'Donald Duck played the role of Bob Cratchit in Disney&#039;s 1983 adaptation of A Christmas Carol.', 'options': ['True', 'False']}
+DEBUG - Sending message to 'cam' in room 371ed2a0: {'action': 'question', 'question': 'Donald Duck played the role of Bob Cratchit in Disney&#039;s 1983 adaptation of A Christmas Carol.', 'options': ['True', 'False']}
+DEBUG - Queued message to cam: {'action': 'question', 'question': 'Donald Duck played the role of Bob Cratchit in Disney&#039;s 1983 adaptation of A Christmas Carol.', 'options': ['True', 'False']}
+INFO - Broadcasted question to room 371ed2a0: Donald Duck played the role of Bob Cratchit in Disney&#039;s 1983 adaptation of A Christmas Carol.
+INFO - Processing action 'exit_room' from player 'cam'
+DEBUG - Sending message to 'dave' in room 371ed2a0: {'action': 'player_left', 'player': 'cam'}
+DEBUG - Queued message to dave: {'action': 'player_left', 'player': 'cam'}
+DEBUG - Sending message to 'tom' in room 371ed2a0: {'action': 'player_left', 'player': 'cam'}
+DEBUG - Queued message to tom: {'action': 'player_left', 'player': 'cam'}
+INFO - Player 'cam' removed from room 371ed2a0
+DEBUG - Queued message to cam: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'answer' from player 'tom'
+DEBUG - Queued message to tom: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+INFO - Player 'tom' answered 'true' in room 371ed2a0. Score: 0
+INFO - Processing action 'answer' from player 'dave'
+DEBUG - Queued message to dave: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+INFO - Player 'dave' answered 'true' in room 371ed2a0. Score: 0
+INFO - Ending round in room 371ed2a0
+DEBUG - Sending message to 'dave' in room 371ed2a0: {'action': 'score_update', 'scores': {'dave': 0, 'tom': 0}}
+DEBUG - Queued message to dave: {'action': 'score_update', 'scores': {'dave': 0, 'tom': 0}}
+DEBUG - Sending message to 'tom' in room 371ed2a0: {'action': 'score_update', 'scores': {'dave': 0, 'tom': 0}}
+DEBUG - Queued message to tom: {'action': 'score_update', 'scores': {'dave': 0, 'tom': 0}}
+DEBUG - Sending message to 'dave' in room 371ed2a0: {'action': 'question', 'question': 'Several characters in &quot;Super Mario 64&quot; blink their eyes, including Mario himself.', 'options': ['True', 'False']}
+DEBUG - Queued message to dave: {'action': 'question', 'question': 'Several characters in &quot;Super Mario 64&quot; blink their eyes, including Mario himself.', 'options': ['True', 'False']}
+DEBUG - Sending message to 'tom' in room 371ed2a0: {'action': 'question', 'question': 'Several characters in &quot;Super Mario 64&quot; blink their eyes, including Mario himself.', 'options': ['True', 'False']}
+DEBUG - Queued message to tom: {'action': 'question', 'question': 'Several characters in &quot;Super Mario 64&quot; blink their eyes, including Mario himself.', 'options': ['True', 'False']}
+INFO - Broadcasted question to room 371ed2a0: Several characters in &quot;Super Mario 64&quot; blink their eyes, including Mario himself.
+INFO - Processing action 'exit_room' from player 'dave'
+DEBUG - Sending message to 'tom' in room 371ed2a0: {'action': 'player_left', 'player': 'dave'}
+DEBUG - Queued message to tom: {'action': 'player_left', 'player': 'dave'}
+INFO - Player 'dave' removed from room 371ed2a0
+DEBUG - Queued message to dave: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'answer' from player 'tom'
+DEBUG - Queued message to tom: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+INFO - Player 'tom' answered 'false' in room 371ed2a0. Score: 0
+INFO - Ending round in room 371ed2a0
+DEBUG - Sending message to 'tom' in room 371ed2a0: {'action': 'score_update', 'scores': {'tom': 0}}
+DEBUG - Queued message to tom: {'action': 'score_update', 'scores': {'tom': 0}}
+DEBUG - Sending message to 'tom' in room 371ed2a0: {'action': 'question', 'question': 'The Windows 7 operating system has six main editions.', 'options': ['True', 'False']}
+DEBUG - Queued message to tom: {'action': 'question', 'question': 'The Windows 7 operating system has six main editions.', 'options': ['True', 'False']}
+INFO - Broadcasted question to room 371ed2a0: The Windows 7 operating system has six main editions.
+INFO - Processing action 'answer' from player 'tom'
+DEBUG - Queued message to tom: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+INFO - Player 'tom' answered 'false' in room 371ed2a0. Score: 0
+INFO - Ending round in room 371ed2a0
+DEBUG - Sending message to 'tom' in room 371ed2a0: {'action': 'score_update', 'scores': {'tom': 0}}
+DEBUG - Queued message to tom: {'action': 'score_update', 'scores': {'tom': 0}}
+DEBUG - Sending message to 'tom' in room 371ed2a0: {'action': 'question', 'question': 'The color of the pills in the Matrix were Blue and Yellow.', 'options': ['True', 'False']}
+DEBUG - Queued message to tom: {'action': 'question', 'question': 'The color of the pills in the Matrix were Blue and Yellow.', 'options': ['True', 'False']}
+INFO - Broadcasted question to room 371ed2a0: The color of the pills in the Matrix were Blue and Yellow.
+INFO - Processing action 'disconnect' from player 'tom'
+INFO - Player 'tom' disconnected
+INFO - Player 'tom' removed from room 371ed2a0
+INFO - Room 371ed2a0 deleted as it became empty
+INFO - Processing action 'disconnect' from player 'dave'
+INFO - Player 'dave' disconnected
+INFO - Processing action 'disconnect' from player 'cam'
+INFO - Player 'cam' disconnected
+INFO - KeyboardInterrupt received. Initiating shutdown.
+INFO - Server shutting down...
+INFO - Server has been shut down.
+INFO - Server started on 0.0.0.0:5555
+INFO - New connection from ('129.82.45.130', 58974)
+DEBUG - Queued message to None: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from player 'None'
+INFO - Player 'cam' connected from ('129.82.45.130', 58974)
+DEBUG - Queued message to cam: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - New connection from ('129.82.45.130', 58986)
+DEBUG - Queued message to None: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from player 'None'
+INFO - Player 'tom' connected from ('129.82.45.130', 58986)
+DEBUG - Queued message to tom: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - New connection from ('129.82.45.130', 58996)
+DEBUG - Queued message to None: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from player 'None'
+INFO - Player 'dave' connected from ('129.82.45.130', 58996)
+DEBUG - Queued message to dave: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'create_game' from player 'dave'
+DEBUG - Queued message to dave: {'action': 'game_created', 'room_id': '36a71d10', 'message': 'Room 36a71d10 created. Waiting for players to join.'}
+INFO - Game room 36a71d10 created by 'dave'.
+INFO - Processing action 'join_game' from player 'tom'
+DEBUG - Queued message to tom: {'action': 'game_joined', 'room_id': '36a71d10', 'message': 'Joined room 36a71d10. Waiting for the game to start.'}
+DEBUG - Sending message to 'dave' in room 36a71d10: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Queued message to dave: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Sending message to 'tom' in room 36a71d10: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Queued message to tom: {'action': 'player_joined', 'player': 'tom'}
+INFO - Player 'tom' joined room 36a71d10
+INFO - Processing action 'join_game' from player 'cam'
+DEBUG - Queued message to cam: {'action': 'game_joined', 'room_id': '36a71d10', 'message': 'Joined room 36a71d10. Waiting for the game to start.'}
+DEBUG - Sending message to 'dave' in room 36a71d10: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Queued message to dave: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Sending message to 'tom' in room 36a71d10: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Queued message to tom: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Sending message to 'cam' in room 36a71d10: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Queued message to cam: {'action': 'player_joined', 'player': 'cam'}
+INFO - Player 'cam' joined room 36a71d10
+INFO - Starting game in room 36a71d10 with players: ['dave', 'tom', 'cam']
+DEBUG - Sending message to 'dave' in room 36a71d10: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Queued message to dave: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Sending message to 'tom' in room 36a71d10: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Queued message to tom: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Sending message to 'cam' in room 36a71d10: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Queued message to cam: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Starting new HTTPS connection (1): opentdb.com:443
+DEBUG - https://opentdb.com:443 "GET /api.php?amount=50&type=boolean HTTP/1.1" 200 None
+INFO - Fetched 50 questions for room 36a71d10
+DEBUG - Sending message to 'dave' in room 36a71d10: {'action': 'question', 'question': 'The binary number &quot;101001101&quot; is equivalent to the Decimal number &quot;334&quot;', 'options': ['True', 'False']}
+DEBUG - Queued message to dave: {'action': 'question', 'question': 'The binary number &quot;101001101&quot; is equivalent to the Decimal number &quot;334&quot;', 'options': ['True', 'False']}
+DEBUG - Sending message to 'tom' in room 36a71d10: {'action': 'question', 'question': 'The binary number &quot;101001101&quot; is equivalent to the Decimal number &quot;334&quot;', 'options': ['True', 'False']}
+DEBUG - Queued message to tom: {'action': 'question', 'question': 'The binary number &quot;101001101&quot; is equivalent to the Decimal number &quot;334&quot;', 'options': ['True', 'False']}
+DEBUG - Sending message to 'cam' in room 36a71d10: {'action': 'question', 'question': 'The binary number &quot;101001101&quot; is equivalent to the Decimal number &quot;334&quot;', 'options': ['True', 'False']}
+DEBUG - Queued message to cam: {'action': 'question', 'question': 'The binary number &quot;101001101&quot; is equivalent to the Decimal number &quot;334&quot;', 'options': ['True', 'False']}
+INFO - Broadcasted question to room 36a71d10: The binary number &quot;101001101&quot; is equivalent to the Decimal number &quot;334&quot;
+INFO - Processing action 'exit_room' from player 'cam'
+DEBUG - Sending message to 'dave' in room 36a71d10: {'action': 'player_left', 'player': 'cam'}
+DEBUG - Queued message to dave: {'action': 'player_left', 'player': 'cam'}
+DEBUG - Sending message to 'tom' in room 36a71d10: {'action': 'player_left', 'player': 'cam'}
+DEBUG - Queued message to tom: {'action': 'player_left', 'player': 'cam'}
+INFO - Player 'cam' removed from room 36a71d10
+DEBUG - Queued message to cam: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'exit_room' from player 'tom'
+DEBUG - Sending message to 'dave' in room 36a71d10: {'action': 'player_left', 'player': 'tom'}
+DEBUG - Queued message to dave: {'action': 'player_left', 'player': 'tom'}
+INFO - Player 'tom' removed from room 36a71d10
+DEBUG - Queued message to tom: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'answer' from player 'dave'
+DEBUG - Queued message to dave: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+INFO - Player 'dave' answered 'true' in room 36a71d10. Score: 0
+INFO - Ending round in room 36a71d10
+DEBUG - Sending message to 'dave' in room 36a71d10: {'action': 'score_update', 'scores': {'dave': 0}}
+DEBUG - Queued message to dave: {'action': 'score_update', 'scores': {'dave': 0}}
+DEBUG - Sending message to 'dave' in room 36a71d10: {'action': 'question', 'question': 'Slovakia is a member of European Union-', 'options': ['True', 'False']}
+DEBUG - Queued message to dave: {'action': 'question', 'question': 'Slovakia is a member of European Union-', 'options': ['True', 'False']}
+INFO - Broadcasted question to room 36a71d10: Slovakia is a member of European Union-
+INFO - Processing action 'answer' from player 'dave'
+DEBUG - Queued message to dave: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+INFO - Player 'dave' answered 'false' in room 36a71d10. Score: 0
+INFO - Ending round in room 36a71d10
+DEBUG - Sending message to 'dave' in room 36a71d10: {'action': 'score_update', 'scores': {'dave': 0}}
+DEBUG - Queued message to dave: {'action': 'score_update', 'scores': {'dave': 0}}
+DEBUG - Sending message to 'dave' in room 36a71d10: {'action': 'question', 'question': 'In &quot;Mario Kart 64&quot;, Waluigi is a playable character.', 'options': ['True', 'False']}
+DEBUG - Queued message to dave: {'action': 'question', 'question': 'In &quot;Mario Kart 64&quot;, Waluigi is a playable character.', 'options': ['True', 'False']}
+INFO - Broadcasted question to room 36a71d10: In &quot;Mario Kart 64&quot;, Waluigi is a playable character.
+INFO - Processing action 'exit_room' from player 'dave'
+INFO - Player 'dave' removed from room 36a71d10
+INFO - Ending round in room 36a71d10
+INFO - Broadcasted question to room 36a71d10: In &quot;Super Mario World&quot;, the rhino mini-boss, Reznor, is named after the lead singer of the band &quot;Nine Inch Nails&quot;.
+DEBUG - Queued message to dave: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'disconnect' from player 'dave'
+INFO - Player 'dave' disconnected
+INFO - Processing action 'disconnect' from player 'tom'
+INFO - Player 'tom' disconnected
+INFO - Processing action 'disconnect' from player 'cam'
+INFO - Player 'cam' disconnected
+INFO - KeyboardInterrupt received. Initiating shutdown.
+INFO - Server shutting down...
+INFO - Server has been shut down.
+INFO - Server started on 0.0.0.0:5555
+INFO - New connection from ('129.82.45.130', 42644)
+DEBUG - Queued message to None: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from player 'None'
+INFO - Player 'cam' connected from ('129.82.45.130', 42644)
+DEBUG - Queued message to cam: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'create_game' from player 'cam'
+DEBUG - Queued message to cam: {'action': 'game_created', 'room_id': '58fd0da9', 'message': 'Room 58fd0da9 created. Waiting for players to join.'}
+INFO - Game room 58fd0da9 created by 'cam'.
+INFO - New connection from ('129.82.45.130', 42648)
+DEBUG - Queued message to None: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from player 'None'
+INFO - Player 'dave' connected from ('129.82.45.130', 42648)
+DEBUG - Queued message to dave: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'join_game' from player 'dave'
+DEBUG - Queued message to dave: {'action': 'game_joined', 'room_id': '58fd0da9', 'message': 'Joined room 58fd0da9. Waiting for the game to start.'}
+DEBUG - Sending message to 'cam' in room 58fd0da9: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Queued message to cam: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Sending message to 'dave' in room 58fd0da9: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Queued message to dave: {'action': 'player_joined', 'player': 'dave'}
+INFO - Player 'dave' joined room 58fd0da9
+INFO - New connection from ('129.82.45.130', 58092)
+DEBUG - Queued message to None: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from player 'None'
+INFO - Player 'tom' connected from ('129.82.45.130', 58092)
+DEBUG - Queued message to tom: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'join_game' from player 'tom'
+DEBUG - Queued message to tom: {'action': 'game_joined', 'room_id': '58fd0da9', 'message': 'Joined room 58fd0da9. Waiting for the game to start.'}
+DEBUG - Sending message to 'cam' in room 58fd0da9: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Queued message to cam: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Sending message to 'dave' in room 58fd0da9: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Queued message to dave: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Sending message to 'tom' in room 58fd0da9: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Queued message to tom: {'action': 'player_joined', 'player': 'tom'}
+INFO - Player 'tom' joined room 58fd0da9
+INFO - Starting game in room 58fd0da9 with players: ['cam', 'dave', 'tom']
+DEBUG - Sending message to 'cam' in room 58fd0da9: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Queued message to cam: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Sending message to 'dave' in room 58fd0da9: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Queued message to dave: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Sending message to 'tom' in room 58fd0da9: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Queued message to tom: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Starting new HTTPS connection (1): opentdb.com:443
+DEBUG - https://opentdb.com:443 "GET /api.php?amount=50&type=boolean HTTP/1.1" 200 None
+INFO - Fetched 50 questions for room 58fd0da9
+DEBUG - Sending message to 'cam' in room 58fd0da9: {'action': 'question', 'question': 'The band STRFKR was also briefly known as Pyramiddd.', 'options': ['True', 'False']}
+DEBUG - Queued message to cam: {'action': 'question', 'question': 'The band STRFKR was also briefly known as Pyramiddd.', 'options': ['True', 'False']}
+DEBUG - Sending message to 'dave' in room 58fd0da9: {'action': 'question', 'question': 'The band STRFKR was also briefly known as Pyramiddd.', 'options': ['True', 'False']}
+DEBUG - Queued message to dave: {'action': 'question', 'question': 'The band STRFKR was also briefly known as Pyramiddd.', 'options': ['True', 'False']}
+DEBUG - Sending message to 'tom' in room 58fd0da9: {'action': 'question', 'question': 'The band STRFKR was also briefly known as Pyramiddd.', 'options': ['True', 'False']}
+DEBUG - Queued message to tom: {'action': 'question', 'question': 'The band STRFKR was also briefly known as Pyramiddd.', 'options': ['True', 'False']}
+INFO - Broadcasted question to room 58fd0da9: The band STRFKR was also briefly known as Pyramiddd.
+INFO - Processing action 'answer' from player 'tom'
+DEBUG - Queued message to tom: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+INFO - Player 'tom' answered 'false' in room 58fd0da9. Score: 0
+INFO - Processing action 'answer' from player 'dave'
+DEBUG - Queued message to dave: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+INFO - Player 'dave' answered 'true' in room 58fd0da9. Score: 1
+INFO - Processing action 'answer' from player 'cam'
+DEBUG - Queued message to cam: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+INFO - Player 'cam' answered 'true' in room 58fd0da9. Score: 1
+INFO - Ending round in room 58fd0da9
+DEBUG - Sending message to 'cam' in room 58fd0da9: {'action': 'score_update', 'scores': {'cam': 1, 'dave': 1, 'tom': 0}}
+DEBUG - Queued message to cam: {'action': 'score_update', 'scores': {'cam': 1, 'dave': 1, 'tom': 0}}
+DEBUG - Sending message to 'dave' in room 58fd0da9: {'action': 'score_update', 'scores': {'cam': 1, 'dave': 1, 'tom': 0}}
+DEBUG - Queued message to dave: {'action': 'score_update', 'scores': {'cam': 1, 'dave': 1, 'tom': 0}}
+DEBUG - Sending message to 'tom' in room 58fd0da9: {'action': 'score_update', 'scores': {'cam': 1, 'dave': 1, 'tom': 0}}
+DEBUG - Queued message to tom: {'action': 'score_update', 'scores': {'cam': 1, 'dave': 1, 'tom': 0}}
+DEBUG - Sending message to 'cam' in room 58fd0da9: {'action': 'question', 'question': 'Stevie Wonder&#039;s real name is Stevland Hardaway Morris.', 'options': ['True', 'False']}
+DEBUG - Queued message to cam: {'action': 'question', 'question': 'Stevie Wonder&#039;s real name is Stevland Hardaway Morris.', 'options': ['True', 'False']}
+DEBUG - Sending message to 'dave' in room 58fd0da9: {'action': 'question', 'question': 'Stevie Wonder&#039;s real name is Stevland Hardaway Morris.', 'options': ['True', 'False']}
+DEBUG - Queued message to dave: {'action': 'question', 'question': 'Stevie Wonder&#039;s real name is Stevland Hardaway Morris.', 'options': ['True', 'False']}
+DEBUG - Sending message to 'tom' in room 58fd0da9: {'action': 'question', 'question': 'Stevie Wonder&#039;s real name is Stevland Hardaway Morris.', 'options': ['True', 'False']}
+DEBUG - Queued message to tom: {'action': 'question', 'question': 'Stevie Wonder&#039;s real name is Stevland Hardaway Morris.', 'options': ['True', 'False']}
+INFO - Broadcasted question to room 58fd0da9: Stevie Wonder&#039;s real name is Stevland Hardaway Morris.
+INFO - Processing action 'exit_room' from player 'cam'
+DEBUG - Sending message to 'dave' in room 58fd0da9: {'action': 'player_left', 'player': 'cam'}
+DEBUG - Queued message to dave: {'action': 'player_left', 'player': 'cam'}
+DEBUG - Sending message to 'tom' in room 58fd0da9: {'action': 'player_left', 'player': 'cam'}
+DEBUG - Queued message to tom: {'action': 'player_left', 'player': 'cam'}
+INFO - Player 'cam' removed from room 58fd0da9
+DEBUG - Queued message to cam: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'answer' from player 'dave'
+DEBUG - Queued message to dave: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 1}
+INFO - Player 'dave' answered 'false' in room 58fd0da9. Score: 1
+INFO - Processing action 'answer' from player 'tom'
+DEBUG - Queued message to tom: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+INFO - Player 'tom' answered 'true' in room 58fd0da9. Score: 1
+INFO - Ending round in room 58fd0da9
+DEBUG - Sending message to 'dave' in room 58fd0da9: {'action': 'score_update', 'scores': {'dave': 1, 'tom': 1}}
+DEBUG - Queued message to dave: {'action': 'score_update', 'scores': {'dave': 1, 'tom': 1}}
+DEBUG - Sending message to 'tom' in room 58fd0da9: {'action': 'score_update', 'scores': {'dave': 1, 'tom': 1}}
+DEBUG - Queued message to tom: {'action': 'score_update', 'scores': {'dave': 1, 'tom': 1}}
+DEBUG - Sending message to 'dave' in room 58fd0da9: {'action': 'question', 'question': 'In the game &quot;Melty Blood Actress Again Current Code&quot;, you can enter Blood Heat mode in Half Moon style.', 'options': ['True', 'False']}
+DEBUG - Queued message to dave: {'action': 'question', 'question': 'In the game &quot;Melty Blood Actress Again Current Code&quot;, you can enter Blood Heat mode in Half Moon style.', 'options': ['True', 'False']}
+DEBUG - Sending message to 'tom' in room 58fd0da9: {'action': 'question', 'question': 'In the game &quot;Melty Blood Actress Again Current Code&quot;, you can enter Blood Heat mode in Half Moon style.', 'options': ['True', 'False']}
+DEBUG - Queued message to tom: {'action': 'question', 'question': 'In the game &quot;Melty Blood Actress Again Current Code&quot;, you can enter Blood Heat mode in Half Moon style.', 'options': ['True', 'False']}
+INFO - Broadcasted question to room 58fd0da9: In the game &quot;Melty Blood Actress Again Current Code&quot;, you can enter Blood Heat mode in Half Moon style.
+INFO - Processing action 'exit_room' from player 'tom'
+DEBUG - Sending message to 'dave' in room 58fd0da9: {'action': 'player_left', 'player': 'tom'}
+DEBUG - Queued message to dave: {'action': 'player_left', 'player': 'tom'}
+INFO - Player 'tom' removed from room 58fd0da9
+DEBUG - Queued message to tom: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'answer' from player 'dave'
+DEBUG - Queued message to dave: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 2}
+INFO - Player 'dave' answered 'false' in room 58fd0da9. Score: 2
+INFO - Ending round in room 58fd0da9
+DEBUG - Sending message to 'dave' in room 58fd0da9: {'action': 'score_update', 'scores': {'dave': 2}}
+DEBUG - Queued message to dave: {'action': 'score_update', 'scores': {'dave': 2}}
+DEBUG - Sending message to 'dave' in room 58fd0da9: {'action': 'question', 'question': 'Like with the Neanderthals, Homo sapiens sapiens also interbred with the Denisovans.', 'options': ['True', 'False']}
+DEBUG - Queued message to dave: {'action': 'question', 'question': 'Like with the Neanderthals, Homo sapiens sapiens also interbred with the Denisovans.', 'options': ['True', 'False']}
+INFO - Broadcasted question to room 58fd0da9: Like with the Neanderthals, Homo sapiens sapiens also interbred with the Denisovans.
+INFO - Processing action 'disconnect' from player 'cam'
+INFO - Player 'cam' disconnected
+INFO - Processing action 'disconnect' from player 'dave'
+INFO - Player 'dave' disconnected
+INFO - Player 'dave' removed from room 58fd0da9
+INFO - Room 58fd0da9 deleted as it became empty
+INFO - Processing action 'disconnect' from player 'tom'
+INFO - Player 'tom' disconnected
+INFO - KeyboardInterrupt received. Initiating shutdown.
+INFO - Server shutting down...
+INFO - Server has been shut down.
+INFO - Server started on 0.0.0.0:5555
+INFO - New connection from ('129.82.45.130', 56130)
+DEBUG - Queued message to None: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from player 'None'
+INFO - Player 'cam' connected from ('129.82.45.130', 56130)
+DEBUG - Queued message to cam: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - New connection from ('129.82.45.130', 60636)
+DEBUG - Queued message to None: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from player 'None'
+INFO - Player 'tom' connected from ('129.82.45.130', 60636)
+DEBUG - Queued message to tom: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - New connection from ('129.82.45.130', 60640)
+DEBUG - Queued message to None: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from player 'None'
+INFO - Player 'dave' connected from ('129.82.45.130', 60640)
+DEBUG - Queued message to dave: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'create_game' from player 'dave'
+DEBUG - Queued message to dave: {'action': 'game_created', 'room_id': '2d8f9c80', 'message': 'Room 2d8f9c80 created. Waiting for players to join.'}
+INFO - Game room 2d8f9c80 created by 'dave'.
+INFO - Processing action 'join_game' from player 'tom'
+DEBUG - Queued message to tom: {'action': 'game_joined', 'room_id': '2d8f9c80', 'message': 'Joined room 2d8f9c80. Waiting for the game to start.'}
+DEBUG - Sending message to 'dave' in room 2d8f9c80: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Queued message to dave: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Sending message to 'tom' in room 2d8f9c80: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Queued message to tom: {'action': 'player_joined', 'player': 'tom'}
+INFO - Player 'tom' joined room 2d8f9c80
+INFO - Processing action 'join_game' from player 'cam'
+DEBUG - Queued message to cam: {'action': 'game_joined', 'room_id': '2d8f9c80', 'message': 'Joined room 2d8f9c80. Waiting for the game to start.'}
+DEBUG - Sending message to 'dave' in room 2d8f9c80: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Queued message to dave: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Sending message to 'tom' in room 2d8f9c80: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Queued message to tom: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Sending message to 'cam' in room 2d8f9c80: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Queued message to cam: {'action': 'player_joined', 'player': 'cam'}
+INFO - Player 'cam' joined room 2d8f9c80
+INFO - Starting game in room 2d8f9c80 with players: ['dave', 'tom', 'cam']
+DEBUG - Sending message to 'dave' in room 2d8f9c80: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Queued message to dave: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Sending message to 'tom' in room 2d8f9c80: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Queued message to tom: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Sending message to 'cam' in room 2d8f9c80: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Queued message to cam: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Starting new HTTPS connection (1): opentdb.com:443
+DEBUG - https://opentdb.com:443 "GET /api.php?amount=50&type=boolean HTTP/1.1" 200 None
+INFO - Fetched 50 questions for room 2d8f9c80
+DEBUG - Sending message to 'dave' in room 2d8f9c80: {'action': 'question', 'question': 'There is a Donald Trump Board Game, which was made in 1989.', 'options': ['True', 'False']}
+DEBUG - Queued message to dave: {'action': 'question', 'question': 'There is a Donald Trump Board Game, which was made in 1989.', 'options': ['True', 'False']}
+DEBUG - Sending message to 'tom' in room 2d8f9c80: {'action': 'question', 'question': 'There is a Donald Trump Board Game, which was made in 1989.', 'options': ['True', 'False']}
+DEBUG - Queued message to tom: {'action': 'question', 'question': 'There is a Donald Trump Board Game, which was made in 1989.', 'options': ['True', 'False']}
+DEBUG - Sending message to 'cam' in room 2d8f9c80: {'action': 'question', 'question': 'There is a Donald Trump Board Game, which was made in 1989.', 'options': ['True', 'False']}
+DEBUG - Queued message to cam: {'action': 'question', 'question': 'There is a Donald Trump Board Game, which was made in 1989.', 'options': ['True', 'False']}
+INFO - Broadcasted question to room 2d8f9c80: There is a Donald Trump Board Game, which was made in 1989.
+INFO - Processing action 'answer' from player 'cam'
+DEBUG - Queued message to cam: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+INFO - Player 'cam' answered 'true' in room 2d8f9c80. Score: 1
+INFO - Processing action 'answer' from player 'tom'
+DEBUG - Queued message to tom: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+INFO - Player 'tom' answered 'false' in room 2d8f9c80. Score: 0
+INFO - Processing action 'answer' from player 'dave'
+DEBUG - Queued message to dave: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+INFO - Player 'dave' answered 'false' in room 2d8f9c80. Score: 0
+INFO - Ending round in room 2d8f9c80
+DEBUG - Sending message to 'dave' in room 2d8f9c80: {'action': 'score_update', 'scores': {'dave': 0, 'tom': 0, 'cam': 1}}
+DEBUG - Queued message to dave: {'action': 'score_update', 'scores': {'dave': 0, 'tom': 0, 'cam': 1}}
+DEBUG - Sending message to 'tom' in room 2d8f9c80: {'action': 'score_update', 'scores': {'dave': 0, 'tom': 0, 'cam': 1}}
+DEBUG - Queued message to tom: {'action': 'score_update', 'scores': {'dave': 0, 'tom': 0, 'cam': 1}}
+DEBUG - Sending message to 'cam' in room 2d8f9c80: {'action': 'score_update', 'scores': {'dave': 0, 'tom': 0, 'cam': 1}}
+DEBUG - Queued message to cam: {'action': 'score_update', 'scores': {'dave': 0, 'tom': 0, 'cam': 1}}
+DEBUG - Sending message to 'dave' in room 2d8f9c80: {'action': 'question', 'question': 'The Windows ME operating system was released in the year 2000.', 'options': ['True', 'False']}
+DEBUG - Queued message to dave: {'action': 'question', 'question': 'The Windows ME operating system was released in the year 2000.', 'options': ['True', 'False']}
+DEBUG - Sending message to 'tom' in room 2d8f9c80: {'action': 'question', 'question': 'The Windows ME operating system was released in the year 2000.', 'options': ['True', 'False']}
+DEBUG - Queued message to tom: {'action': 'question', 'question': 'The Windows ME operating system was released in the year 2000.', 'options': ['True', 'False']}
+DEBUG - Sending message to 'cam' in room 2d8f9c80: {'action': 'question', 'question': 'The Windows ME operating system was released in the year 2000.', 'options': ['True', 'False']}
+DEBUG - Queued message to cam: {'action': 'question', 'question': 'The Windows ME operating system was released in the year 2000.', 'options': ['True', 'False']}
+INFO - Broadcasted question to room 2d8f9c80: The Windows ME operating system was released in the year 2000.
+INFO - Processing action 'exit_room' from player 'dave'
+DEBUG - Sending message to 'tom' in room 2d8f9c80: {'action': 'player_left', 'player': 'dave'}
+DEBUG - Queued message to tom: {'action': 'player_left', 'player': 'dave'}
+DEBUG - Sending message to 'cam' in room 2d8f9c80: {'action': 'player_left', 'player': 'dave'}
+DEBUG - Queued message to cam: {'action': 'player_left', 'player': 'dave'}
+INFO - Player 'dave' removed from room 2d8f9c80
+DEBUG - Queued message to dave: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'answer' from player 'tom'
+DEBUG - Queued message to tom: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+INFO - Player 'tom' answered 'true' in room 2d8f9c80. Score: 1
+INFO - Processing action 'answer' from player 'cam'
+DEBUG - Queued message to cam: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 2}
+INFO - Player 'cam' answered 'true' in room 2d8f9c80. Score: 2
+INFO - Ending round in room 2d8f9c80
+DEBUG - Sending message to 'tom' in room 2d8f9c80: {'action': 'score_update', 'scores': {'tom': 1, 'cam': 2}}
+DEBUG - Queued message to tom: {'action': 'score_update', 'scores': {'tom': 1, 'cam': 2}}
+DEBUG - Sending message to 'cam' in room 2d8f9c80: {'action': 'score_update', 'scores': {'tom': 1, 'cam': 2}}
+DEBUG - Queued message to cam: {'action': 'score_update', 'scores': {'tom': 1, 'cam': 2}}
+DEBUG - Sending message to 'tom' in room 2d8f9c80: {'action': 'question', 'question': 'Sean Connery wasn&#039;t in &quot;Indiana Jones and the Kingdom of the Crystal Skull&quot; because he found retirement too enjoyable.', 'options': ['True', 'False']}
+DEBUG - Queued message to tom: {'action': 'question', 'question': 'Sean Connery wasn&#039;t in &quot;Indiana Jones and the Kingdom of the Crystal Skull&quot; because he found retirement too enjoyable.', 'options': ['True', 'False']}
+DEBUG - Sending message to 'cam' in room 2d8f9c80: {'action': 'question', 'question': 'Sean Connery wasn&#039;t in &quot;Indiana Jones and the Kingdom of the Crystal Skull&quot; because he found retirement too enjoyable.', 'options': ['True', 'False']}
+DEBUG - Queued message to cam: {'action': 'question', 'question': 'Sean Connery wasn&#039;t in &quot;Indiana Jones and the Kingdom of the Crystal Skull&quot; because he found retirement too enjoyable.', 'options': ['True', 'False']}
+INFO - Broadcasted question to room 2d8f9c80: Sean Connery wasn&#039;t in &quot;Indiana Jones and the Kingdom of the Crystal Skull&quot; because he found retirement too enjoyable.
+INFO - Processing action 'exit_room' from player 'cam'
+DEBUG - Sending message to 'tom' in room 2d8f9c80: {'action': 'player_left', 'player': 'cam'}
+DEBUG - Queued message to tom: {'action': 'player_left', 'player': 'cam'}
+INFO - Player 'cam' removed from room 2d8f9c80
+DEBUG - Queued message to cam: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'answer' from player 'tom'
+DEBUG - Queued message to tom: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 1}
+INFO - Player 'tom' answered 'false' in room 2d8f9c80. Score: 1
+INFO - Ending round in room 2d8f9c80
+DEBUG - Sending message to 'tom' in room 2d8f9c80: {'action': 'score_update', 'scores': {'tom': 1}}
+DEBUG - Queued message to tom: {'action': 'score_update', 'scores': {'tom': 1}}
+DEBUG - Sending message to 'tom' in room 2d8f9c80: {'action': 'question', 'question': 'Time on Computers is measured via the EPOX System.', 'options': ['True', 'False']}
+DEBUG - Queued message to tom: {'action': 'question', 'question': 'Time on Computers is measured via the EPOX System.', 'options': ['True', 'False']}
+INFO - Broadcasted question to room 2d8f9c80: Time on Computers is measured via the EPOX System.
+INFO - Processing action 'disconnect' from player 'tom'
+INFO - Player 'tom' disconnected
+INFO - Player 'tom' removed from room 2d8f9c80
+INFO - Room 2d8f9c80 deleted as it became empty
+INFO - Processing action 'disconnect' from player 'dave'
+INFO - Player 'dave' disconnected
+INFO - Processing action 'disconnect' from player 'cam'
+INFO - Player 'cam' disconnected
+INFO - KeyboardInterrupt received. Initiating shutdown.
+INFO - Server shutting down...
+INFO - Server has been shut down.
+INFO - Server started on 0.0.0.0:5555
+INFO - New connection from ('129.82.45.130', 39652)
+DEBUG - Queued message to None: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from player 'None'
+INFO - Player 'cam' connected from ('129.82.45.130', 39652)
+DEBUG - Queued message to cam: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - New connection from ('129.82.45.130', 39660)
+DEBUG - Queued message to None: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from player 'None'
+INFO - Player 'dave' connected from ('129.82.45.130', 39660)
+DEBUG - Queued message to dave: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - New connection from ('129.82.45.130', 39664)
+DEBUG - Queued message to None: {'action': 'set_name', 'message': 'Enter your username: '}
+INFO - Processing action 'set_name' from player 'None'
+INFO - Player 'tom' connected from ('129.82.45.130', 39664)
+DEBUG - Queued message to tom: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'create_game' from player 'tom'
+DEBUG - Queued message to tom: {'action': 'game_created', 'room_id': '8e8f976e', 'message': 'Room 8e8f976e created. Waiting for players to join.'}
+INFO - Game room 8e8f976e created by 'tom'.
+INFO - Processing action 'join_game' from player 'dave'
+DEBUG - Queued message to dave: {'action': 'game_joined', 'room_id': '8e8f976e', 'message': 'Joined room 8e8f976e. Waiting for the game to start.'}
+DEBUG - Sending message to 'tom' in room 8e8f976e: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Queued message to tom: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Sending message to 'dave' in room 8e8f976e: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Queued message to dave: {'action': 'player_joined', 'player': 'dave'}
+INFO - Player 'dave' joined room 8e8f976e
+INFO - Processing action 'join_game' from player 'cam'
+DEBUG - Queued message to cam: {'action': 'game_joined', 'room_id': '8e8f976e', 'message': 'Joined room 8e8f976e. Waiting for the game to start.'}
+DEBUG - Sending message to 'tom' in room 8e8f976e: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Queued message to tom: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Sending message to 'dave' in room 8e8f976e: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Queued message to dave: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Sending message to 'cam' in room 8e8f976e: {'action': 'player_joined', 'player': 'cam'}
+DEBUG - Queued message to cam: {'action': 'player_joined', 'player': 'cam'}
+INFO - Player 'cam' joined room 8e8f976e
+INFO - Starting game in room 8e8f976e with players: ['tom', 'dave', 'cam']
+DEBUG - Sending message to 'tom' in room 8e8f976e: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Queued message to tom: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Sending message to 'dave' in room 8e8f976e: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Queued message to dave: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Sending message to 'cam' in room 8e8f976e: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Queued message to cam: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Starting new HTTPS connection (1): opentdb.com:443
+DEBUG - https://opentdb.com:443 "GET /api.php?amount=50&type=boolean HTTP/1.1" 200 None
+INFO - Fetched 50 questions for room 8e8f976e
+DEBUG - Sending message to 'tom' in room 8e8f976e: {'action': 'question', 'question': 'Nazi Germany surrendered on Harry Truman&#039;s birthday while he was president.', 'options': ['True', 'False']}
+DEBUG - Queued message to tom: {'action': 'question', 'question': 'Nazi Germany surrendered on Harry Truman&#039;s birthday while he was president.', 'options': ['True', 'False']}
+DEBUG - Sending message to 'dave' in room 8e8f976e: {'action': 'question', 'question': 'Nazi Germany surrendered on Harry Truman&#039;s birthday while he was president.', 'options': ['True', 'False']}
+DEBUG - Queued message to dave: {'action': 'question', 'question': 'Nazi Germany surrendered on Harry Truman&#039;s birthday while he was president.', 'options': ['True', 'False']}
+DEBUG - Sending message to 'cam' in room 8e8f976e: {'action': 'question', 'question': 'Nazi Germany surrendered on Harry Truman&#039;s birthday while he was president.', 'options': ['True', 'False']}
+DEBUG - Queued message to cam: {'action': 'question', 'question': 'Nazi Germany surrendered on Harry Truman&#039;s birthday while he was president.', 'options': ['True', 'False']}
+INFO - Broadcasted question to room 8e8f976e: Nazi Germany surrendered on Harry Truman&#039;s birthday while he was president.
+INFO - Processing action 'answer' from player 'cam'
+DEBUG - Queued message to cam: {'action': 'answer_feedback', 'message': 'Incorrect!', 'score': 0}
+INFO - Player 'cam' answered 'false' in room 8e8f976e. Score: 0
+INFO - Processing action 'answer' from player 'dave'
+DEBUG - Queued message to dave: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+INFO - Player 'dave' answered 'true' in room 8e8f976e. Score: 1
+INFO - Processing action 'answer' from player 'tom'
+DEBUG - Queued message to tom: {'action': 'answer_feedback', 'message': 'Correct!', 'score': 1}
+INFO - Player 'tom' answered 'true' in room 8e8f976e. Score: 1
+INFO - Ending round in room 8e8f976e
+DEBUG - Sending message to 'tom' in room 8e8f976e: {'action': 'score_update', 'scores': {'tom': 1, 'dave': 1, 'cam': 0}}
+DEBUG - Queued message to tom: {'action': 'score_update', 'scores': {'tom': 1, 'dave': 1, 'cam': 0}}
+DEBUG - Sending message to 'dave' in room 8e8f976e: {'action': 'score_update', 'scores': {'tom': 1, 'dave': 1, 'cam': 0}}
+DEBUG - Queued message to dave: {'action': 'score_update', 'scores': {'tom': 1, 'dave': 1, 'cam': 0}}
+DEBUG - Sending message to 'cam' in room 8e8f976e: {'action': 'score_update', 'scores': {'tom': 1, 'dave': 1, 'cam': 0}}
+DEBUG - Queued message to cam: {'action': 'score_update', 'scores': {'tom': 1, 'dave': 1, 'cam': 0}}
+DEBUG - Sending message to 'tom' in room 8e8f976e: {'action': 'question', 'question': 'Oxford University is older than the Aztec Empire. ', 'options': ['True', 'False']}
+DEBUG - Queued message to tom: {'action': 'question', 'question': 'Oxford University is older than the Aztec Empire. ', 'options': ['True', 'False']}
+DEBUG - Sending message to 'dave' in room 8e8f976e: {'action': 'question', 'question': 'Oxford University is older than the Aztec Empire. ', 'options': ['True', 'False']}
+DEBUG - Queued message to dave: {'action': 'question', 'question': 'Oxford University is older than the Aztec Empire. ', 'options': ['True', 'False']}
+DEBUG - Sending message to 'cam' in room 8e8f976e: {'action': 'question', 'question': 'Oxford University is older than the Aztec Empire. ', 'options': ['True', 'False']}
+DEBUG - Queued message to cam: {'action': 'question', 'question': 'Oxford University is older than the Aztec Empire. ', 'options': ['True', 'False']}
+INFO - Broadcasted question to room 8e8f976e: Oxford University is older than the Aztec Empire. 
+INFO - Processing action 'exit_room' from player 'tom'
+DEBUG - Sending message to 'dave' in room 8e8f976e: {'action': 'player_left', 'player': 'tom'}
+DEBUG - Queued message to dave: {'action': 'player_left', 'player': 'tom'}
+DEBUG - Sending message to 'cam' in room 8e8f976e: {'action': 'player_left', 'player': 'tom'}
+DEBUG - Queued message to cam: {'action': 'player_left', 'player': 'tom'}
+INFO - Player 'tom' removed from room 8e8f976e
+DEBUG - Queued message to tom: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'exit_room' from player 'dave'
+DEBUG - Sending message to 'cam' in room 8e8f976e: {'action': 'player_left', 'player': 'dave'}
+DEBUG - Queued message to cam: {'action': 'player_left', 'player': 'dave'}
+INFO - Player 'dave' removed from room 8e8f976e
+DEBUG - Sending message to 'cam' in room 8e8f976e: {'action': 'error', 'message': 'Not enough players to continue the game. Game ended.'}
+DEBUG - Queued message to cam: {'action': 'error', 'message': 'Not enough players to continue the game. Game ended.'}
+DEBUG - Sending message to 'cam' in room 8e8f976e: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+DEBUG - Queued message to cam: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Room 8e8f976e has been reset and removed.
+DEBUG - Queued message to dave: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Processing action 'answer' from player 'cam'
+DEBUG - Queued message to cam: {'action': 'error', 'message': 'No active question to answer.'}
+INFO - Processing action 'create_game' from player 'cam'
+DEBUG - Queued message to cam: {'action': 'game_created', 'room_id': '21222ab2', 'message': 'Room 21222ab2 created. Waiting for players to join.'}
+INFO - Game room 21222ab2 created by 'cam'.
+INFO - Processing action 'join_game' from player 'dave'
+DEBUG - Queued message to dave: {'action': 'game_joined', 'room_id': '21222ab2', 'message': 'Joined room 21222ab2. Waiting for the game to start.'}
+DEBUG - Sending message to 'cam' in room 21222ab2: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Queued message to cam: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Sending message to 'dave' in room 21222ab2: {'action': 'player_joined', 'player': 'dave'}
+DEBUG - Queued message to dave: {'action': 'player_joined', 'player': 'dave'}
+INFO - Player 'dave' joined room 21222ab2
+INFO - Processing action 'join_game' from player 'tom'
+DEBUG - Queued message to tom: {'action': 'game_joined', 'room_id': '21222ab2', 'message': 'Joined room 21222ab2. Waiting for the game to start.'}
+DEBUG - Sending message to 'cam' in room 21222ab2: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Queued message to cam: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Sending message to 'dave' in room 21222ab2: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Queued message to dave: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Sending message to 'tom' in room 21222ab2: {'action': 'player_joined', 'player': 'tom'}
+DEBUG - Queued message to tom: {'action': 'player_joined', 'player': 'tom'}
+INFO - Player 'tom' joined room 21222ab2
+INFO - Starting game in room 21222ab2 with players: ['cam', 'dave', 'tom']
+DEBUG - Sending message to 'cam' in room 21222ab2: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Queued message to cam: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Sending message to 'dave' in room 21222ab2: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Queued message to dave: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Sending message to 'tom' in room 21222ab2: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Queued message to tom: {'action': 'game_started', 'message': 'The game has started! Get ready for the first question.'}
+DEBUG - Starting new HTTPS connection (1): opentdb.com:443
+DEBUG - https://opentdb.com:443 "GET /api.php?amount=50&type=boolean HTTP/1.1" 200 None
+INFO - Fetched 50 questions for room 21222ab2
+DEBUG - Sending message to 'cam' in room 21222ab2: {'action': 'question', 'question': 'In the &quot;Half-Life&quot; series, &quot;H.E.V&quot; stands for &quot;Hazardous Evasiveness Vest&quot;', 'options': ['True', 'False']}
+DEBUG - Queued message to cam: {'action': 'question', 'question': 'In the &quot;Half-Life&quot; series, &quot;H.E.V&quot; stands for &quot;Hazardous Evasiveness Vest&quot;', 'options': ['True', 'False']}
+DEBUG - Sending message to 'dave' in room 21222ab2: {'action': 'question', 'question': 'In the &quot;Half-Life&quot; series, &quot;H.E.V&quot; stands for &quot;Hazardous Evasiveness Vest&quot;', 'options': ['True', 'False']}
+DEBUG - Queued message to dave: {'action': 'question', 'question': 'In the &quot;Half-Life&quot; series, &quot;H.E.V&quot; stands for &quot;Hazardous Evasiveness Vest&quot;', 'options': ['True', 'False']}
+DEBUG - Sending message to 'tom' in room 21222ab2: {'action': 'question', 'question': 'In the &quot;Half-Life&quot; series, &quot;H.E.V&quot; stands for &quot;Hazardous Evasiveness Vest&quot;', 'options': ['True', 'False']}
+DEBUG - Queued message to tom: {'action': 'question', 'question': 'In the &quot;Half-Life&quot; series, &quot;H.E.V&quot; stands for &quot;Hazardous Evasiveness Vest&quot;', 'options': ['True', 'False']}
+INFO - Broadcasted question to room 21222ab2: In the &quot;Half-Life&quot; series, &quot;H.E.V&quot; stands for &quot;Hazardous Evasiveness Vest&quot;
+INFO - Processing action 'disconnect' from player 'tom'
+INFO - Player 'tom' disconnected
+DEBUG - Sending message to 'cam' in room 21222ab2: {'action': 'player_left', 'player': 'tom'}
+DEBUG - Queued message to cam: {'action': 'player_left', 'player': 'tom'}
+DEBUG - Sending message to 'dave' in room 21222ab2: {'action': 'player_left', 'player': 'tom'}
+DEBUG - Queued message to dave: {'action': 'player_left', 'player': 'tom'}
+INFO - Player 'tom' removed from room 21222ab2
+INFO - Processing action 'disconnect' from player 'dave'
+INFO - Player 'dave' disconnected
+DEBUG - Sending message to 'cam' in room 21222ab2: {'action': 'player_left', 'player': 'dave'}
+DEBUG - Queued message to cam: {'action': 'player_left', 'player': 'dave'}
+INFO - Player 'dave' removed from room 21222ab2
+DEBUG - Sending message to 'cam' in room 21222ab2: {'action': 'error', 'message': 'Not enough players to continue the game. Game ended.'}
+DEBUG - Queued message to cam: {'action': 'error', 'message': 'Not enough players to continue the game. Game ended.'}
+DEBUG - Sending message to 'cam' in room 21222ab2: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+DEBUG - Queued message to cam: {'action': 'game_menu', 'options': ['1. Join a game', '2. Create a game', '3. Exit']}
+INFO - Room 21222ab2 has been reset and removed.
+INFO - Processing action 'disconnect' from player 'cam'
+INFO - Player 'cam' disconnected
+INFO - KeyboardInterrupt received. Initiating shutdown.
+INFO - Server shutting down...
+INFO - Server has been shut down.
